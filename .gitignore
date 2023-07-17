@@ -1,5 +1,5 @@
 .Rproj.user
 node_modules
 /www/
-*.woff$
-*.woff2$
+*.woff
+*.woff2
