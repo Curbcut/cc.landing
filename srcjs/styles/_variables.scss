@@ -1,0 +1,41 @@
+// Fonts
+$font-main: '_AcidGrotesk', sans-serif;
+$font-title: '_Apparat', sans-serif;
+
+// Colors
+$black: #000000;
+$white: #ffffff;
+$grey: #e9ecef;
+
+$color-explorer: #a3b0d1;
+$color-ecology: #73ad80;
+$color-housing: #e08565;
+$color-health: #cd718c;
+$color-transport: #c9c3fa;
+$color-climate: #f5d574;
+$color-urban: #adb033;
+$color-demographics: #9e9090;
+$color-economy: #beaf62;
+$color-resources: #dca656;
+$color-land: #7baaaa;
+
+$t1: 0.25s;
+$t2: 0.45s;
+
+$b-radius: 4px;
+$b-radius-mid: 6.4px;
+$b-radius-large: 74px;
+
+// Easings
+$ease-in-out-cubic: cubic-bezier(
+	0.65,
+	0,
+	0.35,
+	1
+); // https://cubic-bezier.com/#.65,0,.35,1
+$ease-in-out-airbag: cubic-bezier(
+	0.3,
+	0,
+	0,
+	1
+); // https://cubic-bezier.com/#.3,0,0,1

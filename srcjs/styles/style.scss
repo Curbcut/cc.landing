@@ -1,0 +1,14 @@
+@use 'reset';
+@use 'fonts';
+@use 'variables';
+@use 'mixins';
+@use 'global';
+
+// Components
+@use './components/nav';
+@use './components/hero';
+@use './components/section-about';
+@use './components/section-discover';
+@use './components/section-news';
+@use './components/footer';
+@use './components/team';

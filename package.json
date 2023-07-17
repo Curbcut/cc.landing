@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "dependencies": {
+    "@loadable/component": "^5.15.3",
+    "@studio-freight/lenis": "^1.0.16",
+    "react-router-dom": "^6.14.1",
+    "react-scripts": "^5.0.1",
+    "sass": "^1.63.6",
+    "sass-loader": "^13.3.2",
+    "swiper": "^10.0.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^6.8.1",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^3.1.2"
+  },
+  "scripts": {
+    "watch": "webpack --watch",
+    "build": "webpack"
+  }
+}

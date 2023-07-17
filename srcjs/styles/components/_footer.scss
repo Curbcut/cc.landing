@@ -1,0 +1,248 @@
+@use '../variables';
+@use '../mixins';
+
+.landing {
+	footer {
+		position: relative;
+		background-color: variables.$white;
+
+		.footer__banner {
+			text-align: center;
+			margin: 0 auto;
+			overflow: hidden;
+			display: inline-block;
+			white-space: nowrap;
+			width: 100%;
+
+			img {
+				display: block;
+			}
+		}
+
+		.footer__content {
+			padding: 45px 51px 20px;
+			max-width: 1440px;
+			margin: 0 auto;
+
+			@include mixins.tablet {
+				padding: 43px 23px 20px;
+
+				.curbcut-logo-footer {
+					width: 141px;
+					height: 141px;
+				}
+			}
+
+			.footer-mobile-nav {
+				display: none;
+
+				@include mixins.tablet {
+					display: block;
+				}
+
+				.nav-item {
+					padding: 16px 0;
+					border-bottom: 1px solid variables.$black;
+
+					&__title {
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+
+						.plus-sign {
+							position: relative;
+							width: 14px;
+							height: 14px;
+
+							&::before,
+							&::after {
+								display: block;
+								position: relative;
+								content: '';
+								background-color: variables.$black;
+							}
+
+							&::before {
+								top: 8px;
+								width: 100%;
+								height: 2px;
+							}
+
+							&::after {
+								left: 6px;
+								width: 2px;
+								height: 100%;
+								transform-origin: center;
+								transition: transform variables.$t1
+									variables.$ease-in-out-cubic;
+							}
+						}
+					}
+
+					& > div {
+						padding-top: 15px;
+						display: flex;
+						flex-direction: column;
+						gap: 15px;
+					}
+
+					&[open] .plus-sign::after {
+						transform: scaleY(0);
+					}
+				}
+			}
+
+			& > div:not(.footer__content-copyright) {
+				display: grid;
+				grid-template-columns: 230px 1fr;
+				gap: 50px;
+
+				@include mixins.tablet {
+					display: flex;
+					flex-direction: column;
+					gap: 44px;
+				}
+
+				.grid {
+					display: grid;
+					grid-template-columns: repeat(4, minmax(10px, 1fr));
+					column-gap: 50px;
+					row-gap: 30px;
+
+					@include mixins.tablet {
+						display: flex;
+						flex-direction: column;
+					}
+
+					.column {
+						display: flex;
+						flex-direction: column;
+						align-items: flex-start;
+						gap: 8px;
+
+						@include mixins.tablet {
+							&:not(:last-of-type) {
+								padding-bottom: 50px;
+								border-bottom: 1px solid variables.$black;
+							}
+						}
+
+						&__title {
+							display: inline-flex;
+							align-items: center;
+							height: 22px;
+							margin-bottom: 2px;
+							padding: 0 7px;
+							font-size: 1.4rem;
+							line-height: 1.7rem;
+							white-space: nowrap;
+							border: 1px solid #101010;
+							border-radius: variables.$b-radius-mid;
+
+							@include mixins.tablet {
+								padding: 0;
+								font-size: 2.5rem;
+								line-height: 3.1rem;
+								height: auto;
+								border: none;
+							}
+						}
+
+						img:first-of-type {
+							margin-top: 15px;
+						}
+
+						img:not(:last-child) {
+							margin-bottom: 24px;
+						}
+					}
+				}
+			}
+
+			&-first-half {
+				padding-bottom: 60px;
+				border-bottom: 1px solid variables.$black;
+
+				@include mixins.tablet {
+					padding-bottom: 10px;
+					border-bottom: none;
+				}
+			}
+
+			&-second-half {
+				padding-top: 42px;
+
+				@include mixins.tablet {
+					.grid > .column--cities {
+						display: block !important;
+
+						.column__title {
+							display: block !important;
+						}
+
+						img {
+							margin-bottom: 0 !important;
+							display: inline-flex;
+							align-items: center;
+
+							&:not(:last-child) {
+								margin-right: 40px;
+							}
+						}
+					}
+				}
+			}
+
+			&-copyright {
+				display: block;
+				text-align: center;
+				margin-top: 42px;
+			}
+
+			.hidden-mobile {
+				@include mixins.tablet {
+					display: none !important;
+				}
+			}
+		}
+
+		form {
+			width: 100%;
+		}
+
+		input {
+			height: 46px;
+			border: 1px solid variables.$black;
+			border-radius: variables.$b-radius-mid;
+			padding: 0 16px;
+			width: min(208px, 100%);
+
+			@include mixins.tablet {
+				width: 100%;
+			}
+
+			&,
+			&::placeholder {
+				font-family: variables.$font-main;
+				font-size: 1.4rem;
+			}
+		}
+
+		.submit-btn {
+			margin-top: 11px;
+			color: variables.$white;
+			background-color: variables.$black;
+			height: 46px;
+			min-width: 124px;
+			padding: 0 16px;
+			border-radius: 8px;
+			font-size: 1.6rem;
+			line-height: 2.2rem;
+			cursor: pointer;
+
+			@include mixins.tablet {
+				min-width: 188px;
+			}
+		}
+	}
+}

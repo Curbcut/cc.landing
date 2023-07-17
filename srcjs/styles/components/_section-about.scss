@@ -1,0 +1,29 @@
+@use '../variables';
+@use '../mixins';
+
+.landing {
+	.section-about {
+		margin-top: 66px;
+		display: grid;
+		grid-template-columns: min(35%, 300px) 1fr;
+		justify-content: flex-start;
+		align-items: flex-start;
+
+		@include mixins.mobile {
+			margin-top: 58px;
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+		}
+
+		& > div:last-of-type {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+
+			.cta-text {
+				margin-top: 13px;
+			}
+		}
+	}
+}

@@ -1,0 +1,331 @@
+@use 'variables';
+@use 'mixins';
+
+.landing {
+	position: relative;
+	height: 100%;
+	font-family: variables.$font-main;
+	font-size: 1.6rem;
+	line-height: 2rem;
+	font-weight: 400;
+	letter-spacing: 0;
+	color: variables.$black;
+	background-color: variables.$grey;
+	overscroll-behavior: none;
+
+	&.is-fixed {
+		overflow: hidden;
+	}
+
+	&::after {
+		display: none;
+		content: '';
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: #b3b3b3;
+		z-index: 9;
+	}
+
+	&.bg-background::after {
+		display: block;
+	}
+
+	* {
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	html {
+		font-size: 10px;
+		overscroll-behavior: none;
+	}
+
+	// Lenis
+	html.lenis {
+		height: auto;
+	}
+
+	.lenis.lenis-smooth {
+		scroll-behavior: auto;
+	}
+
+	.lenis.lenis-smooth [data-lenis-prevent] {
+		overscroll-behavior: contain;
+	}
+
+	.lenis.lenis-stopped {
+		overflow: hidden;
+	}
+
+	.lenis.lenis-scrolling iframe {
+		pointer-events: none;
+	}
+
+	a {
+		font-family: variables.$font-main;
+		color: variables.$black;
+		text-decoration: none;
+		cursor: pointer;
+
+		&:hover,
+		&:visited,
+		&:focus {
+			color: inherit; /* This will keep the color the same */
+			text-decoration: none; /* This will remove the underline */
+		}
+	}
+
+	.cta-text {
+		font-size: 1.4rem;
+		line-height: 1.7rem;
+		text-transform: uppercase;
+		cursor: pointer;
+
+		@include mixins.mobile {
+			font-size: 1.6rem;
+			line-height: 2rem;
+		}
+
+		&--underline {
+			position: relative;
+
+			&::after {
+				content: '';
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				height: 1px;
+				background-color: variables.$black;
+				transform-origin: left;
+				transform: scaleX(0);
+				transition: transform variables.$t1
+					variables.$ease-in-out-airbag;
+
+				@include mixins.tablet {
+					transform: scaleX(1);
+				}
+			}
+
+			&:hover::after {
+				transform: scaleX(1);
+			}
+		}
+	}
+
+	.cta-text-lower {
+		cursor: pointer;
+
+		@include mixins.mobile {
+			font-size: 1.6rem;
+			line-height: 2rem;
+		}
+	}
+
+	p {
+		font-size: 1.6rem;
+		line-height: 2rem;
+		font-family: variables.$font-main;
+		font-weight: 400;
+		letter-spacing: 0;
+
+		& ~ p {
+			margin-top: 25px;
+		}
+	}
+
+	.h1 {
+		font-family: variables.$font-title;
+		font-weight: 300;
+		font-size: 11.8rem;
+		line-height: 14.4rem;
+		text-transform: uppercase;
+		margin-top: 0;
+		margin-bottom: 0;
+
+		@include mixins.laptop {
+			font-size: clamp(4.4rem, 6vw, 11.8rem);
+			line-height: clamp(5.4rem, 6vw, 14.4rem);
+		}
+
+		@include mixins.mobile {
+			font-size: 4.4rem;
+			line-height: 5.4rem;
+		}
+	}
+
+	.h2 {
+		font-family: variables.$font-main;
+		font-size: 4rem;
+		line-height: 5rem;
+		margin-top: 0;
+		margin-bottom: 0;
+
+		@include mixins.laptop {
+			font-size: clamp(2.5rem, 4vw, 4rem);
+			line-height: clamp(3.1rem, 4vw, 5rem);
+		}
+
+		@include mixins.mobile {
+			font-size: 2.5rem;
+			line-height: 3.1rem;
+		}
+	}
+
+	.h3 {
+		font-family: variables.$font-main;
+		font-size: 3rem;
+		line-height: 3.7rem;
+		margin-top: 0;
+		margin-bottom: 0;
+
+		@include mixins.laptop {
+			font-size: clamp(2.2rem, 2vw, 3rem);
+			line-height: clamp(2.7rem, 2vw, 3.7rem);
+		}
+
+		@include mixins.mobile {
+			font-size: 2.2rem;
+			line-height: 2.7rem;
+		}
+	}
+
+	summary {
+		list-style-type: none !important;
+		text-align: left;
+
+		&::-webkit-details-marker {
+			display: none;
+		}
+	}
+
+	dialog {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: rgba(0, 0, 0, 0.8);
+		z-index: 999;
+
+		#video-modal-close-btn {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			cursor: pointer;
+			z-index: 9999;
+
+			img {
+				filter: brightness(1) invert(1);
+			}
+		}
+
+		video {
+			max-height: 90vh;
+			width: 90vw;
+			margin-top: 25px;
+			outline: none;
+		}
+
+		&::backdrop {
+			background-color: rgba(0, 0, 0, 0.8);
+		}
+	}
+
+	// Categories colors
+	.bg-explorer {
+		background-color: variables.$color-explorer !important;
+	}
+	.bg-ecology {
+		background-color: variables.$color-ecology !important;
+	}
+	.bg-housing {
+		background-color: variables.$color-housing !important;
+	}
+	.bg-health {
+		background-color: variables.$color-health !important;
+	}
+	.bg-transport {
+		background-color: variables.$color-transport !important;
+	}
+	.bg-climate {
+		background-color: variables.$color-climate !important;
+	}
+	.bg-urban {
+		background-color: variables.$color-urban !important;
+	}
+	.bg-demographics {
+		background-color: variables.$color-demographics !important;
+	}
+	.bg-economy {
+		background-color: variables.$color-economy !important;
+	}
+	.bg-resources {
+		background-color: variables.$color-resources !important;
+	}
+	.bg-land {
+		background-color: variables.$color-land !important;
+	}
+
+	#main-content {
+		position: relative;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 450px;
+		align-items: flex-start;
+		justify-content: flex-end;
+		justify-items: center;
+		gap: 48px;
+		padding-left: 44px;
+		margin: 0 auto;
+
+		@include mixins.tablet {
+			display: block;
+			padding-left: 23px;
+			padding-right: 23px;
+		}
+
+		main {
+			max-width: calc(1440px - 450px);
+			width: 100%;
+			order: -1;
+			margin-bottom: 100px;
+
+			@include mixins.tablet {
+				max-width: none;
+			}
+		}
+	}
+
+	.section__title {
+		@extend .cta-text;
+		display: inline-flex;
+		align-items: center;
+		min-height: 21px;
+		padding: 0 6px;
+		margin-right: 30px;
+		background-color: variables.$white;
+		border-radius: variables.$b-radius;
+		cursor: default;
+	}
+
+	.dot {
+		position: absolute;
+		width: 10px;
+		height: 10px;
+		background-color: variables.$black;
+		user-select: none;
+
+		@include mixins.mobile {
+			width: 5px;
+			height: 5px;
+		}
+	}
+}

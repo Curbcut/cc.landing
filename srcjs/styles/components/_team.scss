@@ -1,0 +1,193 @@
+@use '../variables';
+@use '../mixins';
+
+.landing {
+	.section-team {
+		margin-top: 84px;
+		display: flex;
+		flex-direction: column;
+
+		@include mixins.mobile {
+			margin-top: 78px;
+		}
+
+		& > div:first-child {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		&__cards-wrapper {
+			margin-top: 20px;
+			display: grid;
+			grid-template-columns: repeat(4, minmax(10px, 1fr));
+			gap: 18px;
+
+			@include mixins.mobile {
+				margin-top: 11px;
+				grid-template-columns: repeat(2, minmax(10px, 1fr));
+				gap: 13px;
+			}
+
+			.card {
+				position: relative;
+				overflow: hidden;
+
+				&__img {
+					width: 100%;
+					height: 265px;
+					overflow: hidden;
+					border-top-left-radius: variables.$b-radius-mid;
+					border-top-right-radius: variables.$b-radius-mid;
+					transition: border-radius variables.$t1
+						variables.$ease-in-out-cubic;
+
+					@include mixins.tablet {
+						height: 168px;
+					}
+
+					img {
+						display: block;
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+						object-position: center;
+					}
+				}
+
+				&__title {
+					padding: 14px;
+					min-height: 67px;
+					max-height: auto;
+					align-items: center;
+
+					@include mixins.mobile {
+						height: 78px;
+						padding: 9px 11px;
+					}
+
+					span {
+						display: -webkit-box;
+						-webkit-box-orient: vertical;
+						-webkit-line-clamp: 2;
+						line-clamp: 2;
+						overflow: hidden;
+
+						@include mixins.mobile {
+							-webkit-line-clamp: 3;
+							line-clamp: 3;
+						}
+					}
+				}
+
+				&__hover {
+					position: absolute;
+					border-top-right-radius: variables.$b-radius-large - 10;
+					top: 0;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					opacity: 0;
+					transition: opacity 0.3s ease;
+					z-index: 2;
+					padding: 14px;
+					min-height: 100%;
+
+					span {
+						padding: 10px;
+						color: --black;
+						font-size: 13px;
+					}
+
+					@include mixins.mobile {
+						padding: 9px 11px;
+						pointer-events: none;
+						opacity: 0 !important;
+					}
+				}
+
+				&:hover {
+					.card__img {
+						border-top-right-radius: variables.$b-radius-large;
+					}
+
+					.card__hover {
+						opacity: 1; /* show on hover */
+
+						span {
+							white-space: normal; /* Reset the white-space to normal */
+							overflow: visible; /* Display overflowed text */
+						}
+
+						@include mixins.mobile {
+							opacity: 0 !important; // prevent hover effect
+							max-height: auto; // reset to original height
+							span {
+								white-space: nowrap; // reset to original white-space
+								overflow: hidden; // reset to original overflow
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.contributors-container {
+		text-align: center;
+	}
+
+	.contributor-style {
+		display: inline;
+		margin-right: 10px;
+		margin-left: 10px;
+	}
+
+	.contributor-dot {
+		display: inline;
+		width: 10px;
+		height: 10px;
+		user-select: none;
+		padding: 0 5px;
+
+		@include mixins.mobile {
+			width: 5px;
+			height: 5px;
+		}
+	}
+
+	// Add some noise in the color used
+	.contributor-dot:nth-child(11n + 1) {
+		color: variables.$color-explorer;
+	}
+	.contributor-dot:nth-child(11n + 2) {
+		color: variables.$color-ecology;
+	}
+	.contributor-dot:nth-child(11n + 3) {
+		color: variables.$color-housing;
+	}
+	.contributor-dot:nth-child(11n + 4) {
+		color: variables.$color-health;
+	}
+	.contributor-dot:nth-child(11n + 5) {
+		color: variables.$color-transport;
+	}
+	.contributor-dot:nth-child(11n + 6) {
+		color: variables.$color-climate;
+	}
+	.contributor-dot:nth-child(11n + 7) {
+		color: variables.$color-urban;
+	}
+	.contributor-dot:nth-child(11n + 8) {
+		color: variables.$color-demographics;
+	}
+	.contributor-dot:nth-child(11n + 9) {
+		color: variables.$color-economy;
+	}
+	.contributor-dot:nth-child(11n + 10) {
+		color: variables.$color-resources;
+	}
+	.contributor-dot:nth-child(11n + 11) {
+		color: variables.$color-land;
+	}
+}

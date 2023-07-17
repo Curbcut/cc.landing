@@ -1,0 +1,427 @@
+@use '../variables';
+@use '../mixins';
+
+.landing {
+	#mobile-nav {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		background-color: variables.$grey;
+		padding: 150px 23px;
+		overflow: auto;
+		z-index: 10;
+
+		@include mixins.mobile {
+			&.mobile-nav--visible {
+				display: block;
+			}
+		}
+
+		.mobile-nav-group {
+			padding-bottom: 24px;
+			margin-bottom: 24px;
+
+			ul {
+				margin-top: 20px;
+				display: flex;
+				flex-direction: column;
+				gap: 15px;
+			}
+
+			&:not(:last-of-type) {
+				border-bottom: 1px solid variables.$black;
+			}
+		}
+
+		.dot:nth-of-type(1) {
+			top: 80px;
+			left: 0;
+		}
+		.dot:nth-of-type(2) {
+			top: 108px;
+			left: 6.1vw;
+		}
+		.dot:nth-of-type(3) {
+			top: 113px;
+			left: 24vw;
+		}
+		.dot:nth-of-type(4) {
+			top: 97px;
+			left: 40vw;
+		}
+		.dot:nth-of-type(5) {
+			top: 91px;
+			left: 54vw;
+		}
+		.dot:nth-of-type(6) {
+			top: 132px;
+			left: 60vw;
+		}
+		.dot:nth-of-type(7) {
+			top: 111px;
+			left: 67vw;
+		}
+		.dot:nth-of-type(8) {
+			top: 170px;
+			left: 74vw;
+		}
+		.dot:nth-of-type(9) {
+			top: 116px;
+			left: 92vw;
+		}
+		.dot:nth-of-type(10) {
+			top: 189px;
+			left: 94vw;
+		}
+	}
+
+	#main-header {
+		max-width: min(calc(100vw - 44px * 2), 1440px);
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		display: flex;
+		width: 100%;
+		margin: 0 auto;
+		padding: 46px 0;
+		z-index: 15;
+		transition: transform variables.$t1 variables.$ease-in-out-cubic;
+
+		@include mixins.tablet {
+			max-width: min(calc(100vw - 44px), 1440px);
+		}
+
+		@include mixins.mobile {
+			max-width: none;
+			justify-content: space-between;
+			align-items: center;
+			padding: 28px 24px;
+		}
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 150vw;
+			height: 100%;
+			transform: translateX(-50vw);
+			background-color: variables.$white;
+			z-index: 0;
+			transition: opacity variables.$t1 linear;
+			opacity: 0;
+		}
+
+		.curbcut-logo {
+			display: none;
+			z-index: 1;
+
+			@include mixins.mobile {
+				display: block;
+			}
+		}
+
+		.main-nav > ul {
+			display: flex;
+			gap: 24px;
+
+			li {
+				display: flex;
+				align-items: center;
+				z-index: 1;
+
+				@include mixins.mobile {
+					&:not(.language-switcher, .menu-btn) {
+						display: none;
+					}
+				}
+
+				details {
+					position: relative;
+					display: flex;
+					flex-direction: column;
+					padding: 7px 14px;
+
+					&[open] {
+						background-color: variables.$white;
+
+						.caret {
+							transform: rotateX(180deg);
+						}
+					}
+
+					summary {
+						display: flex;
+						gap: 8px;
+					}
+
+					ul {
+						position: absolute;
+						top: 30px;
+						left: 0;
+						background-color: variables.$white;
+						z-index: 12;
+
+						li {
+							white-space: nowrap;
+							padding: 2px 0;
+							margin: 0 8px;
+
+							&:not(:last-of-type) {
+								border-bottom: 1px solid variables.$black;
+							}
+
+							a {
+								font-size: 1.4rem;
+								line-height: 3rem;
+							}
+						}
+					}
+				}
+
+				&.language-switcher {
+					padding: 7px 14px;
+
+					@include mixins.mobile {
+						padding: 0;
+
+						.cta-text--underline::after {
+							transform: scaleX(0);
+						}
+					}
+				}
+
+				&.menu-btn {
+					display: none;
+					align-items: center;
+					width: 24px;
+					height: 24px;
+					background: url('data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAxNyI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTAgMGgyNHYyLjQyOUgwek0wIDcuMjg2aDI0djIuNDI5SDB6TTAgMTQuNTcxaDI0VjE3SDB6Ii8+Cjwvc3ZnPg==')
+						no-repeat;
+					background-position: center;
+					cursor: pointer;
+
+					@include mixins.mobile {
+						display: flex;
+					}
+				}
+			}
+		}
+
+		&.header--opened {
+			.main-nav > ul li.menu-btn {
+				background-image: url('data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNCAzNCI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTI2LjMxNSA5LjM0MyA5LjM0NCAyNi4zMTRsLTEuNzE4LTEuNzE4IDE2Ljk3MS0xNi45N3oiLz4KICA8cGF0aCBmaWxsPSIjMDAwIiBkPSJtOS4zNDQgNy42MjcgMTYuOTcgMTYuOTctMS43MTcgMS43MTgtMTYuOTctMTYuOTd6Ii8+Cjwvc3ZnPg==');
+			}
+		}
+
+		&.header--hidden {
+			transform: translateY(-130px);
+		}
+
+		&.header--background:not(.header--opened)::before {
+			opacity: 1;
+		}
+
+		body.bg-background &.header--background:not(.header--opened)::before {
+			opacity: 0;
+		}
+	}
+
+	#categories-menu {
+		position: sticky;
+		top: 0;
+		min-height: 100vh;
+		width: 100%;
+		max-width: 450px;
+		background-color: variables.$white;
+		display: flex;
+		flex-direction: column;
+		transition: background-color variables.$t2 variables.$ease-in-out-airbag;
+		z-index: 20;
+
+		@include mixins.tablet {
+			display: none;
+
+			&.is-visible {
+				min-height: auto;
+				max-width: none;
+				width: calc(100% - 23px * 2);
+				max-height: 80vh;
+				display: flex;
+				position: fixed;
+				top: auto;
+				bottom: 14px;
+				overflow: auto;
+			}
+		}
+
+		.curbcut-logo {
+			padding-bottom: 20px;
+			margin: 30px auto auto;
+
+			@include mixins.tablet {
+				display: none;
+			}
+		}
+
+		.close-cta {
+			display: none;
+
+			@include mixins.tablet {
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				gap: 12px;
+				min-height: 60px;
+				height: 60px;
+				padding-right: 16px;
+				cursor: pointer;
+			}
+		}
+
+		.categories-nav {
+			display: flex;
+			flex-direction: column;
+
+			.nav-item {
+				border-top: 1.3px solid variables.$black;
+				padding: 12px 24px;
+				background-color: transparent;
+				transition: color variables.$t1 variables.$ease-in-out-airbag,
+					background-color variables.$t2 variables.$ease-in-out-airbag;
+
+				&:hover,
+				&:focus {
+					background-color: variables.$black;
+
+					&[data-category='climate'] {
+						color: variables.$color-climate;
+						svg path {
+							fill: variables.$color-climate;
+						}
+					}
+					&[data-category='demographics'] {
+						color: variables.$color-demographics;
+						svg path {
+							fill: variables.$color-demographics;
+						}
+					}
+					&[data-category='ecology'] {
+						color: variables.$color-ecology;
+						svg path {
+							fill: variables.$color-ecology;
+						}
+					}
+					&[data-category='health'] {
+						color: variables.$color-health;
+						svg path {
+							fill: variables.$color-health;
+						}
+					}
+					&[data-category='housing'] {
+						color: variables.$color-housing;
+						svg path {
+							fill: variables.$color-housing;
+						}
+					}
+					&[data-category='transport'] {
+						color: variables.$color-transport;
+						svg path {
+							fill: variables.$color-transport;
+						}
+					}
+					&[data-category='urban'] {
+						color: variables.$color-urban;
+						svg path {
+							fill: variables.$color-urban;
+						}
+					}
+					&[data-category='explorer'] {
+						color: variables.$color-explorer;
+						svg path {
+							fill: variables.$color-explorer;
+						}
+					}
+					&[data-category='economy'] {
+						color: variables.$color-economy;
+						svg path {
+							fill: variables.$color-economy;
+						}
+					}
+					&[data-category='resources'] {
+						color: variables.$color-resources;
+						svg path {
+							fill: variables.$color-resources;
+						}
+					}
+					&[data-category='land'] {
+						color: variables.$color-land;
+						svg path {
+							fill: variables.$color-land;
+						}
+					}
+				}
+
+				&__category {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					cursor: pointer;
+
+					span {
+						display: flex;
+						align-items: center;
+						gap: 14px;
+					}
+				}
+
+				ul {
+					padding: 5px 0;
+					display: flex;
+					flex-direction: column;
+					gap: 10px;
+
+					a {
+						font-size: 1.6rem;
+						line-height: 3rem;
+						text-transform: none;
+						color: inherit;
+					}
+				}
+
+				svg path {
+					transition: fill variables.$t1 variables.$ease-in-out-airbag;
+				}
+
+				&[open] {
+					.caret {
+						transform: rotateX(180deg);
+					}
+				}
+			}
+		}
+	}
+
+	#choose-map-mobile-cta {
+		display: none;
+
+		@include mixins.tablet {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			position: sticky;
+			bottom: 0;
+			margin-bottom: 30px;
+			width: 100vw;
+			height: 50px;
+			background-color: variables.$black;
+			color: variables.$white;
+			transform: translateX(-23px);
+			z-index: 8;
+		}
+	}
+}
