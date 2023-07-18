@@ -28,7 +28,8 @@ A data frame containing information about the pages. It should have the followin
 }}
 
 \item{c_city_svg}{<\code{character}>
-A character string representing the top-left corner SVG image of the city.}
+A character string representing the path to the top-left corner SVG image
+of the city. (\code{c-montreal})}
 
 \item{news_cards}{<\code{data.frame}>
 A data frame containing information about news cards. It should have the following columns:

@@ -149,7 +149,7 @@
 					&[open] {
 						background-color: variables.$white;
 
-						.caret {
+						.caret_land {
 							transform: rotateX(180deg);
 						}
 					}
@@ -398,7 +398,7 @@
 				}
 
 				&[open] {
-					.caret {
+					.caret_land {
 						transform: rotateX(180deg);
 					}
 				}

@@ -83,7 +83,7 @@ function ThemesMenu({ lenis, themes, pages, setValue }) {
 							<span className='h2'>
 								<Translate str={theme} />
 								<svg
-									className='caret'
+									className='caret_land'
 									width='24'
 									height='15'
 									viewBox='0 0 24 15'

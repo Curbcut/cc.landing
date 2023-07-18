@@ -12,7 +12,11 @@ function MainNav({ lenis, setLang }) {
 	// Get the language and the Curbcut City svg from the context
 	const contextValue = useContext(LanguageContext)
 	const lang = contextValue.lang
-	const c_city_svg = contextValue.configuration.c_city_svg
+	const configState = contextValue.configState
+	if (!configState) {
+		return null
+	}
+	const c_city_svg = configState.c_city_svg
 
 	// Set the state for the main header and mobile nav
 	const [mainHeaderOpened, setMainHeaderOpened] = useState(false)

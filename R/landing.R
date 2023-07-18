@@ -14,7 +14,8 @@
 #'     }
 #'
 #' @param c_city_svg <`character`>
-#'   A character string representing the top-left corner SVG image of the city.
+#'   A character string representing the path to the top-left corner SVG image
+#'   of the city. (`c-montreal`)
 #'
 #' @param news_cards <`data.frame`>
 #'   A data frame containing information about news cards. It should have the following columns:
@@ -74,6 +75,11 @@ landing_input <- function(inputId, pages, c_city_svg, news_cards,
                          discover_cards, team_cards, contributors,
                          collabs, translation_df) {
 
+  # Encode `svg` to base64 (top left corner image)
+  svg_content <- readLines(c_city_svg, warn = FALSE)
+  base64_content <- base64enc::base64encode(charToRaw(paste(svg_content, collapse = "\n")))
+  c_city_svg <- paste0("data:image/svg+xml;base64,", base64_content)
+
   # Encode images to base64 for the input
   base64 <- function(x) {
     # Read the JPG image as raw binary data
@@ -82,7 +88,6 @@ landing_input <- function(inputId, pages, c_city_svg, news_cards,
     # Encode the image data to base64
     paste0("data:image/jpeg;base64,", base64enc::base64encode(image_data))
   }
-
   discover_cards$img <- sapply(discover_cards$img, base64)
   team_cards$img <- sapply(team_cards$img, base64)
   collabs$img <- sapply(collabs$img, base64)

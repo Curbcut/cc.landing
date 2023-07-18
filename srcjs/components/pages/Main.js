@@ -36,8 +36,12 @@ function NewsCard({ card, lang }) {
 function Main({ lenis }) {
 	const contextValue = useContext(LanguageContext)
 	const lang = contextValue.lang
-	const discover_cards = contextValue.configuration.discover_cards
-	const news_cards = contextValue.configuration.news_cards
+	const configState = contextValue.configState
+	if (!configState) {
+		return null
+	}
+	const discover_cards = configState.discover_cards
+	const news_cards = configState.news_cards
 
 	if (discover_cards.length > 4) {
 		console.error('discover_cards should not have a length higher than 4!')

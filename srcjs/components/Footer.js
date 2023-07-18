@@ -63,7 +63,11 @@ const ThemesMobile = ({ themes, pages, setValue }) =>
 function Footer({ themes, pages, setValue }) {
 	const contextValue = useContext(LanguageContext)
 	const lang = contextValue.lang
-	const collabs = contextValue.configuration.collabs
+	const configState = contextValue.configState
+	if (!configState) {
+		return null
+	}
+	const collabs = configState.collabs
 
 	const cities = [
 		{

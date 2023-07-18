@@ -6,7 +6,11 @@ function Translate({ str }) {
 	// Use the useContext hook to get the language from the LanguageContext
 	const contextValue = useContext(LanguageContext)
 	const lang = contextValue.lang
-	const translation_df = contextValue.configuration.translation_df
+	const configState = contextValue.configState
+	if (!configState) {
+		return null
+	}
+	const translation_df = configState.translation_df
 
 	// Find the translation in the translation_df
 	const translation = translation_df.find((row) => row.en === str)

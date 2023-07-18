@@ -1,6 +1,6 @@
 import { reactShinyInput } from 'reactR'
 import './styles/style.scss'
-import { useState, createContext } from 'react'
+import { useState, createContext, useEffect, useMemo } from 'react'
 import Nav from './components/Nav'
 import ThemesMenu from './components/ThemesMenu'
 import Footer from './components/Footer'
@@ -18,34 +18,57 @@ export const LanguageContext = createContext()
 const Landing = ({ configuration, value, setValue }) => {
 	// Set language
 	const [lang, setLang] = useState('en')
+	const [configState, setConfigState] = useState(() => {
+		return Object.fromEntries(
+			Object.entries(configuration).map(([key, value]) => {
+				if (typeof value === 'string') {
+					try {
+						value = JSON.parse(value)
+					} catch (e) {}
+				}
+				return [key, value]
+			})
+		)
+	})
 
+	// This effect will listen for changes in the configuration prop
+	// and update the configState accordingly
 	// Map over configuration to modify everything to JSON
-	configuration = Object.fromEntries(
-		Object.entries(configuration).map(([key, value]) => {
-			if (typeof value === 'string') {
-				try {
-					value = JSON.parse(value)
-				} catch (e) {}
+	useEffect(() => {
+		const parsedConfiguration = Object.fromEntries(
+			Object.entries(configuration).map(([key, value]) => {
+				if (typeof value === 'string') {
+					try {
+						value = JSON.parse(value)
+					} catch (e) {}
+				}
+				return [key, value]
+			})
+		)
+
+		setConfigState((prevConfig) => ({
+			...prevConfig,
+			...parsedConfiguration,
+		}))
+	}, [configuration])
+
+	// Get all the pages from the configState
+	const pages = useMemo(() => configState.pages || [], [configState.pages])
+
+	// Get all unique the themes from the pages, only if/when the pages change
+	const themes = useMemo(() => {
+		let themes = []
+		pages.forEach((page) => {
+			if (!themes.includes(page.theme)) {
+				themes.push(page.theme)
 			}
-			return [key, value]
 		})
-	)
-
-	const pages = configuration.pages
-
-	// Get all unique the themes from the pages.json file
-	let themes = []
-	pages.forEach((page) => {
-		if (!themes.includes(page.theme)) {
-			themes.push(page.theme)
-		}
-	})
-	// Sort and place the explorer last
-	themes = themes.sort((a, b) => {
-		if (a === 'Explorer') return 1
-		if (b === 'Explorer') return -1
-		return a.localeCompare(b)
-	})
+		return themes.sort((a, b) => {
+			if (a === 'Explorer') return 1
+			if (b === 'Explorer') return -1
+			return a.localeCompare(b)
+		})
+	}, [pages])
 
 	// Smooth scroll
 	const lenis = new Lenis()
@@ -59,36 +82,51 @@ const Landing = ({ configuration, value, setValue }) => {
 	// Start the lenis scroll
 	requestAnimationFrame(raf)
 
+	// Turn on and off the whole component depending on the configuration
+	const [isVisible, setIsVisible] = useState(true)
+	useEffect(() => {
+		if (configState.turn === undefined) return
+
+		if (configState.turn === 'on') {
+			setIsVisible(true)
+		} else if (configState.turn === 'off') {
+			lenis.destroy()
+			setIsVisible(false)
+		}
+	}, [configState])
+
 	return (
 		<div className='landing'>
-			<LanguageContext.Provider value={{ lang, configuration }}>
-				<Router>
-					<Nav lenis={lenis} setLang={setLang} />
-					<div id='main-content'>
-						<ThemesMenu
-							lenis={lenis}
+			{isVisible && (
+				<LanguageContext.Provider value={{ lang, configState }}>
+					<Router>
+						<Nav lenis={lenis} setLang={setLang} />
+						<div id='main-content'>
+							<ThemesMenu
+								lenis={lenis}
+								pages={pages}
+								themes={themes}
+								setValue={setValue}
+							/>
+							<Routes>
+								<Route
+									path='/'
+									element={<Main lenis={lenis} lang={lang} />}
+								/>
+								<Route path='/about' element={<About />} />
+								<Route path='/team' element={<Team />} />
+							</Routes>
+							<ChooseMap lenis={lenis} />
+						</div>
+						<Footer
+							lang={lang}
 							pages={pages}
 							themes={themes}
 							setValue={setValue}
 						/>
-						<Routes>
-							<Route
-								path='/'
-								element={<Main lenis={lenis} lang={lang} />}
-							/>
-							<Route path='/about' element={<About />} />
-							<Route path='/team' element={<Team />} />
-						</Routes>
-						<ChooseMap lenis={lenis} />
-					</div>
-					<Footer
-						lang={lang}
-						pages={pages}
-						themes={themes}
-						setValue={setValue}
-					/>
-				</Router>
-			</LanguageContext.Provider>
+					</Router>
+				</LanguageContext.Provider>
+			)}
 		</div>
 	)
 }

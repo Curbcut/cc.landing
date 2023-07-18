@@ -29,8 +29,12 @@ function MemberCard({ card, lang }) {
 function Team() {
 	const contextValue = useContext(LanguageContext)
 	const lang = contextValue.lang
-	const team_cards = contextValue.configuration.team_cards
-	const contributors = contextValue.configuration.contributors
+	const configState = contextValue.configState
+	if (!configState) {
+		return null
+	}
+	const team_cards = configState.team_cards
+	const contributors = configState.contributors
 
 	return (
 		<main>

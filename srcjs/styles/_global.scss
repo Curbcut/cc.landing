@@ -38,31 +38,31 @@
 		-moz-osx-font-smoothing: grayscale;
 	}
 
-	html {
-		font-size: 10px;
-		overscroll-behavior: none;
-	}
+	// html {
+	// 	font-size: 10px;
+	// 	overscroll-behavior: none;
+	// }
 
-	// Lenis
-	html.lenis {
-		height: auto;
-	}
+	// // Lenis
+	// html.lenis {
+	// 	height: auto;
+	// }
 
-	.lenis.lenis-smooth {
-		scroll-behavior: auto;
-	}
+	// .lenis.lenis-smooth {
+	// 	scroll-behavior: auto;
+	// }
 
-	.lenis.lenis-smooth [data-lenis-prevent] {
-		overscroll-behavior: contain;
-	}
+	// .lenis.lenis-smooth [data-lenis-prevent] {
+	// 	overscroll-behavior: contain;
+	// }
 
-	.lenis.lenis-stopped {
-		overflow: hidden;
-	}
+	// .lenis.lenis-stopped {
+	// 	overflow: hidden;
+	// }
 
-	.lenis.lenis-scrolling iframe {
-		pointer-events: none;
-	}
+	// .lenis.lenis-scrolling iframe {
+	// 	pointer-events: none;
+	// }
 
 	a {
 		font-family: variables.$font-main;
