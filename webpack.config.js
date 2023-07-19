@@ -1,10 +1,12 @@
 var path = require('path')
 
 module.exports = {
-	entry: path.join(__dirname, 'srcjs', 'landing.jsx'),
+entry: [
+  path.join(__dirname, 'srcjs', 'main.jsx')
+],
 	output: {
-		path: path.join(__dirname, 'inst/www/cc.landing/landing'),
-		filename: 'landing.js',
+		path: path.join(__dirname, 'inst/www/cc.landing'),
+  filename: 'main.js'
 	},
 	module: {
 		rules: [

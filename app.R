@@ -76,41 +76,56 @@ collabs <- tibble::tibble(
   name = c('The McGill Sustainability Systems Initiative', 'Centraide')
 )
 
+# ui <- fluidPage(
+#
+#   tags$head(
+#     tags$style(HTML("
+#       .container-fluid {
+#         padding-left: 0;
+#         padding-right: 0;
+#       }
+#     "))
+#   ),
+#
+#   landing_input("landing",
+#                pages = pages,
+#                c_city_svg = c_city_svg,
+#                news_cards = news_cards,
+#                discover_cards = discover_cards,
+#                team_cards = team_cards,
+#                contributors = contributors,
+#                translation_df = translation_df,
+#                collabs = collabs)
+# )
+#
+# server <- function(input, output, session) {
+#
+#   click <- reactive(get_landing_click("landing"))
+#
+#   observeEvent(click(), {
+#     update_landing(session = session,
+#                    inputId = "landing",
+#                    configuration = list(
+#                      turn = 'off'
+#                    ))
+#
+#   }, ignoreNULL = TRUE)
+# }
+#
+# shinyApp(ui, server)
+
+
 ui <- fluidPage(
-
-  tags$head(
-    tags$style(HTML("
-      .container-fluid {
-        padding-left: 0;
-        padding-right: 0;
-      }
-    "))
-  ),
-
-  landing_input("landing",
-               pages = pages,
-               c_city_svg = c_city_svg,
-               news_cards = news_cards,
-               discover_cards = discover_cards,
-               team_cards = team_cards,
-               contributors = contributors,
-               translation_df = translation_df,
-               collabs = collabs)
+  theme_drop_input("theme_drop", pages = pages, theme = "Transport")
 )
 
 server <- function(input, output, session) {
 
-  click <- reactive(get_landing_click("landing"))
+  click <- reactive(get_theme_drop_click("theme_drop"))
 
   observeEvent(click(), {
-    update_landing(session = session,
-                   inputId = "landing",
-                   configuration = list(
-                     turn = 'off'
-                   ))
-
+    print(click())
   }, ignoreNULL = TRUE)
 }
 
 shinyApp(ui, server)
-

@@ -131,4 +131,6 @@ const Landing = ({ configuration, value, setValue }) => {
 	)
 }
 
-reactShinyInput('.landing', 'cc.landing.landing', Landing)
+export default function initLanding() {
+	reactShinyInput('.landing', 'cc.landing.landing', Landing)
+}

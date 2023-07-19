@@ -108,9 +108,9 @@ landing_input <- function(inputId, pages, c_city_svg, news_cards,
     htmltools::htmlDependency(
       name = "landing-input",
       version = "1.0.0",
-      src = "www/cc.landing/landing",
+      src = "www/cc.landing",
       package = "cc.landing",
-      script = "landing.js"
+      script = "main.js"
     ),
     "",
     list(pages = pages,

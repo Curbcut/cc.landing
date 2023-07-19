@@ -425,3 +425,159 @@
 		}
 	}
 }
+
+#inapp-categories-menu {
+	position: sticky;
+	top: 0;
+	min-height: 100%;
+	width: 250px;
+	max-width: 250px;
+	background-color: variables.$grey;
+	display: flex;
+	flex-direction: column;
+	transition: background-color variables.$t2 variables.$ease-in-out-airbag;
+	z-index: 20;
+	border: 1px black solid;
+	border-width: 0 1px 1px 1px;
+
+	.categories-nav {
+		display: flex;
+		flex-direction: column;
+
+		.nav-item {
+			border-top: 1px solid variables.$black;
+			padding: 3px 12px;
+			background-color: transparent;
+			transition: color variables.$t1 variables.$ease-in-out-airbag,
+				background-color variables.$t2 variables.$ease-in-out-airbag;
+
+			&:hover,
+			&:focus {
+				background-color: variables.$black;
+
+				&[data-category='climate'] {
+					color: variables.$color-climate;
+					svg path {
+						fill: variables.$color-climate;
+					}
+				}
+				&[data-category='demographics'] {
+					color: variables.$color-demographics;
+					svg path {
+						fill: variables.$color-demographics;
+					}
+				}
+				&[data-category='ecology'] {
+					color: variables.$color-ecology;
+					svg path {
+						fill: variables.$color-ecology;
+					}
+				}
+				&[data-category='health'] {
+					color: variables.$color-health;
+					svg path {
+						fill: variables.$color-health;
+					}
+				}
+				&[data-category='housing'] {
+					color: variables.$color-housing;
+					svg path {
+						fill: variables.$color-housing;
+					}
+				}
+				&[data-category='transport'] {
+					color: variables.$color-transport;
+					svg path {
+						fill: variables.$color-transport;
+					}
+				}
+				&[data-category='urban'] {
+					color: variables.$color-urban;
+					svg path {
+						fill: variables.$color-urban;
+					}
+				}
+				&[data-category='explorer'] {
+					color: variables.$color-explorer;
+					svg path {
+						fill: variables.$color-explorer;
+					}
+				}
+				&[data-category='economy'] {
+					color: variables.$color-economy;
+					svg path {
+						fill: variables.$color-economy;
+					}
+				}
+				&[data-category='resources'] {
+					color: variables.$color-resources;
+					svg path {
+						fill: variables.$color-resources;
+					}
+				}
+				&[data-category='land'] {
+					color: variables.$color-land;
+					svg path {
+						fill: variables.$color-land;
+					}
+				}
+			}
+
+			&__category {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				cursor: pointer;
+
+				span {
+					display: flex;
+					align-items: center;
+					gap: 14px;
+				}
+			}
+
+			ul {
+				padding: 5px 0;
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+
+				a {
+					font-size: 1.6rem;
+					line-height: 3rem;
+					text-transform: none;
+					color: inherit;
+				}
+
+				li {
+					font-size: 1.2rem;
+				}
+			}
+
+			svg path {
+				transition: fill variables.$t1 variables.$ease-in-out-airbag;
+			}
+
+			&[open] {
+				.caret_land {
+					transform: rotateX(180deg);
+				}
+			}
+		}
+	}
+
+	.caret_land {
+		width: 12px;
+	}
+}
+
+.menu-invisible {
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 3s ease-out;
+}
+
+.menu-visible {
+	max-height: 800px;
+	transition: max-height 3s ease-in;
+}
