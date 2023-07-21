@@ -6,7 +6,7 @@ function About() {
 			<div className='hero'>
 				<h1 className='h1 main-title'>
 					<div className='main-title__first-part'>
-						<Translate str={'ABOUT&nbsp; Curbcut'} />
+						<Translate str={'About&nbsp; Curbcut'} />
 					</div>
 				</h1>
 

@@ -1,6 +1,7 @@
 import { reactShinyInput } from 'reactR'
 import React, { useState, useEffect, useRef } from 'react'
 import SvgIcon from './components/SvgIcon'
+import decodeHtml from './utils/htmlUtils'
 
 const themeColors = {
 	explorer: '#a3b0d1',
@@ -72,13 +73,6 @@ function TitleTextBox({ configuration, value, setValue }) {
 			document.removeEventListener('mousedown', handleClickOutside)
 		}
 	}, [])
-
-	// Function to decode html entities (configuration is encoded)
-	function decodeHtml(html) {
-		var txt = document.createElement('textarea')
-		txt.innerHTML = html
-		return txt.value
-	}
 
 	return (
 		boxVisible && (

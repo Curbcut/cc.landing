@@ -6,10 +6,12 @@ import ThemesMenu from './components/ThemesMenu'
 import Footer from './components/Footer'
 import ChooseMap from './components/ChooseMap'
 import Lenis from '@studio-freight/lenis'
-import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
+import { Routes, Route, MemoryRouter as Router } from 'react-router-dom'
 import Main from './components/pages/Main'
 import About from './components/pages/About'
 import Team from './components/pages/Team'
+import decodeHtml from './utils/htmlUtils'
+import { translation_df } from './data/translation.js'
 
 // Create a Language context to be used with the useContext hook. This will allow us to pass the language
 // to any component without having to pass it through props.
@@ -18,33 +20,49 @@ export const LanguageContext = createContext()
 const Landing = ({ configuration, value, setValue }) => {
 	// Set language
 	const [lang, setLang] = useState('en')
+
+	console.log(translation_df)
+
+	// Set configState
 	const [configState, setConfigState] = useState(() => {
-		return Object.fromEntries(
+		let state = Object.fromEntries(
 			Object.entries(configuration).map(([key, value]) => {
 				if (typeof value === 'string') {
 					try {
-						value = JSON.parse(value)
+						value = JSON.parse(decodeHtml(value))
 					} catch (e) {}
 				}
 				return [key, value]
 			})
 		)
+		// if translation_df is available in the configuration, concatenate it with translation_df from translation.js
+		if (state.translation_df) {
+			state.translation_df = state.translation_df.concat(translation_df)
+			console.log(state.translation_df)
+		}
+		return state
 	})
 
 	// This effect will listen for changes in the configuration prop
 	// and update the configState accordingly
 	// Map over configuration to modify everything to JSON
 	useEffect(() => {
-		const parsedConfiguration = Object.fromEntries(
+		let parsedConfiguration = Object.fromEntries(
 			Object.entries(configuration).map(([key, value]) => {
 				if (typeof value === 'string') {
 					try {
-						value = JSON.parse(value)
+						value = JSON.parse(decodeHtml(value))
 					} catch (e) {}
 				}
 				return [key, value]
 			})
 		)
+		// if translation_df is available in the configuration, concatenate it with translation_df from translation.js
+		if (parsedConfiguration.translation_df) {
+			parsedConfiguration.translation_df =
+				parsedConfiguration.translation_df.concat(translation_df)
+			console.log(parsedConfiguration.translation_df)
+		}
 
 		setConfigState((prevConfig) => ({
 			...prevConfig,

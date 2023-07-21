@@ -1,6 +1,7 @@
 import Translate from './Translate'
 import { useContext } from 'react'
 import { LanguageContext } from '../landing'
+import { Link } from 'react-router-dom'
 
 const ThemesDesktop = ({ themes, pages, setValue }) =>
 	themes.map((theme, i) => {
@@ -136,15 +137,15 @@ function Footer({ themes, pages, setValue }) {
 									<span className='plus-sign'></span>
 								</summary>
 								<div>
-									<a href='/about'>
+									<Link to='/about'>
 										<Translate str='About Curbcut' />
-									</a>
-									<a href='/team'>
+									</Link>
+									<Link to='/team'>
 										<Translate str='The Team' />
-									</a>
-									<a href='mailto:contact@curbcut.ca'>
+									</Link>
+									<Link to='mailto:contact@curbcut.ca'>
 										<Translate str='Contact Us' />
-									</a>
+									</Link>
 								</div>
 							</details>
 						</div>
@@ -152,15 +153,15 @@ function Footer({ themes, pages, setValue }) {
 							<div className='column__title'>
 								<Translate str='About' />
 							</div>
-							<a href='/about'>
+							<Link to='/about'>
 								<Translate str='About Curbcut' />
-							</a>
-							<a href='/team'>
+							</Link>
+							<Link to='/team'>
 								<Translate str='The Team' />
-							</a>
-							<a href='mailto:contact@curbcut.ca'>
+							</Link>
+							<Link to='mailto:contact@curbcut.ca'>
 								<Translate str='Contact Us' />
-							</a>
+							</Link>
 						</div>
 
 						<div className='column'>

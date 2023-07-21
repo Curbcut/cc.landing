@@ -6,6 +6,7 @@ import 'swiper/css'
 import SvgIcon from '../SvgIcon'
 import { useContext } from 'react'
 import { LanguageContext } from '../../landing'
+import { Link } from 'react-router-dom'
 
 // Component for each discover cards
 function DiscoverCard({ card, lang }) {
@@ -149,12 +150,12 @@ function Main({ lenis }) {
 							<Translate str='Curbcut is a platform for deep, dynamic, and intuitive exploration of urban sustainability.' />
 						</div>
 
-						<a
-							href='/about'
+						<Link
+							to='/about'
 							className='cta-text cta-text--underline'
 						>
 							<Translate str='More about Curbcut' />
-						</a>
+						</Link>
 					</div>
 				</section>
 

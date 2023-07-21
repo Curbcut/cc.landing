@@ -11812,6 +11812,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _landing__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../landing */ "./srcjs/landing.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+
 
 
 
@@ -11957,16 +11959,16 @@ function Footer(_ref3) {
     str: "About"
   })), /*#__PURE__*/React.createElement("span", {
     className: "plus-sign"
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("a", {
-    href: "/about"
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+    to: "/about"
   }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "About Curbcut"
-  })), /*#__PURE__*/React.createElement("a", {
-    href: "/team"
+  })), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+    to: "/team"
   }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "The Team"
-  })), /*#__PURE__*/React.createElement("a", {
-    href: "mailto:contact@curbcut.ca"
+  })), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+    to: "mailto:contact@curbcut.ca"
   }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "Contact Us"
   }))))), /*#__PURE__*/React.createElement("div", {
@@ -11975,16 +11977,16 @@ function Footer(_ref3) {
     className: "column__title"
   }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "About"
-  })), /*#__PURE__*/React.createElement("a", {
-    href: "/about"
+  })), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+    to: "/about"
   }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "About Curbcut"
-  })), /*#__PURE__*/React.createElement("a", {
-    href: "/team"
+  })), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+    to: "/team"
   }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "The Team"
-  })), /*#__PURE__*/React.createElement("a", {
-    href: "mailto:contact@curbcut.ca"
+  })), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+    to: "mailto:contact@curbcut.ca"
   }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "Contact Us"
   }))), /*#__PURE__*/React.createElement("div", {
@@ -12208,8 +12210,6 @@ function Nav(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("span", {
     onClick: function onClick() {
       var newLang = lang === 'fr' ? 'en' : 'fr';
-      console.log('onClick event triggered');
-      console.log('New Lang: ', newLang);
       setLang(newLang);
       setValue({
         event: 'lang_change',
@@ -12572,7 +12572,7 @@ function About() {
   }, /*#__PURE__*/React.createElement("div", {
     className: "main-title__first-part"
   }, /*#__PURE__*/React.createElement(_Translate_js__WEBPACK_IMPORTED_MODULE_0__["default"], {
-    str: 'ABOUT&nbsp; Curbcut'
+    str: 'About&nbsp; Curbcut'
   }))), _toConsumableArray(Array(5)).map(function (e, i) {
     return /*#__PURE__*/React.createElement("span", {
       key: i,
@@ -12635,6 +12635,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var swiper_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! swiper/css */ "./node_modules/swiper/swiper.css");
 /* harmony import */ var _SvgIcon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../SvgIcon */ "./srcjs/components/SvgIcon.js");
 /* harmony import */ var _landing__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../landing */ "./srcjs/landing.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
@@ -12645,6 +12646,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -12806,8 +12808,8 @@ function Main(_ref3) {
     className: "h3"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Translate_js__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "Curbcut is a platform for deep, dynamic, and intuitive exploration of urban sustainability."
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("a", {
-    href: "/about",
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
+    to: "/about",
     className: "cta-text cta-text--underline"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Translate_js__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "More about Curbcut"
@@ -12999,6 +13001,123 @@ function Team() {
 
 /***/ }),
 
+/***/ "./srcjs/data/translation.js":
+/*!***********************************!*\
+  !*** ./srcjs/data/translation.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   translation_df: () => (/* binding */ translation_df)
+/* harmony export */ });
+var translation_df = [{
+  en: 'About',
+  fr: 'À propos'
+}, {
+  en: 'About Curbcut',
+  fr: 'À propos de Curbcut'
+}, {
+  en: 'The Team',
+  fr: "L'équipe"
+}, {
+  en: 'Contact Us',
+  fr: 'Contact'
+}, {
+  en: 'FR',
+  fr: 'EN'
+}, {
+  en: 'CLOSE',
+  fr: 'FERMER'
+}, {
+  en: 'EXPLORE<br />URBAN',
+  fr: 'EXPLORER LA'
+}, {
+  en: 'SUSTAIN&shy;ABILITY',
+  fr: 'DURABILITÉ'
+}, {
+  en: 'About us',
+  fr: 'À propos'
+}, {
+  en: 'Curbcut is a platform for deep, dynamic, and intuitive exploration of urban sustainability.',
+  fr: "Curbcut est une plateforme d'exploration approfondie, dynamique et intuitive de la durabilité urbaine."
+}, {
+  en: 'More about Curbcut',
+  fr: 'Plus sur Curbcut'
+}, {
+  en: 'Discover',
+  fr: 'Découvrez'
+}, {
+  en: 'View all',
+  fr: 'Afficher tout'
+}, {
+  en: 'Latest news',
+  fr: 'Dernières nouvelles'
+}, {
+  en: 'Read more',
+  fr: 'En lire plus'
+}, {
+  en: 'Browse themes',
+  fr: 'Parcourez les thèmes'
+}, {
+  en: 'Newsletter',
+  fr: 'Infolettre'
+}, {
+  en: 'Keep in touch!',
+  fr: 'Gardons contact!'
+}, {
+  en: 'GET UPDATES',
+  fr: "S'INSCRIRE"
+}, {
+  en: 'Our collaborators',
+  fr: 'Nos partenaires'
+}, {
+  en: 'Curbcut cities',
+  fr: 'Villes Curbcut'
+}, {
+  en: 'by LEEROY. All rights reserved.',
+  fr: 'by LEEROY. Tous droits réservés.'
+}, {
+  en: 'Our mission',
+  fr: 'Notre mission'
+}, {
+  en: 'Data availability, transparency and usability',
+  fr: 'Disponibilité, transparence et accessibilité des données'
+}, {
+  en: 'About our name',
+  fr: 'À propos de notre nom'
+}, {
+  en: 'Curbcut’s mission is to generate and mobilize the knowledge needed to make cities more socially inclusive and less impactful on the environment, while improving the well-being of residents.',
+  fr: "La mission de Curbcut est de générer et de mobiliser les connaissances nécessaires pour rendre les villes plus inclusives socialement et moins impactantes sur l'environnement, tout en améliorant le bien-être des habitants."
+}, {
+  en: 'Curbcut is a platform for exploring urban sustainability across multiple spatial and temporal scales. It offers a justice- and inclusivity-focused approach to urban issues which integrates the widest possible range of information to help inform interested citizens, communities, researchers and policymakers.',
+  fr: "Curbcut est une plateforme permettant d'explorer la durabilité urbaine à de multiples échelles spatiales et temporelles. Elle propose une approche des questions urbaines axée sur la justice et l'inclusion, qui intègre le plus large éventail possible d'informations pour aider à informer les citoyens intéressés, les collectivités, les chercheurs et les décideurs politiques."
+}, {
+  en: 'At Curbcut, we acknowledge that data can be incomplete, fragmented and biased. Whether it be missing values or sampling strategies, data never provides the entirety of the picture. Data is usually collected over short periods of time or at given time intervals (such as the Canadian census), making it impossible to capture information on a continual basis. This can cause groups of people to be over or underrepresented. Curbcut recognizes the importance of questioning data, methods and analyses to not perpetuate inequalities or omissions.',
+  fr: "Chez Curbcut, nous reconnaissons que les données peuvent être incomplètes, fragmentées et biaisées. Qu'il s'agisse de valeurs manquantes ou de stratégies d'échantillonnage, les données ne donnent jamais une image complète de la situation. Les données sont généralement collectées sur de courtes périodes ou à des intervalles de temps donnés (comme le recensement canadien), ce qui rend impossible la collecte d'informations sur une base continue. Cela peut entraîner une surreprésentation ou une sous-représentation de certains groupes de personnes. Curbcut reconnaît l'importance de remettre en question les données, les méthodes et les analyses afin de ne pas perpétuer les inégalités ou les omissions."
+}, {
+  en: 'A curb cut is the small slope connecting the sidewalk to the road, making it easier for people to move through the city - especially those with wheelchairs or strollers. We’re inspired by this simple design feature that exists in our everyday environment which evokes the importance we place on promoting inclusive mobility planning, accessible urban design, and quality of life.',
+  fr: "Un 'Curb cut' est la petite pente qui relie le trottoir à la route, facilitant ainsi la circulation des personnes dans la ville, en particulier celles qui se déplacent en fauteuil roulant ou avec une poussette. Nous sommes inspirés par cet élément de conception simple qui existe dans notre environnement quotidien et qui évoque l'importance que nous accordons à la promotion de la planification de la mobilité inclusive, de l'aménagement urbain accessible et de la qualité de vie."
+}, {
+  en: 'Choose your map',
+  fr: 'Choisissez votre carte'
+}, {
+  en: 'About&nbsp; Curbcut',
+  fr: 'À propos de&nbsp; Curbcut'
+}, {
+  en: 'CURBCUT&nbsp; TEAM',
+  fr: "L'ÉQUIPE&nbsp; CURBCUT"
+}, {
+  en: 'Main team',
+  fr: 'Équipe principale'
+}, {
+  en: 'Contributors',
+  fr: 'Contributeurs'
+}];
+
+/***/ }),
+
 /***/ "./srcjs/landing.jsx":
 /*!***************************!*\
   !*** ./srcjs/landing.jsx ***!
@@ -13020,12 +13139,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ThemesMenu__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/ThemesMenu */ "./srcjs/components/ThemesMenu.js");
 /* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Footer */ "./srcjs/components/Footer.js");
 /* harmony import */ var _components_ChooseMap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/ChooseMap */ "./srcjs/components/ChooseMap.js");
-/* harmony import */ var _studio_freight_lenis__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @studio-freight/lenis */ "./node_modules/@studio-freight/lenis/dist/lenis.modern.mjs");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _studio_freight_lenis__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @studio-freight/lenis */ "./node_modules/@studio-freight/lenis/dist/lenis.modern.mjs");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _components_pages_Main__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/pages/Main */ "./srcjs/components/pages/Main.js");
 /* harmony import */ var _components_pages_About__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/pages/About */ "./srcjs/components/pages/About.js");
 /* harmony import */ var _components_pages_Team__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/pages/Team */ "./srcjs/components/pages/Team.js");
+/* harmony import */ var _utils_htmlUtils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utils/htmlUtils */ "./srcjs/utils/htmlUtils.js");
+/* harmony import */ var _data_translation_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./data/translation.js */ "./srcjs/data/translation.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -13051,6 +13171,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
 // Create a Language context to be used with the useContext hook. This will allow us to pass the language
 // to any component without having to pass it through props.
 var LanguageContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_2__.createContext)();
@@ -13063,18 +13185,27 @@ var Landing = function Landing(_ref) {
     _useState2 = _slicedToArray(_useState, 2),
     lang = _useState2[0],
     setLang = _useState2[1];
+  console.log(_data_translation_js__WEBPACK_IMPORTED_MODULE_11__.translation_df);
+
+  // Set configState
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(function () {
-      return Object.fromEntries(Object.entries(configuration).map(function (_ref2) {
+      var state = Object.fromEntries(Object.entries(configuration).map(function (_ref2) {
         var _ref3 = _slicedToArray(_ref2, 2),
           key = _ref3[0],
           value = _ref3[1];
         if (typeof value === 'string') {
           try {
-            value = JSON.parse(value);
+            value = JSON.parse((0,_utils_htmlUtils__WEBPACK_IMPORTED_MODULE_10__["default"])(value));
           } catch (e) {}
         }
         return [key, value];
       }));
+      // if translation_df is available in the configuration, concatenate it with translation_df from translation.js
+      if (state.translation_df) {
+        state.translation_df = state.translation_df.concat(_data_translation_js__WEBPACK_IMPORTED_MODULE_11__.translation_df);
+        console.log(state.translation_df);
+      }
+      return state;
     }),
     _useState4 = _slicedToArray(_useState3, 2),
     configState = _useState4[0],
@@ -13090,11 +13221,16 @@ var Landing = function Landing(_ref) {
         value = _ref5[1];
       if (typeof value === 'string') {
         try {
-          value = JSON.parse(value);
+          value = JSON.parse((0,_utils_htmlUtils__WEBPACK_IMPORTED_MODULE_10__["default"])(value));
         } catch (e) {}
       }
       return [key, value];
     }));
+    // if translation_df is available in the configuration, concatenate it with translation_df from translation.js
+    if (parsedConfiguration.translation_df) {
+      parsedConfiguration.translation_df = parsedConfiguration.translation_df.concat(_data_translation_js__WEBPACK_IMPORTED_MODULE_11__.translation_df);
+      console.log(parsedConfiguration.translation_df);
+    }
     setConfigState(function (prevConfig) {
       return _objectSpread(_objectSpread({}, prevConfig), parsedConfiguration);
     });
@@ -13121,7 +13257,7 @@ var Landing = function Landing(_ref) {
   }, [pages]);
 
   // Smooth scroll
-  var lenis = new _studio_freight_lenis__WEBPACK_IMPORTED_MODULE_10__["default"]();
+  var lenis = new _studio_freight_lenis__WEBPACK_IMPORTED_MODULE_12__["default"]();
 
   // Setup the lenis scroll
   function raf(time) {
@@ -13159,7 +13295,7 @@ var Landing = function Landing(_ref) {
       lang: lang,
       configState: configState
     }
-  }, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.BrowserRouter, null, /*#__PURE__*/React.createElement(_components_Nav__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.MemoryRouter, null, /*#__PURE__*/React.createElement(_components_Nav__WEBPACK_IMPORTED_MODULE_3__["default"], {
     lenis: lenis,
     setLang: setLang,
     setValue: setValue
@@ -13170,16 +13306,16 @@ var Landing = function Landing(_ref) {
     pages: pages,
     themes: themes,
     setValue: setValue
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
     path: "/",
     element: /*#__PURE__*/React.createElement(_components_pages_Main__WEBPACK_IMPORTED_MODULE_7__["default"], {
       lenis: lenis,
       lang: lang
     })
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
     path: "/about",
     element: /*#__PURE__*/React.createElement(_components_pages_About__WEBPACK_IMPORTED_MODULE_8__["default"], null)
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
     path: "/team",
     element: /*#__PURE__*/React.createElement(_components_pages_Team__WEBPACK_IMPORTED_MODULE_9__["default"], null)
   })), /*#__PURE__*/React.createElement(_components_ChooseMap__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -13490,6 +13626,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _components_SvgIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/SvgIcon */ "./srcjs/components/SvgIcon.js");
+/* harmony import */ var _utils_htmlUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/htmlUtils */ "./srcjs/utils/htmlUtils.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -13502,6 +13639,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -13585,13 +13723,6 @@ function TitleTextBox(_ref) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
-  // Function to decode html entities (configuration is encoded)
-  function decodeHtml(html) {
-    var txt = document.createElement('textarea');
-    txt.innerHTML = html;
-    return txt.value;
-  }
   return boxVisible && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "title-text-box landing",
     style: {
@@ -13608,7 +13739,7 @@ function TitleTextBox(_ref) {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h3", {
     className: "title-text-box__title",
     dangerouslySetInnerHTML: {
-      __html: decodeHtml(configState.title_text_title)
+      __html: (0,_utils_htmlUtils__WEBPACK_IMPORTED_MODULE_3__["default"])(configState.title_text_title)
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "title-text-box__close",
@@ -13620,12 +13751,12 @@ function TitleTextBox(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "title-text-box__main",
     dangerouslySetInnerHTML: {
-      __html: decodeHtml(configState.title_text_main)
+      __html: (0,_utils_htmlUtils__WEBPACK_IMPORTED_MODULE_3__["default"])(configState.title_text_main)
     }
   }), isExtraVisible && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "title-text-box__extra",
     dangerouslySetInnerHTML: {
-      __html: decodeHtml(configState.title_text_extra)
+      __html: (0,_utils_htmlUtils__WEBPACK_IMPORTED_MODULE_3__["default"])(configState.title_text_extra)
     }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "button-container"
@@ -13638,6 +13769,26 @@ function TitleTextBox(_ref) {
 function initTitleTextBox() {
   (0,reactR__WEBPACK_IMPORTED_MODULE_0__.reactShinyInput)('.title_box', 'cc.landing.title_box', TitleTextBox);
 }
+
+/***/ }),
+
+/***/ "./srcjs/utils/htmlUtils.js":
+/*!**********************************!*\
+  !*** ./srcjs/utils/htmlUtils.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function decodeHtml(html) {
+  var txt = document.createElement('textarea');
+  txt.innerHTML = html;
+  return txt.value;
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (decodeHtml);
 
 /***/ }),
 
