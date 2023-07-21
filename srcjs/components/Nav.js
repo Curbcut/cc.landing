@@ -3,7 +3,7 @@ import { LanguageContext } from '../landing'
 import React, { useState, useContext, useEffect, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 
-function MainNav({ lenis, setLang }) {
+function Nav({ lenis, setLang, setValue }) {
 	const navigate = useNavigate()
 	// Set the main header and mobile nav refs to update their classes dynamically
 	const mainHeaderRef = useRef(null)
@@ -130,9 +130,12 @@ function MainNav({ lenis, setLang }) {
 						<li className='language-switcher'>
 							<span
 								onClick={() => {
-									lang === 'fr'
-										? setLang('en')
-										: setLang('fr')
+									const newLang = lang === 'fr' ? 'en' : 'fr'
+									setLang(newLang)
+									setValue({
+										event: 'lang_change',
+										lang: newLang,
+									})
 								}}
 								className='cta-text cta-text--underline'
 							>
@@ -178,4 +181,4 @@ function MainNav({ lenis, setLang }) {
 	)
 }
 
-export default MainNav
+export default Nav

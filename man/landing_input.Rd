@@ -13,7 +13,8 @@ landing_input(
   team_cards,
   contributors,
   collabs,
-  translation_df
+  translation_df,
+  lang = "en"
 )
 }
 \arguments{
@@ -76,12 +77,7 @@ A data frame containing information about collaborators. It should have the foll
 \item \code{name}: Name of the collaborator. (\verb{McGill Sustainability Systems Initiative})
 }}
 
-\item{translation_df}{<\code{data.frame}>
-A data frame containing translation pairs. It should have the following columns:
-\itemize{
-\item \code{en}: Text content in English. (\code{Housing}, ...)
-\item \code{fr}: Text content in French. (\code{Logement}, ...)
-}}
+\item{translation_df}{<\code{character}> Default language, 'en' or 'fr'.}
 }
 \value{
 A ReactShiny input object.

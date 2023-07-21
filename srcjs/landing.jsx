@@ -1,6 +1,6 @@
 import { reactShinyInput } from 'reactR'
 import './styles/style.scss'
-import { useState, createContext, useEffect, useMemo } from 'react'
+import { useState, createContext, useEffect, useMemo, useRef } from 'react'
 import Nav from './components/Nav'
 import ThemesMenu from './components/ThemesMenu'
 import Footer from './components/Footer'
@@ -95,12 +95,23 @@ const Landing = ({ configuration, value, setValue }) => {
 		}
 	}, [configState])
 
+	// Set the language
+	useEffect(() => {
+		if (configState.lang === undefined) return
+
+		setLang(configState.lang)
+	}, [configState])
+
 	return (
 		<div className='landing'>
 			{isVisible && (
 				<LanguageContext.Provider value={{ lang, configState }}>
 					<Router>
-						<Nav lenis={lenis} setLang={setLang} />
+						<Nav
+							lenis={lenis}
+							setLang={setLang}
+							setValue={setValue}
+						/>
 						<div id='main-content'>
 							<ThemesMenu
 								lenis={lenis}

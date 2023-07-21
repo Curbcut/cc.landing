@@ -76,56 +76,117 @@ collabs <- tibble::tibble(
   name = c('The McGill Sustainability Systems Initiative', 'Centraide')
 )
 
+ui <- fluidPage(
+
+  tags$head(
+    tags$style(HTML("
+      .container-fluid {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    "))
+  ),
+
+  landing_input("landing",
+               pages = pages,
+               c_city_svg = c_city_svg,
+               news_cards = news_cards,
+               discover_cards = discover_cards,
+               team_cards = team_cards,
+               contributors = contributors,
+               translation_df = translation_df,
+               collabs = collabs),
+
+  actionButton("lang", "lang", style = "position:absolute;z-index:99999;top:0px")
+)
+
+server <- function(input, output, session) {
+
+  click <- reactive(get_landing_click("landing"))
+
+  observeEvent(click(), {
+    update_landing(session = session,
+                   inputId = "landing",
+                   configuration = list(
+                     turn = 'off'
+                   ))
+
+  }, ignoreNULL = TRUE)
+
+  lang_click <- reactive(get_lang_click("landing"))
+
+  observeEvent(lang_click(), {
+    print(lang_click())
+  }, ignoreNULL = TRUE, ignoreInit = TRUE)
+
+  # observe(print(input$landing))
+
+  observeEvent(input$lang, {
+    update_landing(session = session,
+                   inputId = "landing",
+                   configuration = list(
+                     lang = if (input$lang %% 2 == 0) "en" else "fr"
+                   ))
+  })
+
+}
+
+shinyApp(ui, server)
+
+
 # ui <- fluidPage(
-#
-#   tags$head(
-#     tags$style(HTML("
-#       .container-fluid {
-#         padding-left: 0;
-#         padding-right: 0;
-#       }
-#     "))
-#   ),
-#
-#   landing_input("landing",
-#                pages = pages,
-#                c_city_svg = c_city_svg,
-#                news_cards = news_cards,
-#                discover_cards = discover_cards,
-#                team_cards = team_cards,
-#                contributors = contributors,
-#                translation_df = translation_df,
-#                collabs = collabs)
+#   theme_drop_input("theme_drop", pages = pages, theme = "Transport")
 # )
 #
 # server <- function(input, output, session) {
 #
-#   click <- reactive(get_landing_click("landing"))
+#   click <- reactive(get_theme_drop_click("theme_drop"))
 #
 #   observeEvent(click(), {
-#     update_landing(session = session,
-#                    inputId = "landing",
-#                    configuration = list(
-#                      turn = 'off'
-#                    ))
-#
+#     print(click())
 #   }, ignoreNULL = TRUE)
 # }
 #
 # shinyApp(ui, server)
 
 
-ui <- fluidPage(
-  theme_drop_input("theme_drop", pages = pages, theme = "Transport")
-)
-
-server <- function(input, output, session) {
-
-  click <- reactive(get_theme_drop_click("theme_drop"))
-
-  observeEvent(click(), {
-    print(click())
-  }, ignoreNULL = TRUE)
-}
-
-shinyApp(ui, server)
+# ui <- fluidPage(
+#   shiny::actionButton("show", label = "SHOW"),
+#   shiny::actionButton("hide", label = "HIDE"),
+#   shiny::actionButton("en", label = "EN"),
+#   shiny::actionButton("fr", label = "FR"),
+#   title_box_input("title_box", theme = "Housing",
+#                   title_text_title = "The housing system",
+#                   title_text_main = '<p>Housing is at the centre of our lives. Our ability to find affordable, adequate, and healthy accommodations profoundly affects our life chances.',
+#                   title_text_extra = "<p>The datasets visualized on this page come from the Canadian Census from 1996 to the present. There are a few efforts in place to better the housing landscape from the federal and municipal governments. In Canada, the National Housing Strategy aims to address housing needs and houselessness through modernization, new construction, and innovation and research. Within the City of Montreal, important housing initiatives include the Diverse Metropolis by-law and the 12,000-housing unit strategy. For more information on these initiatives visit:<ul><li><a href='https://www.cmhc-schl.gc.ca/en/nhs/' target='_blank'>CMHC. (n.d.). National Housing Strategy</a></li><li><a href='https://montreal.ca/articles/metropole-mixte-les-grandes-lignes-du-reglement-7816' target='_blank'>Ville de Montréal. (4 octobre 2021). Métropole Mixte: Les grandes lignes du règlement.</a></li></ul></p>", lang = 'fr', minWidth = '300px',
+#                   maxWidth = '400px', show = 'false')
+# )
+#
+# server <- function(input, output, session) {
+#
+#   observeEvent(input$show, {
+#
+#     update_title_box(session = session, inputId = "title_box",
+#                      configuration = list(show = 'true'))
+#   })
+#
+#   observeEvent(input$hide, {
+#     update_title_box(session = session, inputId = "title_box",
+#                      configuration = list(show = 'false'))
+#   })
+#
+#   observeEvent(input$en, {
+#     update_title_box(session = session, inputId = "title_box",
+#                      configuration = list(title_text_title = 'The housing system',
+#                                           lang = 'en'))
+#   })
+#
+#   observeEvent(input$fr, {
+#     update_title_box(session = session, inputId = "title_box",
+#                      configuration = list(title_text_title = 'Système de logement',
+#                                           lang = 'fr'))
+#   })
+#
+# }
+#
+# shinyApp(ui, server)

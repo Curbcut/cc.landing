@@ -46,3 +46,27 @@ get_landing_click <- function(inputId, session = shiny::getDefaultReactiveDomain
 
   return(out$page)
 }
+
+#' Retrieve lang click from Landing input
+#'
+#' This function retrieves lang click information using `get_landing_event`.
+#'
+#' @param inputId A `character` string that identifies the landing id object in
+#'   the Shiny application.
+#' @param session The Shiny `session` object. By default, it uses the current
+#'   reactive domain.
+#' @return Returns the ID of the page clicked if it exists. If it does not
+#'   exist, it returns NULL.
+#' @export
+get_lang_click <- function(inputId, session = shiny::getDefaultReactiveDomain()) {
+  out <- get_landing_event(
+    inputId = inputId, event_type = "lang_change",
+    values = "lang", session = session
+  )
+
+  if (length(out) == 0) {
+    return(NULL)
+  }
+
+  return(out$lang)
+}

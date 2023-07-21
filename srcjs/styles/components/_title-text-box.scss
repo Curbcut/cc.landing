@@ -1,0 +1,45 @@
+.title-text-box {
+	border-radius: 15px;
+	border: 1px solid #000000;
+	position: relative;
+	transition: width 0.3s ease;
+	padding: 15px;
+	max-height: 100%;
+	box-sizing: border-box;
+
+	&__top {
+		display: flex;
+		align-items: center;
+		color: white;
+		padding-bottom: 10px;
+
+		h3 {
+			margin-left: 10px;
+		}
+	}
+
+	&__close {
+		position: absolute;
+		top: 0;
+		right: 0;
+		padding: 10px;
+		cursor: pointer;
+	}
+
+	.content {
+		overflow-y: auto;
+		overflow-x: 'hidden';
+		padding: 1px 0px 1px 0px;
+	}
+
+	.button-container {
+		text-align: right;
+
+		button {
+			text-decoration: underline;
+			cursor: pointer;
+			color: white;
+			padding-top: 10px;
+		}
+	}
+}

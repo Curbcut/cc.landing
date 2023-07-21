@@ -2,14 +2,29 @@
 % Please edit documentation in R/theme_drop.R
 \name{theme_drop_input}
 \alias{theme_drop_input}
-\title{\if{html}{\out{
-<Add Title>
-}}}
+\title{Generate a theme dropdown input for a Curbcut app}
 \usage{
 theme_drop_input(inputId, pages, width = "250px", theme)
 }
-\description{
-\if{html}{\out{
-<Add Description>
+\arguments{
+\item{inputId}{<\code{character}> The ID of the input element.}
+
+\item{pages}{<\code{data.frame}>
+A data frame containing information about the pages. It should have the following columns:
+\itemize{
+\item \code{id}: Unique identifier for each page. (\code{alp})
+\item \code{theme}: Theme of the page (\code{Health})
+\item \code{nav_title}: Navigation title of the page. (\verb{Active living potential})
 }}
+
+\item{width}{<\code{character}> width in pixel of the widget.}
+
+\item{theme}{<\code{character}> Current theme of the page in which this input will live.}
+}
+\value{
+A ReactShiny input object.
+}
+\description{
+The \code{theme_drop_input} function generates a 'ReactShiny' input object for a
+Curbcut app. It's used to switch active page.
 }

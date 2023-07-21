@@ -69,11 +69,13 @@
 #'       \item \code{fr}: Text content in French. (`Logement`, ...)
 #'     }
 #'
+#' @param translation_df <`character`> Default language, 'en' or 'fr'.
+#'
 #' @return A ReactShiny input object.
 #' @export
 landing_input <- function(inputId, pages, c_city_svg, news_cards,
                          discover_cards, team_cards, contributors,
-                         collabs, translation_df) {
+                         collabs, translation_df, lang = "en") {
 
   # Encode `svg` to base64 (top left corner image)
   svg_content <- readLines(c_city_svg, warn = FALSE)
@@ -120,7 +122,8 @@ landing_input <- function(inputId, pages, c_city_svg, news_cards,
          team_cards = team_cards,
          contributors = contributors,
          collabs = collabs,
-         translation_df = translation_df),
+         translation_df = translation_df,
+         lang = lang),
     htmltools::tags$div
   )
 }

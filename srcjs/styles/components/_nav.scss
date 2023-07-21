@@ -432,13 +432,14 @@
 	min-height: 100%;
 	width: 250px;
 	max-width: 250px;
-	background-color: variables.$grey;
+	background-color: variables.$white;
 	display: flex;
 	flex-direction: column;
 	transition: background-color variables.$t2 variables.$ease-in-out-airbag;
 	z-index: 20;
 	border: 1px black solid;
 	border-width: 0 1px 1px 1px;
+	box-shadow: 5px 5px 6px variables.$grey, -5px 5px 6px variables.$grey;
 
 	.categories-nav {
 		display: flex;
