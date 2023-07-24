@@ -93,7 +93,12 @@ function ThemeDropdown({ configuration, value, setValue }) {
 						<li
 							key={j}
 							onClick={() =>
-								setValue({ event: 'page_link', page: page.id })
+								setValue({
+									event: 'page_link',
+									page: page.id,
+									// timestamp to trigger a reactive update
+									timestamp: Date.now(),
+								})
 							}
 							className='cta-text-lower'
 						>
@@ -172,6 +177,9 @@ function ThemeDropdown({ configuration, value, setValue }) {
 		}
 	}, [categoriesMenuRef, buttonRef])
 
+	// Control the home SVG color
+	const [homeHovered, setHomeHovered] = useState(false)
+
 	return (
 		<div className='landing' style={{ backgroundColor: 'transparent' }}>
 			{/* Styled button */}
@@ -180,8 +188,11 @@ function ThemeDropdown({ configuration, value, setValue }) {
 				style={{
 					width: configuration.width,
 					height: '35px',
-					borderRadius: '15px',
-					border: '1px solid #282828',
+					borderRadius: menuVisible ? '15px 15px 0 0' : '15px',
+					border: menuVisible
+						? '1px solid #282828'
+						: '1px solid #282828',
+					borderBottom: menuVisible ? 'none' : '1px solid #282828',
 					background: themeColors[theme_lowercased],
 					display: 'flex',
 					alignItems: 'center',
@@ -198,7 +209,12 @@ function ThemeDropdown({ configuration, value, setValue }) {
 					}}
 					onClick={(e) => {
 						e.stopPropagation() // prevent the main button's onClick event from firing
-						setValue({ event: 'page_link', page: 'home' })
+						setValue({
+							event: 'page_link',
+							page: 'home',
+							// timestamp to trigger a reactive update
+							timestamp: Date.now(),
+						})
 					}}
 				>
 					{/* SVG Curbcut logo */}
@@ -281,7 +297,51 @@ function ThemeDropdown({ configuration, value, setValue }) {
 				ref={categoriesMenuRef}
 				style={{ display: menuVisible ? 'block' : 'none' }}
 			>
-				<nav className='categories-nav'>{themesMenu}</nav>
+				<nav className='categories-nav'>
+					<details
+						key='999'
+						className='nav-item'
+						data-category='home'
+						open={openTheme === theme_lowercased}
+						onMouseEnter={() => setHomeHovered(true)}
+						onMouseLeave={() => setHomeHovered(false)}
+					>
+						<summary
+							className='nav-item__category'
+							onClick={() =>
+								setValue({
+									event: 'page_link',
+									page: 'home',
+									// timestamp to trigger a reactive update
+									timestamp: Date.now(),
+								})
+							}
+						>
+							<span
+								className='h4'
+								style={{
+									color: homeHovered ? 'white' : 'black',
+								}}
+							>
+								{configuration.home_str}
+							</span>
+							{/* SVG Curbcut logo */}
+							<svg
+								width='25px'
+								height='25px'
+								viewBox='0 0 15 15'
+								fill='none'
+								xmlns='http://www.w3.org/2000/svg'
+							>
+								<path
+									d='M14.677 5.68012V2.87005H12.7026C12.2654 2.87005 11.9114 2.51526 11.9114 2.07707V0.105225H2.83602V2.08132C2.83602 2.5195 2.48203 2.8743 2.04483 2.8743H0.0661621V11.9717H2.04483C2.48203 11.9717 2.83602 12.3265 2.83602 12.7646V14.7478H11.9114V12.7646C11.9114 12.3265 12.2654 11.9717 12.7026 11.9717H14.677V9.1616H11.8733V11.1448C11.8733 11.5829 11.5193 11.9377 11.0821 11.9377H3.66246C3.22527 11.9377 2.87128 11.5829 2.87128 11.1448V3.70827C2.87128 3.27008 3.22527 2.91529 3.66246 2.91529H11.0821C11.5193 2.91529 11.8733 3.27008 11.8733 3.70827V5.68012H14.677Z'
+									fill={homeHovered ? 'white' : 'black'}
+								/>
+							</svg>
+						</summary>
+					</details>
+					{themesMenu}
+				</nav>
 			</div>
 		</div>
 	)

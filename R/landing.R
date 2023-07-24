@@ -69,7 +69,7 @@
 #'       \item \code{fr}: Text content in French. (`Logement`, ...)
 #'     }
 #'
-#' @param translation_df <`character`> Default language, 'en' or 'fr'.
+#' @param lang <`character`> Default language, 'en' or 'fr'.
 #'
 #' @return A ReactShiny input object.
 #' @export

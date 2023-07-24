@@ -70,78 +70,78 @@ collabs <- tibble::tibble(
   name = c('The McGill Sustainability Systems Initiative', 'Centraide')
 )
 
-ui <- fluidPage(
-
-  tags$head(
-    tags$style(HTML("
-      .container-fluid {
-        padding-left: 0;
-        padding-right: 0;
-      }
-    "))
-  ),
-
-  landing_input("landing",
-               pages = pages,
-               c_city_svg = c_city_svg,
-               news_cards = news_cards,
-               discover_cards = discover_cards,
-               team_cards = team_cards,
-               contributors = contributors,
-               translation_df = translation_df,
-               collabs = collabs),
-
-  actionButton("lang", "lang", style = "position:absolute;z-index:99999;top:0px")
-)
-
-server <- function(input, output, session) {
-
-  click <- reactive(get_landing_click("landing"))
-
-  observeEvent(click(), {
-    update_landing(session = session,
-                   inputId = "landing",
-                   configuration = list(
-                     turn = 'off'
-                   ))
-
-  }, ignoreNULL = TRUE)
-
-  lang_click <- reactive(get_lang_click("landing"))
-
-  observeEvent(lang_click(), {
-    print(lang_click())
-  }, ignoreNULL = TRUE, ignoreInit = TRUE)
-
-  # observe(print(input$landing))
-
-  observeEvent(input$lang, {
-    update_landing(session = session,
-                   inputId = "landing",
-                   configuration = list(
-                     lang = if (input$lang %% 2 == 0) "en" else "fr"
-                   ))
-  })
-
-}
-
-shinyApp(ui, server)
-
-
 # ui <- fluidPage(
-#   theme_drop_input("theme_drop", pages = pages, theme = "Transport")
+#
+#   tags$head(
+#     tags$style(HTML("
+#       .container-fluid {
+#         padding-left: 0;
+#         padding-right: 0;
+#       }
+#     "))
+#   ),
+#
+#   landing_input("landing",
+#                pages = pages,
+#                c_city_svg = c_city_svg,
+#                news_cards = news_cards,
+#                discover_cards = discover_cards,
+#                team_cards = team_cards,
+#                contributors = contributors,
+#                translation_df = translation_df,
+#                collabs = collabs),
+#
+#   actionButton("lang", "lang", style = "position:absolute;z-index:99999;top:0px")
 # )
 #
 # server <- function(input, output, session) {
 #
-#   click <- reactive(get_theme_drop_click("theme_drop"))
+#   click <- reactive(get_landing_click("landing"))
 #
 #   observeEvent(click(), {
-#     print(click())
+#     update_landing(session = session,
+#                    inputId = "landing",
+#                    configuration = list(
+#                      turn = 'off'
+#                    ))
+#
 #   }, ignoreNULL = TRUE)
+#
+#   lang_click <- reactive(get_lang_click("landing"))
+#
+#   observeEvent(lang_click(), {
+#     print(lang_click())
+#   }, ignoreNULL = TRUE, ignoreInit = TRUE)
+#
+#   # observe(print(input$landing))
+#
+#   observeEvent(input$lang, {
+#     update_landing(session = session,
+#                    inputId = "landing",
+#                    configuration = list(
+#                      lang = if (input$lang %% 2 == 0) "en" else "fr"
+#                    ))
+#   })
+#
 # }
 #
 # shinyApp(ui, server)
+
+
+ui <- fluidPage(
+  theme_drop_input("theme_drop", pages = pages, theme = "Transport")
+)
+
+server <- function(input, output, session) {
+
+  click <- reactive(get_theme_drop_click("theme_drop"))
+
+  observeEvent(click(), {
+    print(click())
+  }, ignoreNULL = TRUE)
+}
+
+shinyApp(ui, server)
 
 
 # ui <- fluidPage(

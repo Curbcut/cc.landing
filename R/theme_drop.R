@@ -16,7 +16,7 @@
 #'
 #' @return A ReactShiny input object.
 #' @export
-theme_drop_input <- function(inputId, pages, width = "250px", theme) {
+theme_drop_input <- function(inputId, pages, width = "250px", theme, home_str = 'Home') {
 
   # Convert everything to JSON
   pages <- jsonlite::toJSON(pages)
@@ -34,7 +34,8 @@ theme_drop_input <- function(inputId, pages, width = "250px", theme) {
     "",
     list(pages = pages,
          width = width,
-         theme = theme),
+         theme = theme,
+         home_str = home_str),
     htmltools::tags$div
   )
 }
