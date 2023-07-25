@@ -21,8 +21,6 @@ const Landing = ({ configuration, value, setValue }) => {
 	// Set language
 	const [lang, setLang] = useState('en')
 
-	console.log(translation_df)
-
 	// Set configState
 	const [configState, setConfigState] = useState(() => {
 		let state = Object.fromEntries(
@@ -38,7 +36,6 @@ const Landing = ({ configuration, value, setValue }) => {
 		// if translation_df is available in the configuration, concatenate it with translation_df from translation.js
 		if (state.translation_df) {
 			state.translation_df = state.translation_df.concat(translation_df)
-			console.log(state.translation_df)
 		}
 		return state
 	})
@@ -61,7 +58,6 @@ const Landing = ({ configuration, value, setValue }) => {
 		if (parsedConfiguration.translation_df) {
 			parsedConfiguration.translation_df =
 				parsedConfiguration.translation_df.concat(translation_df)
-			console.log(parsedConfiguration.translation_df)
 		}
 
 		setConfigState((prevConfig) => ({

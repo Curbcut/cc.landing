@@ -13185,7 +13185,6 @@ var Landing = function Landing(_ref) {
     _useState2 = _slicedToArray(_useState, 2),
     lang = _useState2[0],
     setLang = _useState2[1];
-  console.log(_data_translation_js__WEBPACK_IMPORTED_MODULE_11__.translation_df);
 
   // Set configState
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(function () {
@@ -13203,7 +13202,6 @@ var Landing = function Landing(_ref) {
       // if translation_df is available in the configuration, concatenate it with translation_df from translation.js
       if (state.translation_df) {
         state.translation_df = state.translation_df.concat(_data_translation_js__WEBPACK_IMPORTED_MODULE_11__.translation_df);
-        console.log(state.translation_df);
       }
       return state;
     }),
@@ -13229,7 +13227,6 @@ var Landing = function Landing(_ref) {
     // if translation_df is available in the configuration, concatenate it with translation_df from translation.js
     if (parsedConfiguration.translation_df) {
       parsedConfiguration.translation_df = parsedConfiguration.translation_df.concat(_data_translation_js__WEBPACK_IMPORTED_MODULE_11__.translation_df);
-      console.log(parsedConfiguration.translation_df);
     }
     setConfigState(function (prevConfig) {
       return _objectSpread(_objectSpread({}, prevConfig), parsedConfiguration);
