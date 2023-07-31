@@ -37,14 +37,14 @@ team_cards <- tibble::tibble(
   name = c('David Wachsmuth', 'Kevin Manaugh', 'Maxime Bélanger De Blois', 'Dominique Boulet'),
   role_en = c('Co-founder & Co-CEO', 'Co-founder & Co-CEO', 'Head of Technology and Data', 'Qualitative Research Lead'),
   role_fr = c('Co-fondateur et co-PDG', 'Co-fondateur et co-PDG', 'Responsable technologie et données', 'Responsable de la recherche qualitative'),
-  bio_en = c("David is one of the world’s leading experts on the impacts of short-term rental platforms, such as Airbnb, on cities around the world and consults widely with municipalities and community organizations on designing appropriate regulations. In addition to his work at Curbcut, David is the Canada Research Chair in Urban Governance at McGill University, where he is also an Associate Professor in the School of Urban Planning.",
-             "Kevin is one of the leading experts on the intersection between urban transport systems and social and environmental justice. In addition to his work at Curbcut, Kevin is also an associate professor at McGill University jointly appointed in the Department of Geography and the Bieler School of Environment.",
-             "Maxime is a skilled, resourceful and forward-thinking data scientist, adept at developing and transforming intricate datasets into actionable intelligence. With a master's degree in Urban Planning from McGill University, his extensive understanding of data analysis and geovisualization enables him to extract valuable insights and provide innovative solutions.",
-             "Dominique is driven to create qualitative work that complements quantitative information. She has a master’s degree in Urban Planning from McGill University and a master’s degree in Anthropology from Aarhus University, Copenhagen."),
-  bio_fr = c("David est l'un des plus grands experts mondiaux sur les impacts des plateformes de location à court terme, telles que Airbnb, sur les villes du monde entier et consulte largement les municipalités et les organisations communautaires sur la conception de réglementations appropriées. En plus de son travail chez Curbcut, David est titulaire de la Chaire de recherche du Canada en gouvernance urbaine à l'Université McGill, où il est également professeur associé à l'École d'urbanisme.",
-             "Kevin est l'un des principaux experts de l'intersection entre les systèmes de transport urbain et la justice sociale et environnementale. En plus de son travail chez Curbcut, Kevin est également professeur associé à l'Université McGill, nommé conjointement au département de géographie et à l'école d'environnement Bieler.",
-             "Maxime est un scientifique de données habile, ingénieux et avant-gardiste, capable de concevoir et de transformer des ensembles de données complexes en renseignements exploitables. Diplômé d'une maîtrise en urbanisme de l'Université McGill, sa connaissance approfondie de l'analyse des données et de la géovisualisation lui permet d'extraire des informations précieuses et de proposer des solutions innovantes.",
-             "Dominique est motivée par la nécessité de produire des études qualitatives qui complètent les informations quantitatives. Elle est titulaire d'une maîtrise en urbanisme de l'Université McGill et d'une maîtrise en anthropologie de l'Université d'Aarhus, à Copenhague."),
+  # bio_en = c("David is one of the world’s leading experts on the impacts of short-term rental platforms, such as Airbnb, on cities around the world and consults widely with municipalities and community organizations on designing appropriate regulations. In addition to his work at Curbcut, David is the Canada Research Chair in Urban Governance at McGill University, where he is also an Associate Professor in the School of Urban Planning.",
+  #            "Kevin is one of the leading experts on the intersection between urban transport systems and social and environmental justice. In addition to his work at Curbcut, Kevin is also an associate professor at McGill University jointly appointed in the Department of Geography and the Bieler School of Environment.",
+  #            "Maxime is a skilled, resourceful and forward-thinking data scientist, adept at developing and transforming intricate datasets into actionable intelligence. With a master's degree in Urban Planning from McGill University, his extensive understanding of data analysis and geovisualization enables him to extract valuable insights and provide innovative solutions.",
+  #            "Dominique is driven to create qualitative work that complements quantitative information. She has a master’s degree in Urban Planning from McGill University and a master’s degree in Anthropology from Aarhus University, Copenhagen."),
+  # bio_fr = c("David est l'un des plus grands experts mondiaux sur les impacts des plateformes de location à court terme, telles que Airbnb, sur les villes du monde entier et consulte largement les municipalités et les organisations communautaires sur la conception de réglementations appropriées. En plus de son travail chez Curbcut, David est titulaire de la Chaire de recherche du Canada en gouvernance urbaine à l'Université McGill, où il est également professeur associé à l'École d'urbanisme.",
+  #            "Kevin est l'un des principaux experts de l'intersection entre les systèmes de transport urbain et la justice sociale et environnementale. En plus de son travail chez Curbcut, Kevin est également professeur associé à l'Université McGill, nommé conjointement au département de géographie et à l'école d'environnement Bieler.",
+  #            "Maxime est un scientifique de données habile, ingénieux et avant-gardiste, capable de concevoir et de transformer des ensembles de données complexes en renseignements exploitables. Diplômé d'une maîtrise en urbanisme de l'Université McGill, sa connaissance approfondie de l'analyse des données et de la géovisualisation lui permet d'extraire des informations précieuses et de proposer des solutions innovantes.",
+  #            "Dominique est motivée par la nécessité de produire des études qualitatives qui complètent les informations quantitatives. Elle est titulaire d'une maîtrise en urbanisme de l'Université McGill et d'une maîtrise en anthropologie de l'Université d'Aarhus, à Copenhague."),
   theme = c('housing', 'transport', 'health', 'urban')
 )
 
@@ -70,79 +70,79 @@ collabs <- tibble::tibble(
   name = c('The McGill Sustainability Systems Initiative', 'Centraide')
 )
 
-# ui <- fluidPage(
-#
-#   tags$head(
-#     tags$style(HTML("
-#       .container-fluid {
-#         padding-left: 0;
-#         padding-right: 0;
-#       }
-#     "))
-#   ),
-#
-#   landing_input("landing",
-#                pages = pages,
-#                c_city_svg = c_city_svg,
-#                news_cards = news_cards,
-#                discover_cards = discover_cards,
-#                team_cards = team_cards,
-#                contributors = contributors,
-#                translation_df = translation_df,
-#                collabs = collabs),
-#
-#   actionButton("lang", "lang", style = "position:absolute;z-index:99999;top:0px")
-# )
-#
-# server <- function(input, output, session) {
-#
-#   click <- reactive(get_landing_click("landing"))
-#
-#   observeEvent(click(), {
-#     update_landing(session = session,
-#                    inputId = "landing",
-#                    configuration = list(
-#                      turn = 'off'
-#                    ))
-#
-#   }, ignoreNULL = TRUE)
-#
-#   lang_click <- reactive(get_lang_click("landing"))
-#
-#   observeEvent(lang_click(), {
-#     print(lang_click())
-#   }, ignoreNULL = TRUE, ignoreInit = TRUE)
-#
-#   # observe(print(input$landing))
-#
-#   observeEvent(input$lang, {
-#     update_landing(session = session,
-#                    inputId = "landing",
-#                    configuration = list(
-#                      lang = if (input$lang %% 2 == 0) "en" else "fr"
-#                    ))
-#   })
-#
-# }
-#
-# shinyApp(ui, server)
-
-
 ui <- fluidPage(
-  theme_drop_input("theme_drop", pages = pages, theme = "Transport")
+
+  tags$head(
+    tags$style(HTML("
+      .container-fluid {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    "))
+  ),
+
+  landing_input("landing",
+               pages = pages,
+               c_city_svg = c_city_svg,
+               news_cards = news_cards,
+               discover_cards = discover_cards,
+               team_cards = team_cards,
+               contributors = contributors,
+               translation_df = translation_df,
+               collabs = collabs),
+
+  actionButton("lang", "lang", style = "position:absolute;z-index:99999;top:0px")
 )
 
 server <- function(input, output, session) {
 
-  click <- reactive(get_theme_drop_click("theme_drop"))
+  click <- reactive(get_landing_click("landing"))
 
   observeEvent(click(), {
-    print(click())
+    update_landing(session = session,
+                   inputId = "landing",
+                   configuration = list(
+                     turn = 'off'
+                   ))
+
   }, ignoreNULL = TRUE)
+
+  lang_click <- reactive(get_lang_click("landing"))
+
+  observeEvent(lang_click(), {
+    print(lang_click())
+  }, ignoreNULL = TRUE, ignoreInit = TRUE)
+
+  # observe(print(input$landing))
+
+  observeEvent(input$lang, {
+    update_landing(session = session,
+                   inputId = "landing",
+                   configuration = list(
+                     lang = if (input$lang %% 2 == 0) "en" else "fr"
+                   ))
+  })
+
 }
 
 shinyApp(ui, server)
 
+#
+# ui <- fluidPage(
+#   theme_drop_input("theme_drop", pages = pages, theme = "Transport")
+# )
+#
+# server <- function(input, output, session) {
+#
+#   click <- reactive(get_theme_drop_click("theme_drop"))
+#
+#   observeEvent(click(), {
+#     print(click())
+#   }, ignoreNULL = TRUE)
+# }
+#
+# shinyApp(ui, server)
+#
 
 # ui <- fluidPage(
 #   shiny::actionButton("show", label = "SHOW"),

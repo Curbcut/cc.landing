@@ -46,8 +46,6 @@
 #'       \item \code{name}: Name of the team member. (`Maxime Bélanger De Blois`)
 #'       \item \code{role_en}: Role of the team member in English. (`Head of Technology and Data`)
 #'       \item \code{role_fr}: Role of the team member in French. (`Responsable technologie et données`)
-#'       \item \code{bio_en}: Biography of the team member in English.
-#'       \item \code{bio_fr}: Biography of the team member in French.
 #'       \item \code{theme}: Theme of the team card. (`Health`)
 #'     }
 #'

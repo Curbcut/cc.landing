@@ -5,10 +5,10 @@ import React from 'react'
 
 // Component for each member
 function MemberCard({ card, lang }) {
-	const maxLength = 375
-	const bio = card[`bio_${lang}`]
-	const truncatedBio =
-		bio.length > maxLength ? bio.substring(0, maxLength - 3) + '...' : bio
+	// const maxLength = 375
+	// const bio = card[`bio_${lang}`]
+	// const truncatedBio =
+	// 	bio.length > maxLength ? bio.substring(0, maxLength - 3) + '...' : bio
 
 	return (
 		<div className='card'>
@@ -19,9 +19,9 @@ function MemberCard({ card, lang }) {
 				<span>{card.name}</span>
 				<span style={{ fontSize: '12px' }}>{card[`role_${lang}`]}</span>
 			</div>
-			<div className={`card__hover bg-${card.theme}`}>
+			{/* <div className={`card__hover bg-${card.theme}`}>
 				<span title={bio}>{truncatedBio}</span>
-			</div>
+			</div> */}
 		</div>
 	)
 }

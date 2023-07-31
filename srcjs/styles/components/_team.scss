@@ -80,54 +80,54 @@
 					}
 				}
 
-				&__hover {
-					position: absolute;
-					border-top-right-radius: variables.$b-radius-large - 10;
-					top: 0;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					opacity: 0;
-					transition: opacity 0.3s ease;
-					z-index: 2;
-					padding: 14px;
-					min-height: 100%;
+				// &__hover {
+				// 	position: absolute;
+				// 	border-top-right-radius: variables.$b-radius-large - 10;
+				// 	top: 0;
+				// 	display: flex;
+				// 	align-items: center;
+				// 	justify-content: center;
+				// 	opacity: 0;
+				// 	transition: opacity 0.3s ease;
+				// 	z-index: 2;
+				// 	padding: 14px;
+				// 	min-height: 100%;
 
-					span {
-						padding: 10px;
-						color: --black;
-						font-size: 13px;
-					}
+				// 	span {
+				// 		padding: 10px;
+				// 		color: --black;
+				// 		font-size: 13px;
+				// 	}
 
-					@include mixins.mobile {
-						padding: 9px 11px;
-						pointer-events: none;
-						opacity: 0 !important;
-					}
-				}
+				// 	@include mixins.mobile {
+				// 		padding: 9px 11px;
+				// 		pointer-events: none;
+				// 		opacity: 0 !important;
+				// 	}
+				// }
 
 				&:hover {
 					.card__img {
 						border-top-right-radius: variables.$b-radius-large;
 					}
 
-					.card__hover {
-						opacity: 1; /* show on hover */
+					// .card__hover {
+					// 	opacity: 1; /* show on hover */
 
-						span {
-							white-space: normal; /* Reset the white-space to normal */
-							overflow: visible; /* Display overflowed text */
-						}
+					// 	span {
+					// 		white-space: normal; /* Reset the white-space to normal */
+					// 		overflow: visible; /* Display overflowed text */
+					// 	}
 
-						@include mixins.mobile {
-							opacity: 0 !important; // prevent hover effect
-							max-height: auto; // reset to original height
-							span {
-								white-space: nowrap; // reset to original white-space
-								overflow: hidden; // reset to original overflow
-							}
-						}
-					}
+					// 	@include mixins.mobile {
+					// 		opacity: 0 !important; // prevent hover effect
+					// 		max-height: auto; // reset to original height
+					// 		span {
+					// 			white-space: nowrap; // reset to original white-space
+					// 			overflow: hidden; // reset to original overflow
+					// 		}
+					// 	}
+					// }
 				}
 			}
 		}
