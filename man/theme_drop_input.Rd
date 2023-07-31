@@ -4,7 +4,7 @@
 \alias{theme_drop_input}
 \title{Generate a theme dropdown input for a Curbcut app}
 \usage{
-theme_drop_input(inputId, pages, width = "250px", theme)
+theme_drop_input(inputId, pages, width = "250px", theme, home_str = "Home")
 }
 \arguments{
 \item{inputId}{<\code{character}> The ID of the input element.}

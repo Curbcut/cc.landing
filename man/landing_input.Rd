@@ -61,8 +61,6 @@ A data frame containing information about team cards. It should have the followi
 \item \code{name}: Name of the team member. (\verb{Maxime Bélanger De Blois})
 \item \code{role_en}: Role of the team member in English. (\verb{Head of Technology and Data})
 \item \code{role_fr}: Role of the team member in French. (\verb{Responsable technologie et données})
-\item \code{bio_en}: Biography of the team member in English.
-\item \code{bio_fr}: Biography of the team member in French.
 \item \code{theme}: Theme of the team card. (\code{Health})
 }}
 
@@ -77,7 +75,14 @@ A data frame containing information about collaborators. It should have the foll
 \item \code{name}: Name of the collaborator. (\verb{McGill Sustainability Systems Initiative})
 }}
 
-\item{translation_df}{<\code{character}> Default language, 'en' or 'fr'.}
+\item{translation_df}{<\code{data.frame}>
+A data frame containing translation pairs. It should have the following columns:
+\itemize{
+\item \code{en}: Text content in English. (\code{Housing}, ...)
+\item \code{fr}: Text content in French. (\code{Logement}, ...)
+}}
+
+\item{lang}{<\code{character}> Default language, 'en' or 'fr'.}
 }
 \value{
 A ReactShiny input object.
