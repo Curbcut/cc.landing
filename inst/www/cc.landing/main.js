@@ -13574,7 +13574,7 @@ function ThemeDropdown(_ref) {
     onClick: function onClick() {
       return setMenuVisible(!menuVisible);
     } // onClick event for label and caret
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h1", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h2", {
     style: {
       margin: '0 10px',
       fontFamily: '_AcidGrotesk',

@@ -254,7 +254,7 @@ function ThemeDropdown({ configuration, value, setValue }) {
 					onClick={() => setMenuVisible(!menuVisible)} // onClick event for label and caret
 				>
 					{/* Label */}
-					<h1
+					<h2
 						style={{
 							margin: '0 10px',
 							fontFamily: '_AcidGrotesk',
@@ -262,7 +262,7 @@ function ThemeDropdown({ configuration, value, setValue }) {
 						}}
 					>
 						{configuration.theme}
-					</h1>
+					</h2>
 
 					{/* Caret */}
 					<svg
