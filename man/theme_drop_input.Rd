@@ -4,7 +4,15 @@
 \alias{theme_drop_input}
 \title{Generate a theme dropdown input for a Curbcut app}
 \usage{
-theme_drop_input(inputId, pages, width = "250px", theme, home_str = "Home")
+theme_drop_input(
+  inputId,
+  pages,
+  width = "250px",
+  theme,
+  home_str = "Home",
+  translation_df,
+  lang = "en"
+)
 }
 \arguments{
 \item{inputId}{<\code{character}> The ID of the input element.}
@@ -20,6 +28,17 @@ A data frame containing information about the pages. It should have the followin
 \item{width}{<\code{character}> width in pixel of the widget.}
 
 \item{theme}{<\code{character}> Current theme of the page in which this input will live.}
+
+\item{home_str}{<\code{character}> String to link back to the home page. Defaults to \code{"Home"}.}
+
+\item{translation_df}{<\code{data.frame}>
+A data frame containing translation pairs. It should have the following columns:
+\itemize{
+\item \code{en}: Text content in English. (\code{Housing}, ...)
+\item \code{fr}: Text content in French. (\code{Logement}, ...)
+}}
+
+\item{lang}{<\code{character}> Default language, 'en' or 'fr'.}
 }
 \value{
 A ReactShiny input object.

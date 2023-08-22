@@ -12999,6 +12999,252 @@ function Team() {
 
 /***/ }),
 
+/***/ "./srcjs/components/theme_drop/ThemeMenu.js":
+/*!**************************************************!*\
+  !*** ./srcjs/components/theme_drop/ThemeMenu.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Translate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Translate */ "./srcjs/components/theme_drop/Translate.js");
+/* harmony import */ var _SvgIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../SvgIcon */ "./srcjs/components/SvgIcon.js");
+/* harmony import */ var _theme_drop__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../theme_drop */ "./srcjs/theme_drop.jsx");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+
+
+
+
+var ThemesMenu = function ThemesMenu(_ref) {
+  var openTheme = _ref.openTheme,
+    setopenTheme = _ref.setopenTheme,
+    categoriesMenuRef = _ref.categoriesMenuRef,
+    theme_lowercased = _ref.theme_lowercased,
+    setValue = _ref.setValue;
+  var contextValue = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_theme_drop__WEBPACK_IMPORTED_MODULE_3__.LanguageContext);
+  var configState = contextValue.configState;
+
+  // Get all unique themes from the pages.json file
+  var themes = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    var uniqueThemes = _toConsumableArray(new Set(configState.pages.map(function (page) {
+      return page.theme;
+    })));
+    // Sort and place the explorer last
+    uniqueThemes = uniqueThemes.sort(function (a, b) {
+      if (a === 'Explorer') return 1;
+      if (b === 'Explorer') return -1;
+      return a.localeCompare(b);
+    });
+    return uniqueThemes;
+  }, [configState.pages]);
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState2 = _slicedToArray(_useState, 2),
+    themesMenu = _useState2[0],
+    setThemesMenu = _useState2[1];
+
+  // Change the background color of the categories menu when hovering over a theme
+  var changeBackgroundColor = function changeBackgroundColor(event) {
+    var theme_lowercased = event.currentTarget.dataset.category;
+    if (categoriesMenuRef.current.dataset.theme) {
+      // Remove the class for the old theme
+      categoriesMenuRef.current.classList.remove("bg-".concat(categoriesMenuRef.current.dataset.theme));
+    }
+    // Add the class for the new theme
+    categoriesMenuRef.current.classList.add("bg-".concat(theme_lowercased));
+    // Update the theme stored in the data-theme attribute
+    categoriesMenuRef.current.dataset.theme = theme_lowercased;
+  };
+
+  // Clear the background color of the categories menu when leaving a theme
+  var clearBackgroundColor = function clearBackgroundColor() {
+    if (categoriesMenuRef.current.dataset.theme) {
+      categoriesMenuRef.current.classList.remove("bg-".concat(categoriesMenuRef.current.dataset.theme));
+      categoriesMenuRef.current.dataset.theme = '';
+    }
+  };
+  var handlePageLinkClick = function handlePageLinkClick(pageId) {
+    setValue({
+      event: 'page_link',
+      page: pageId,
+      timestamp: Date.now()
+    });
+  };
+
+  // Control the home SVG color
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    homeHovered = _useState4[0],
+    setHomeHovered = _useState4[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    var handleToggle = function handleToggle(event) {
+      var currentCategory = event.currentTarget.parentNode.dataset.category;
+      if (currentCategory !== openTheme) {
+        setopenTheme(currentCategory);
+      }
+    };
+    setThemesMenu(themes.map(function (theme, i) {
+      var theme_pages = configState.pages.filter(function (page) {
+        return page.theme === theme;
+      }).map(function (page, j) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
+          key: j,
+          onClick: function onClick() {
+            return handlePageLinkClick(page.id);
+          },
+          className: "cta-text-lower"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Translate__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          str: page.nav_title
+        }));
+      });
+      var theme_lowercased = theme.toLowerCase().split(' ')[0];
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("details", {
+        key: i,
+        className: "nav-item",
+        "data-category": theme_lowercased,
+        open: openTheme === theme_lowercased,
+        onMouseEnter: changeBackgroundColor,
+        onMouseLeave: clearBackgroundColor
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("summary", {
+        className: "nav-item__category",
+        onClick: handleToggle
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+        className: "h4"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Translate__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        str: theme
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("svg", {
+        className: "caret_land",
+        width: "24",
+        height: "15",
+        viewBox: "0 0 24 15",
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", {
+        fillRule: "evenodd",
+        clipRule: "evenodd",
+        d: "M14.4006 14.4001L14.4006 10.485C14.4006 9.99638 14.7969 9.60006 15.2855 9.60006L19.2 9.60006L19.2 5.68495C19.2 5.19635 19.5963 4.80003 20.0849 4.80003L24 4.80003L24 0L19.2 -2.09816e-07L19.2 3.91512C19.2 4.40372 18.8037 4.80003 18.3151 4.80003L15.2849 4.80003C14.9933 4.80003 14.6409 4.80027 14.4041 4.80046L14.4041 6.22837L14.4006 6.22837L14.4006 8.71515C14.4006 9.20375 14.0043 9.60006 13.5157 9.60006L10.4855 9.60006C9.99686 9.60006 9.60054 9.20375 9.60054 8.71515L9.60054 6.22837L9.59717 6.22837L9.59717 4.80399L7.81678 4.80399L7.81678 4.80066L5.68479 4.80066C5.19619 4.80066 4.79988 4.40435 4.79988 3.91575L4.79988 0.00063077L-0.000154495 0.00063056L-0.000154705 4.80066L3.91496 4.80066C4.40356 4.80066 4.79988 5.19698 4.79988 5.68558L4.79988 9.60069L8.71499 9.60069C9.20359 9.60069 9.59991 9.99701 9.59991 10.4856L9.59991 14.4007L14.4006 14.4007L14.4006 14.4001Z",
+        fill: "black"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_SvgIcon__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        theme_lowercased: theme_lowercased,
+        size: '25px'
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, theme_pages));
+    }));
+  }, [openTheme, configState.pages, themes]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("details", {
+    key: "999",
+    className: "nav-item",
+    "data-category": "home",
+    open: openTheme === theme_lowercased,
+    onMouseEnter: function onMouseEnter() {
+      return setHomeHovered(true);
+    },
+    onMouseLeave: function onMouseLeave() {
+      return setHomeHovered(false);
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("summary", {
+    className: "nav-item__category",
+    onClick: function onClick() {
+      return setValue({
+        event: 'page_link',
+        page: 'home',
+        // timestamp to trigger a reactive update
+        timestamp: Date.now()
+      });
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "h4",
+    style: {
+      color: homeHovered ? 'white' : 'black'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Translate__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    str: configState.home_str
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("svg", {
+    width: "25px",
+    height: "25px",
+    viewBox: "0 0 15 15",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", {
+    d: "M14.677 5.68012V2.87005H12.7026C12.2654 2.87005 11.9114 2.51526 11.9114 2.07707V0.105225H2.83602V2.08132C2.83602 2.5195 2.48203 2.8743 2.04483 2.8743H0.0661621V11.9717H2.04483C2.48203 11.9717 2.83602 12.3265 2.83602 12.7646V14.7478H11.9114V12.7646C11.9114 12.3265 12.2654 11.9717 12.7026 11.9717H14.677V9.1616H11.8733V11.1448C11.8733 11.5829 11.5193 11.9377 11.0821 11.9377H3.66246C3.22527 11.9377 2.87128 11.5829 2.87128 11.1448V3.70827C2.87128 3.27008 3.22527 2.91529 3.66246 2.91529H11.0821C11.5193 2.91529 11.8733 3.27008 11.8733 3.70827V5.68012H14.677Z",
+    fill: homeHovered ? 'white' : 'black'
+  })))), themesMenu);
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ThemesMenu);
+
+/***/ }),
+
+/***/ "./srcjs/components/theme_drop/Translate.js":
+/*!**************************************************!*\
+  !*** ./srcjs/components/theme_drop/Translate.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _theme_drop__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../theme_drop */ "./srcjs/theme_drop.jsx");
+/* harmony import */ var he__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! he */ "./node_modules/he/he.js");
+/* harmony import */ var he__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(he__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+function Translate(_ref) {
+  var str = _ref.str;
+  // Use the useContext hook to get the language from the LanguageContext
+  var contextValue = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_theme_drop__WEBPACK_IMPORTED_MODULE_1__.LanguageContext);
+  var lang = contextValue.lang;
+  var configState = contextValue.configState;
+  if (!configState) {
+    return null;
+  }
+  var translation_df = configState.translation_df;
+
+  // Find the translation in the translation_df
+  var translation = translation_df.find(function (row) {
+    return row.en === str;
+  });
+  var out = translation === undefined ? str : translation[lang];
+
+  // Decode HTML entities if they exist in the translation
+  if (out.includes('&')) {
+    out = he__WEBPACK_IMPORTED_MODULE_2___default().decode(out);
+  }
+
+  // Render HTML if it exists in the translation
+  if (out.includes('<')) {
+    out = /*#__PURE__*/React.createElement("span", {
+      dangerouslySetInnerHTML: {
+        __html: out
+      }
+    });
+  } else {
+    out = /*#__PURE__*/React.createElement("span", null, out);
+  }
+
+  // Return the translation for the language
+  return out;
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Translate);
+
+/***/ }),
+
 /***/ "./srcjs/data/translation.js":
 /*!***********************************!*\
   !*** ./srcjs/data/translation.js ***!
@@ -13112,6 +13358,9 @@ var translation_df = [{
 }, {
   en: 'Contributors',
   fr: 'Contributeurs'
+}, {
+  en: 'Home',
+  fr: 'Accueil'
 }];
 
 /***/ }),
@@ -13337,13 +13586,22 @@ function initLanding() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LanguageContext: () => (/* binding */ LanguageContext),
 /* harmony export */   "default": () => (/* binding */ initThemeDropdown)
 /* harmony export */ });
 /* harmony import */ var reactR__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! reactR */ "reactR");
 /* harmony import */ var reactR__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(reactR__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_SvgIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/SvgIcon */ "./srcjs/components/SvgIcon.js");
+/* harmony import */ var _components_theme_drop_Translate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/theme_drop/Translate */ "./srcjs/components/theme_drop/Translate.js");
+/* harmony import */ var _components_theme_drop_ThemeMenu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/theme_drop/ThemeMenu */ "./srcjs/components/theme_drop/ThemeMenu.js");
+/* harmony import */ var _data_translation_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./data/translation.js */ "./srcjs/data/translation.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -13353,6 +13611,12 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
+
+// Create a Language context to be used with the useContext hook. This will allow us to pass the language
+// to any component without having to pass it through props.
+var LanguageContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createContext)();
 function ThemeDropdown(_ref) {
   var configuration = _ref.configuration,
     value = _ref.value,
@@ -13370,125 +13634,83 @@ function ThemeDropdown(_ref) {
     resources: '#dca656',
     land: '#7baaaa'
   };
-  var theme_lowercased = configuration.theme.toLowerCase().split(' ')[0];
-  var pages = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(function () {
-    return JSON.parse(configuration.pages);
-  }, [configuration.pages]);
 
-  // Get all unique the themes from the pages.json file
-  var themes = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(function () {
-    var uniqueThemes = [];
-    pages.forEach(function (page) {
-      if (!uniqueThemes.includes(page.theme)) {
-        uniqueThemes.push(page.theme);
+  // Set language
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('en'),
+    _useState2 = _slicedToArray(_useState, 2),
+    lang = _useState2[0],
+    setLang = _useState2[1];
+
+  // Set configState
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(function () {
+      var state = Object.fromEntries(Object.entries(configuration).map(function (_ref2) {
+        var _ref3 = _slicedToArray(_ref2, 2),
+          key = _ref3[0],
+          value = _ref3[1];
+        if (typeof value === 'string') {
+          try {
+            value = JSON.parse(value);
+          } catch (e) {}
+        }
+        return [key, value];
+      }));
+      // if translation_df is available in the configuration, concatenate it with translation_df from translation.js
+      if (state.translation_df) {
+        state.translation_df = state.translation_df.concat(_data_translation_js__WEBPACK_IMPORTED_MODULE_4__.translation_df);
       }
+      return state;
+    }),
+    _useState4 = _slicedToArray(_useState3, 2),
+    configState = _useState4[0],
+    setConfigState = _useState4[1];
+
+  // This effect will listen for changes in the configuration prop
+  // and update the configState accordingly
+  // Map over configuration to modify everything to JSON
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    var parsedConfiguration = Object.fromEntries(Object.entries(configuration).map(function (_ref4) {
+      var _ref5 = _slicedToArray(_ref4, 2),
+        key = _ref5[0],
+        value = _ref5[1];
+      if (typeof value === 'string') {
+        try {
+          value = JSON.parse(value);
+        } catch (e) {}
+      }
+      return [key, value];
+    }));
+    // if translation_df is available in the configuration, concatenate it with translation_df from translation.js
+    if (parsedConfiguration.translation_df) {
+      parsedConfiguration.translation_df = parsedConfiguration.translation_df.concat(_data_translation_js__WEBPACK_IMPORTED_MODULE_4__.translation_df);
+    }
+    setConfigState(function (prevConfig) {
+      return _objectSpread(_objectSpread({}, prevConfig), parsedConfiguration);
     });
-    // Sort and place the explorer last
-    uniqueThemes = uniqueThemes.sort(function (a, b) {
-      if (a === 'Explorer') return 1;
-      if (b === 'Explorer') return -1;
-      return a.localeCompare(b);
-    });
-    return uniqueThemes;
-  }, [pages]);
+  }, [configuration]);
+
+  // Update the language
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    if (configState.lang === undefined) return;
+    setLang(configState.lang);
+  }, [configState]);
+  var theme_lowercased = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(function () {
+    return configState.theme.toLowerCase().split(' ')[0];
+  }, [configState.theme]);
 
   // Create a reference to the categories menu
   var categoriesMenuRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)();
 
-  // Change the background color of the categories menu when hovering over a theme
-  var changeBackgroundColor = function changeBackgroundColor(event) {
-    var theme_lowercased = event.currentTarget.dataset.category;
-    if (categoriesMenuRef.current.dataset.theme) {
-      // Remove the class for the old theme
-      categoriesMenuRef.current.classList.remove("bg-".concat(categoriesMenuRef.current.dataset.theme));
-    }
-    // Add the class for the new theme
-    categoriesMenuRef.current.classList.add("bg-".concat(theme_lowercased));
-    // Update the theme stored in the data-theme attribute
-    categoriesMenuRef.current.dataset.theme = theme_lowercased;
-  };
-
-  // Clear the background color of the categories menu when leaving a theme
-  var clearBackgroundColor = function clearBackgroundColor() {
-    if (categoriesMenuRef.current.dataset.theme) {
-      categoriesMenuRef.current.classList.remove("bg-".concat(categoriesMenuRef.current.dataset.theme));
-      categoriesMenuRef.current.dataset.theme = '';
-    }
-  };
-
   // State to hold the currently open category
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
-    _useState2 = _slicedToArray(_useState, 2),
-    openTheme = _useState2[0],
-    setopenTheme = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
-    _useState4 = _slicedToArray(_useState3, 2),
-    themesMenu = _useState4[0],
-    setThemesMenu = _useState4[1];
-
-  // Create the themes menu
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    // Function to handle opening a new category
-    var handleToggle = function handleToggle(event) {
-      var currentCategory = event.currentTarget.parentNode.dataset.category;
-      if (currentCategory !== openTheme) {
-        setopenTheme(currentCategory);
-      }
-    };
-    setThemesMenu(themes.map(function (theme, i) {
-      var theme_pages = pages.filter(function (page) {
-        return page.theme === theme;
-      }).map(function (page, j) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("li", {
-          key: j,
-          onClick: function onClick() {
-            return setValue({
-              event: 'page_link',
-              page: page.id,
-              // timestamp to trigger a reactive update
-              timestamp: Date.now()
-            });
-          },
-          className: "cta-text-lower"
-        }, page.nav_title);
-      });
-      var theme_lowercased = theme.toLowerCase().split(' ')[0];
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("details", {
-        key: i,
-        className: "nav-item",
-        "data-category": theme_lowercased,
-        open: openTheme === theme_lowercased,
-        onMouseEnter: changeBackgroundColor,
-        onMouseLeave: clearBackgroundColor
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("summary", {
-        className: "nav-item__category",
-        onClick: handleToggle
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", {
-        className: "h4"
-      }, theme, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("svg", {
-        className: "caret_land",
-        width: "24",
-        height: "15",
-        viewBox: "0 0 24 15",
-        fill: "none",
-        xmlns: "http://www.w3.org/2000/svg"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("path", {
-        fillRule: "evenodd",
-        clipRule: "evenodd",
-        d: "M14.4006 14.4001L14.4006 10.485C14.4006 9.99638 14.7969 9.60006 15.2855 9.60006L19.2 9.60006L19.2 5.68495C19.2 5.19635 19.5963 4.80003 20.0849 4.80003L24 4.80003L24 0L19.2 -2.09816e-07L19.2 3.91512C19.2 4.40372 18.8037 4.80003 18.3151 4.80003L15.2849 4.80003C14.9933 4.80003 14.6409 4.80027 14.4041 4.80046L14.4041 6.22837L14.4006 6.22837L14.4006 8.71515C14.4006 9.20375 14.0043 9.60006 13.5157 9.60006L10.4855 9.60006C9.99686 9.60006 9.60054 9.20375 9.60054 8.71515L9.60054 6.22837L9.59717 6.22837L9.59717 4.80399L7.81678 4.80399L7.81678 4.80066L5.68479 4.80066C5.19619 4.80066 4.79988 4.40435 4.79988 3.91575L4.79988 0.00063077L-0.000154495 0.00063056L-0.000154705 4.80066L3.91496 4.80066C4.40356 4.80066 4.79988 5.19698 4.79988 5.68558L4.79988 9.60069L8.71499 9.60069C9.20359 9.60069 9.59991 9.99701 9.59991 10.4856L9.59991 14.4007L14.4006 14.4007L14.4006 14.4001Z",
-        fill: "black"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components_SvgIcon__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        theme_lowercased: theme_lowercased,
-        size: '25px'
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("ul", null, theme_pages));
-    }));
-  }, [openTheme, pages, themes]);
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+    _useState6 = _slicedToArray(_useState5, 2),
+    openTheme = _useState6[0],
+    setopenTheme = _useState6[1];
 
   // State to handle visibility of the menu
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
-    _useState6 = _slicedToArray(_useState5, 2),
-    menuVisible = _useState6[0],
-    setMenuVisible = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState8 = _slicedToArray(_useState7, 2),
+    menuVisible = _useState8[0],
+    setMenuVisible = _useState8[1];
 
   // Reference to the button that controls the menu
   var buttonRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
@@ -13505,13 +13727,12 @@ function ThemeDropdown(_ref) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [categoriesMenuRef, buttonRef]);
-
-  // Control the home SVG color
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
-    _useState8 = _slicedToArray(_useState7, 2),
-    homeHovered = _useState8[0],
-    setHomeHovered = _useState8[1];
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(LanguageContext.Provider, {
+    value: {
+      lang: lang,
+      configState: configState
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "landing",
     style: {
       backgroundColor: 'transparent'
@@ -13519,7 +13740,7 @@ function ThemeDropdown(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", {
     ref: buttonRef,
     style: {
-      width: configuration.width,
+      width: configState.width,
       height: '35px',
       borderRadius: menuVisible ? '15px 15px 0 0' : '15px',
       border: menuVisible ? '1px solid #282828' : '1px solid #282828',
@@ -13580,7 +13801,9 @@ function ThemeDropdown(_ref) {
       fontFamily: '_AcidGrotesk',
       fontSize: '1.6rem'
     }
-  }, configuration.theme), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("svg", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components_theme_drop_Translate__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    str: configState.theme
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("svg", {
     className: "caret_land",
     style: {
       width: '14px',
@@ -13608,42 +13831,13 @@ function ThemeDropdown(_ref) {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("nav", {
     className: "categories-nav"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("details", {
-    key: "999",
-    className: "nav-item",
-    "data-category": "home",
-    open: openTheme === theme_lowercased,
-    onMouseEnter: function onMouseEnter() {
-      return setHomeHovered(true);
-    },
-    onMouseLeave: function onMouseLeave() {
-      return setHomeHovered(false);
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("summary", {
-    className: "nav-item__category",
-    onClick: function onClick() {
-      return setValue({
-        event: 'page_link',
-        page: 'home',
-        // timestamp to trigger a reactive update
-        timestamp: Date.now()
-      });
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", {
-    className: "h4",
-    style: {
-      color: homeHovered ? 'white' : 'black'
-    }
-  }, configuration.home_str), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("svg", {
-    width: "25px",
-    height: "25px",
-    viewBox: "0 0 15 15",
-    fill: "none",
-    xmlns: "http://www.w3.org/2000/svg"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("path", {
-    d: "M14.677 5.68012V2.87005H12.7026C12.2654 2.87005 11.9114 2.51526 11.9114 2.07707V0.105225H2.83602V2.08132C2.83602 2.5195 2.48203 2.8743 2.04483 2.8743H0.0661621V11.9717H2.04483C2.48203 11.9717 2.83602 12.3265 2.83602 12.7646V14.7478H11.9114V12.7646C11.9114 12.3265 12.2654 11.9717 12.7026 11.9717H14.677V9.1616H11.8733V11.1448C11.8733 11.5829 11.5193 11.9377 11.0821 11.9377H3.66246C3.22527 11.9377 2.87128 11.5829 2.87128 11.1448V3.70827C2.87128 3.27008 3.22527 2.91529 3.66246 2.91529H11.0821C11.5193 2.91529 11.8733 3.27008 11.8733 3.70827V5.68012H14.677Z",
-    fill: homeHovered ? 'white' : 'black'
-  })))), themesMenu)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components_theme_drop_ThemeMenu__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    openTheme: openTheme,
+    setopenTheme: setopenTheme,
+    categoriesMenuRef: categoriesMenuRef,
+    theme_lowercased: theme_lowercased,
+    setValue: setValue
+  })))));
 }
 function initThemeDropdown() {
   (0,reactR__WEBPACK_IMPORTED_MODULE_0__.reactShinyInput)('.theme_drop', 'cc.landing.theme_drop', ThemeDropdown);

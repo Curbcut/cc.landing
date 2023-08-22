@@ -28,6 +28,9 @@ This ID makes it possible to refer to the input in server logic.}
 
 \item{title_text_extra}{<\code{character}> A character string defining any additional text.}
 
+\item{lang}{<\code{character}>g A character string defining the language for the title box,
+defaults to English ('en').}
+
 \item{minWidth}{<\code{character}> A character string specifying the minimum width of the title
 box, defaults to '300px'.}
 
@@ -36,9 +39,6 @@ box, defaults to '400px'.}
 
 \item{show}{<\code{character}> A character string indicating whether to show the title box by
 default, 'true' or 'false'. Defaults to 'false'.}
-
-\item{lan}{<\code{character}>g A character string defining the language for the title box,
-defaults to English ('en').}
 }
 \value{
 Returns a Shiny input element that can be added to a Curbcut page.

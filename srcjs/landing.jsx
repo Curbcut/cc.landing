@@ -1,6 +1,6 @@
 import { reactShinyInput } from 'reactR'
 import './styles/style.scss'
-import { useState, createContext, useEffect, useMemo, useRef } from 'react'
+import { useState, createContext, useEffect, useMemo } from 'react'
 import Nav from './components/Nav'
 import ThemesMenu from './components/ThemesMenu'
 import Footer from './components/Footer'

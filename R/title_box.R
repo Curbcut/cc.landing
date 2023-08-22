@@ -8,7 +8,7 @@
 #' @param title_text_title <`character`> A character string defining the main title text.
 #' @param title_text_main <`character`> A character string defining the subtitle text.
 #' @param title_text_extra <`character`> A character string defining any additional text.
-#' @param lan <`character`>g A character string defining the language for the title box,
+#' @param lang <`character`>g A character string defining the language for the title box,
 #' defaults to English ('en').
 #' @param minWidth <`character`> A character string specifying the minimum width of the title
 #' box, defaults to '300px'.

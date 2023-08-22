@@ -135,4 +135,8 @@ export const translation_df = [
 		en: 'Contributors',
 		fr: 'Contributeurs',
 	},
+	{
+		en: 'Home',
+		fr: 'Accueil',
+	},
 ]
