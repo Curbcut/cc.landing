@@ -49,10 +49,8 @@ function Main({ lenis }) {
 	}
 
 	// Setup the video sources
-	const placeholder_video_src =
-		'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'
-	const video_src =
-		'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
+	const placeholder_video_src = configState.placeholder_video_src
+	const video_src = configState.video_src
 
 	// Setup the video
 	const [isModalOpen, setIsModalOpen] = useState(false)

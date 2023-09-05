@@ -68,12 +68,19 @@
 #'     }
 #'
 #' @param lang <`character`> Default language, 'en' or 'fr'.
+#' @param placeholder_video_src <`character`> External link to a publicly available
+#' mp4 video. The video will be used as the placeholder, until the user click on
+#' to watch the intro video. e.g. `https://s3.amazonaws.com/curbcut.public.resources/mtl_vid_placeholder.mp4`
+#' @param video_src <`character`> External link to a publicly available
+#' mp4 video. This is the full length official video the user will see when
+#' they click on to watch the intro video. e.g. `https://s3.amazonaws.com/curbcut.public.resources/mtl_vid_placeholder.mp4`
 #'
 #' @return A ReactShiny input object.
 #' @export
 landing_input <- function(inputId, pages, c_city_svg, news_cards,
                          discover_cards, team_cards, contributors,
-                         collabs, translation_df, lang = "en") {
+                         collabs, translation_df, lang = "en",
+                         placeholder_video_src, video_src) {
 
   # Encode `svg` to base64 (top left corner image)
   svg_content <- readLines(c_city_svg, warn = FALSE)
@@ -121,7 +128,9 @@ landing_input <- function(inputId, pages, c_city_svg, news_cards,
          contributors = contributors,
          collabs = collabs,
          translation_df = translation_df,
-         lang = lang),
+         lang = lang,
+         placeholder_video_src = placeholder_video_src,
+         video_src = video_src),
     htmltools::tags$div
   )
 }

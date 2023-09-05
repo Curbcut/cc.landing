@@ -12708,8 +12708,8 @@ function Main(_ref3) {
   }
 
   // Setup the video sources
-  var placeholder_video_src = 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4';
-  var video_src = 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+  var placeholder_video_src = configState.placeholder_video_src;
+  var video_src = configState.video_src;
 
   // Setup the video
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
