@@ -84,8 +84,8 @@ export const translation_df = [
 		fr: 'Villes Curbcut',
 	},
 	{
-		en: 'by LEEROY. All rights reserved.',
-		fr: 'by LEEROY. Tous droits réservés.',
+		en: 'by Curbcut. All rights reserved.',
+		fr: 'by Curbcut. Tous droits réservés.',
 	},
 	{
 		en: 'Our mission',
