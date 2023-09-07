@@ -12048,7 +12048,7 @@ function Footer(_ref3) {
   })))), /*#__PURE__*/React.createElement("div", {
     className: "footer__content-copyright"
   }, "\xA9 2023 Curbcut -", /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
-    str: "by LEEROY. All rights reserved."
+    str: "by Curbcut. All rights reserved."
   }))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Footer);
@@ -13320,8 +13320,8 @@ var translation_df = [{
   en: 'Curbcut cities',
   fr: 'Villes Curbcut'
 }, {
-  en: 'by LEEROY. All rights reserved.',
-  fr: 'by LEEROY. Tous droits réservés.'
+  en: 'by Curbcut. All rights reserved.',
+  fr: 'by Curbcut. Tous droits réservés.'
 }, {
   en: 'Our mission',
   fr: 'Notre mission'
