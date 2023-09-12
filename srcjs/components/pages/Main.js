@@ -15,7 +15,10 @@ function DiscoverCard({ card, lang }) {
 			<div className='card__img'>
 				<img src={card.img} alt={card[lang]} />
 			</div>
-			<div className={`card__title bg-${card.theme}`}>{card[lang]}</div>
+			<div className={`card__title bg-${card.theme}`}>
+				<div className='card__text'>{card[lang]}</div>
+				<div className='card__preview'>{card[`preview_${lang}`]}</div>
+			</div>
 		</a>
 	)
 }

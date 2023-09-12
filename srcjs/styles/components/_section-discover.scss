@@ -1,85 +1,90 @@
 @use '../variables';
 @use '../mixins';
 
-.landing {
-	.section-discover {
-		margin-top: 84px;
+.section-discover {
+	margin-top: 84px;
+	display: flex;
+	flex-direction: column;
+
+	@include mixins.mobile {
+		margin-top: 78px;
+	}
+
+	& > div:first-child {
 		display: flex;
-		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__cards-wrapper {
+		margin-top: 20px;
+		display: grid;
+		grid-template-columns: repeat(4, minmax(10px, 1fr));
+		gap: 18px;
 
 		@include mixins.mobile {
-			margin-top: 78px;
+			margin-top: 11px;
+			grid-template-columns: repeat(2, minmax(10px, 1fr));
+			gap: 13px;
 		}
 
-		& > div:first-child {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-		}
+		.card {
+			position: relative; // Added this to keep everything in one block
 
-		&__cards-wrapper {
-			margin-top: 20px;
-			display: grid;
-			grid-template-columns: repeat(4, minmax(10px, 1fr));
-			gap: 18px;
+			&__img {
+				width: 100%;
+				height: 332px;
+				overflow: hidden;
+				border-top-left-radius: variables.$b-radius-mid;
+				border-top-right-radius: variables.$b-radius-mid;
+				transition: border-radius variables.$t1
+					variables.$ease-in-out-cubic;
 
-			@include mixins.mobile {
-				margin-top: 11px;
-				grid-template-columns: repeat(2, minmax(10px, 1fr));
-				gap: 13px;
+				@include mixins.tablet {
+					height: 168px;
+				}
+
+				img {
+					display: block;
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+					object-position: center;
+				}
 			}
 
-			.card {
-				&__img {
-					width: 100%;
-					height: 265px;
-					overflow: hidden;
-					border-top-left-radius: variables.$b-radius-mid;
-					border-top-right-radius: variables.$b-radius-mid;
-					transition: border-radius variables.$t1
-						variables.$ease-in-out-cubic;
+			&__title {
+				padding: 14px;
+				height: 67px;
+				display: flex;
+				flex-direction: column; // Changed to column to align text in rows
+				justify-content: center; // Added to vertically center text
+				align-items: flex-start; // Text aligns to the left
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+				overflow: hidden;
 
-					@include mixins.tablet {
-						height: 168px;
-					}
+				.card__text,
+				.card__preview {
+					width: 100%; // Ensures text containers take up full width
+				}
 
-					img {
+				.card__preview {
+					display: none;
+					font-size: 0.7em;
+				}
+			}
+
+			&:hover {
+				.card__img {
+					border-top-right-radius: variables.$b-radius-large;
+				}
+				.card__title {
+					bottom: 0px;
+					height: fit-content;
+					.card__preview {
 						display: block;
-						width: 100%;
-						height: 100%;
-						object-fit: cover;
-						object-position: center;
-					}
-				}
-
-				&__title {
-					padding: 14px;
-					height: 67px;
-					display: flex;
-					align-items: center;
-
-					@include mixins.mobile {
-						height: 78px;
-						padding: 9px 11px;
-					}
-
-					span {
-						display: -webkit-box;
-						-webkit-box-orient: vertical;
-						-webkit-line-clamp: 2;
-						line-clamp: 2;
-						overflow: hidden;
-
-						@include mixins.mobile {
-							-webkit-line-clamp: 3;
-							line-clamp: 3;
-						}
-					}
-				}
-
-				&:hover {
-					.card__img {
-						border-top-right-radius: variables.$b-radius-large;
 					}
 				}
 			}
