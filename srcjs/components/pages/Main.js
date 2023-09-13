@@ -28,13 +28,22 @@ function DiscoverCard({ card, lang, setValue }) {
 	)
 }
 
-// Component for each news cards
-function NewsCard({ card, lang }) {
+function NewsCard({ card, lang, setValue }) {
 	return (
 		<div className='swiper-slide news'>
 			<SvgIcon theme_lowercased={card.icon} size='32px' />
 			<div className='news__title'>{card[`title_${lang}`]}</div>
 			<div className='news__description'>{card[`text_${lang}`]}</div>
+			{card.link ? (
+				<a
+					className='cta-text cta-text--underline'
+					onClick={(e) => {
+						setValue({ event: 'read_more', card_id: card.id })
+					}}
+				>
+					<Translate str='Read more' />
+				</a>
+			) : null}
 		</div>
 	)
 }
@@ -220,6 +229,7 @@ function Main({ lenis, setValue }) {
 										key={card.id}
 										card={card}
 										lang={lang}
+										setValue={setValue}
 									/>
 								))}
 							</div>

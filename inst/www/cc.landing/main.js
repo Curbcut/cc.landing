@@ -12682,11 +12682,10 @@ function DiscoverCard(_ref) {
     className: "card__preview"
   }, card["preview_".concat(lang)])));
 }
-
-// Component for each news cards
 function NewsCard(_ref2) {
   var card = _ref2.card,
-    lang = _ref2.lang;
+    lang = _ref2.lang,
+    setValue = _ref2.setValue;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "swiper-slide news"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_SvgIcon__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -12696,7 +12695,17 @@ function NewsCard(_ref2) {
     className: "news__title"
   }, card["title_".concat(lang)]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "news__description"
-  }, card["text_".concat(lang)]));
+  }, card["text_".concat(lang)]), card.link ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("a", {
+    className: "cta-text cta-text--underline",
+    onClick: function onClick(e) {
+      setValue({
+        event: 'read_more',
+        card_id: card.id
+      });
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Translate_js__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    str: "Read more"
+  })) : null);
 }
 function Main(_ref3) {
   var lenis = _ref3.lenis,
@@ -12866,7 +12875,8 @@ function Main(_ref3) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(NewsCard, {
       key: card.id,
       card: card,
-      lang: lang
+      lang: lang,
+      setValue: setValue
     });
   })))))), isModalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("dialog", {
     id: "video-modal",

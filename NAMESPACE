@@ -3,6 +3,7 @@
 export(get_landing_click)
 export(get_landing_discover)
 export(get_landing_event)
+export(get_landing_news)
 export(get_lang_click)
 export(get_theme_drop_click)
 export(get_theme_drop_event)

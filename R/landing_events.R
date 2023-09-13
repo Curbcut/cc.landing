@@ -71,6 +71,30 @@ get_landing_discover <- function(inputId, session = shiny::getDefaultReactiveDom
   return(out$card_id)
 }
 
+#' Retrieve News Link Click Information from Landing input
+#'
+#' This function retrieves page link click information using `get_landing_event`.
+#'
+#' @param inputId A `character` string that identifies the landing id object in
+#'   the Shiny application.
+#' @param session The Shiny `session` object. By default, it uses the current
+#'   reactive domain.
+#' @return Returns the ID of the news card clicked if it exists. If it does not
+#'   exist, it returns NULL.
+#' @export
+get_landing_news <- function(inputId, session = shiny::getDefaultReactiveDomain()) {
+  out <- get_landing_event(
+    inputId = inputId, event_type = "read_more",
+    values = "card_id", session = session
+  )
+
+  if (length(out) == 0) {
+    return(NULL)
+  }
+
+  return(out$card_id)
+}
+
 #' Retrieve lang click from Landing input
 #'
 #' This function retrieves lang click information using `get_landing_event`.
