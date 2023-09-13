@@ -35,9 +35,6 @@ function NewsCard({ card, lang }) {
 			<SvgIcon theme_lowercased={card.icon} size='32px' />
 			<div className='news__title'>{card[`title_${lang}`]}</div>
 			<div className='news__description'>{card[`text_${lang}`]}</div>
-			<a className='cta-text cta-text--underline' href='/'>
-				<Translate str='Read more' />
-			</a>
 		</div>
 	)
 }
