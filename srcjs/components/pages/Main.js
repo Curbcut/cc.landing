@@ -9,9 +9,14 @@ import { LanguageContext } from '../../landing'
 import { Link } from 'react-router-dom'
 
 // Component for each discover cards
-function DiscoverCard({ card, lang }) {
+function DiscoverCard({ card, lang, setValue }) {
 	return (
-		<a className='card' href='/'>
+		<a
+			className='card'
+			onClick={(e) => {
+				setValue({ event: 'discover_link', card_id: card.id })
+			}}
+		>
 			<div className='card__img'>
 				<img src={card.img} alt={card[lang]} />
 			</div>
@@ -37,7 +42,7 @@ function NewsCard({ card, lang }) {
 	)
 }
 
-function Main({ lenis }) {
+function Main({ lenis, setValue }) {
 	const contextValue = useContext(LanguageContext)
 	const lang = contextValue.lang
 	const configState = contextValue.configState
@@ -178,6 +183,7 @@ function Main({ lenis }) {
 								key={card.id}
 								card={card}
 								lang={lang}
+								setValue={setValue}
 							/>
 						))}
 					</div>

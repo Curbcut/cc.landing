@@ -12659,10 +12659,16 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 // Component for each discover cards
 function DiscoverCard(_ref) {
   var card = _ref.card,
-    lang = _ref.lang;
+    lang = _ref.lang,
+    setValue = _ref.setValue;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("a", {
     className: "card",
-    href: "/"
+    onClick: function onClick(e) {
+      setValue({
+        event: 'discover_link',
+        card_id: card.id
+      });
+    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "card__img"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", {
@@ -12698,7 +12704,8 @@ function NewsCard(_ref2) {
   })));
 }
 function Main(_ref3) {
-  var lenis = _ref3.lenis;
+  var lenis = _ref3.lenis,
+    setValue = _ref3.setValue;
   var contextValue = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_landing__WEBPACK_IMPORTED_MODULE_6__.LanguageContext);
   var lang = contextValue.lang;
   var configState = contextValue.configState;
@@ -12829,7 +12836,8 @@ function Main(_ref3) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(DiscoverCard, {
       key: card.id,
       card: card,
-      lang: lang
+      lang: lang,
+      setValue: setValue
     });
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("section", {
     className: "section section-news"
@@ -13558,7 +13566,8 @@ var Landing = function Landing(_ref) {
     path: "/",
     element: /*#__PURE__*/React.createElement(_components_pages_Main__WEBPACK_IMPORTED_MODULE_7__["default"], {
       lenis: lenis,
-      lang: lang
+      lang: lang,
+      setValue: setValue
     })
   }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
     path: "/about",

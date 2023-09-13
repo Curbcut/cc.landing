@@ -136,7 +136,13 @@ const Landing = ({ configuration, value, setValue }) => {
 							<Routes>
 								<Route
 									path='/'
-									element={<Main lenis={lenis} lang={lang} />}
+									element={
+										<Main
+											lenis={lenis}
+											lang={lang}
+											setValue={setValue}
+										/>
+									}
 								/>
 								<Route path='/about' element={<About />} />
 								<Route path='/team' element={<Team />} />

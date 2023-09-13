@@ -111,6 +111,12 @@ server <- function(input, output, session) {
 
   }, ignoreNULL = TRUE)
 
+  discover <- reactive(get_landing_discover("landing"))
+
+  observeEvent(discover(), {
+    print(discover())
+  }, ignoreNULL = TRUE)
+
   lang_click <- reactive(get_lang_click("landing"))
 
   observeEvent(lang_click(), {
