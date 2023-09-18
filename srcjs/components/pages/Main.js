@@ -1,5 +1,5 @@
 import Translate from '../Translate.js'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useMemo } from 'react'
 import Swiper from 'swiper'
 import { Navigation } from 'swiper/modules'
 import 'swiper/css'
@@ -59,33 +59,34 @@ function Main({ lenis, setValue }) {
 	const news_cards = configState.news_cards
 
 	// Get only 4 discover cards, and minimum 2 stories.
+	// Fisher-Yates (Knuth) Shuffle to shuffle an array
+	const shuffleArray = (array) => {
+		for (let i = array.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1))
+			;[array[i], array[j]] = [array[j], array[i]]
+		}
+		return array
+	}
+
 	// Function to get N random elements from an array
 	const getRandomN = (arr, n) => {
-		const shuffled = [...arr].sort(() => 0.5 - Math.random())
+		const shuffled = shuffleArray([...arr])
 		return shuffled.slice(0, n)
 	}
-	// Function to shuffle an array
-	const shuffleArray = (arr) => {
-		return arr.sort(() => 0.5 - Math.random())
-	}
 
-	// Filtering cards that have type === 'stories'
-	const storyCards = discover_cards.filter((card) => card.type === 'stories')
+	// Using useMemo to optimize the shuffling logic (so that it doesn't run on every render)
+	const shuffledDiscoverCards = useMemo(() => {
+		const storyCards = discover_cards.filter(
+			(card) => card.type === 'stories'
+		)
+		const otherCards = discover_cards.filter(
+			(card) => card.type !== 'stories'
+		)
+		const randomStoryCards = getRandomN(storyCards, 2)
+		const randomOtherCards = getRandomN(otherCards, 2)
 
-	// Filtering cards that have type !== 'stories'
-	const otherCards = discover_cards.filter((card) => card.type !== 'stories')
-
-	// Getting 2 random 'stories' cards
-	const randomStoryCards = getRandomN(storyCards, 2)
-
-	// Getting 2 random 'other' cards
-	const randomOtherCards = getRandomN(otherCards, 2)
-
-	// Combining the two arrays to get 4 cards to be displayed
-	const fourCardsToShow = shuffleArray([
-		...randomStoryCards,
-		...randomOtherCards,
-	])
+		return shuffleArray([...randomStoryCards, ...randomOtherCards])
+	}, [discover_cards])
 
 	// Setup the video sources
 	const placeholder_video_src = configState.placeholder_video_src
@@ -209,7 +210,7 @@ function Main({ lenis, setValue }) {
 						</a> */}
 					</div>
 					<div className='section-discover__cards-wrapper'>
-						{fourCardsToShow.map((card) => (
+						{shuffledDiscoverCards.map((card) => (
 							<DiscoverCard
 								key={card.id}
 								card={card}

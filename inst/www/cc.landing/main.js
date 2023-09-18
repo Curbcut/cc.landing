@@ -12720,38 +12720,35 @@ function Main(_ref3) {
   var news_cards = configState.news_cards;
 
   // Get only 4 discover cards, and minimum 2 stories.
+  // Fisher-Yates (Knuth) Shuffle to shuffle an array
+  var shuffleArray = function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var _ref4 = [array[j], array[i]];
+      array[i] = _ref4[0];
+      array[j] = _ref4[1];
+    }
+    return array;
+  };
+
   // Function to get N random elements from an array
   var getRandomN = function getRandomN(arr, n) {
-    var shuffled = _toConsumableArray(arr).sort(function () {
-      return 0.5 - Math.random();
-    });
+    var shuffled = shuffleArray(_toConsumableArray(arr));
     return shuffled.slice(0, n);
   };
-  // Function to shuffle an array
-  var shuffleArray = function shuffleArray(arr) {
-    return arr.sort(function () {
-      return 0.5 - Math.random();
+
+  // Using useMemo to optimize the shuffling logic (so that it doesn't run on every render)
+  var shuffledDiscoverCards = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(function () {
+    var storyCards = discover_cards.filter(function (card) {
+      return card.type === 'stories';
     });
-  };
-
-  // Filtering cards that have type === 'stories'
-  var storyCards = discover_cards.filter(function (card) {
-    return card.type === 'stories';
-  });
-
-  // Filtering cards that have type !== 'stories'
-  var otherCards = discover_cards.filter(function (card) {
-    return card.type !== 'stories';
-  });
-
-  // Getting 2 random 'stories' cards
-  var randomStoryCards = getRandomN(storyCards, 2);
-
-  // Getting 2 random 'other' cards
-  var randomOtherCards = getRandomN(otherCards, 2);
-
-  // Combining the two arrays to get 4 cards to be displayed
-  var fourCardsToShow = shuffleArray([].concat(_toConsumableArray(randomStoryCards), _toConsumableArray(randomOtherCards)));
+    var otherCards = discover_cards.filter(function (card) {
+      return card.type !== 'stories';
+    });
+    var randomStoryCards = getRandomN(storyCards, 2);
+    var randomOtherCards = getRandomN(otherCards, 2);
+    return shuffleArray([].concat(_toConsumableArray(randomStoryCards), _toConsumableArray(randomOtherCards)));
+  }, [discover_cards]);
 
   // Setup the video sources
   var placeholder_video_src = configState.placeholder_video_src;
@@ -12867,7 +12864,7 @@ function Main(_ref3) {
     str: "Discover"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "section-discover__cards-wrapper"
-  }, fourCardsToShow.map(function (card) {
+  }, shuffledDiscoverCards.map(function (card) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(DiscoverCard, {
       key: card.id,
       card: card,

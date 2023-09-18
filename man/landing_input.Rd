@@ -49,7 +49,7 @@ A data frame containing information about news cards. It should have the followi
 A data frame containing information about discover cards. It should have the following columns:
 \itemize{
 \item \code{id}: Unique identifier for each discover card. (\code{metro})
-\item \code{img}: Image file path for the discover card. (\code{www/discover/metro.png})
+\item \code{img}: base64 image for the discover card. (\code{www/discover/metro.png})
 \item \code{theme}: Theme of the discover card. (\code{Transport})
 \item \code{en}: Text content of the discover card in English. (\verb{The Evolution of the Montreal metro})
 \item \code{fr}: Text content of the discover card in French. (\verb{L'évolution du métro de Montréal})
@@ -59,7 +59,7 @@ A data frame containing information about discover cards. It should have the fol
 A data frame containing information about team cards. It should have the following columns:
 \itemize{
 \item \code{id}: Unique identifier for each team card. (\code{maxbdb})
-\item \code{img}: Image file path or URL for the team card. (\code{www/maxime_belanger_de_blois.png})
+\item \code{img}: base64 image for the team card. (\code{www/maxime_belanger_de_blois.png})
 \item \code{name}: Name of the team member. (\verb{Maxime Bélanger De Blois})
 \item \code{role_en}: Role of the team member in English. (\verb{Head of Technology and Data})
 \item \code{role_fr}: Role of the team member in French. (\verb{Responsable technologie et données})
@@ -73,7 +73,7 @@ A character vector containing the names of contributors.}
 A data frame containing information about collaborators. It should have the following columns:
 \itemize{
 \item \code{id}: Unique identifier for each collaborator. (\code{MSSI})
-\item \code{img}: Image file path or URL for the collaborator. (\code{www/mcgill-logo.png})
+\item \code{img}: base64 image for the collaborator. (\code{www/mcgill-logo.png})
 \item \code{name}: Name of the collaborator. (\verb{McGill Sustainability Systems Initiative})
 }}
 
