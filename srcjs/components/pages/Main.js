@@ -58,35 +58,35 @@ function Main({ lenis, setValue }) {
 	const discover_cards = configState.discover_cards
 	const news_cards = configState.news_cards
 
-	// Get only 4 discover cards, and minimum 2 stories.
-	// Fisher-Yates (Knuth) Shuffle to shuffle an array
-	const shuffleArray = (array) => {
-		for (let i = array.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1))
-			;[array[i], array[j]] = [array[j], array[i]]
-		}
-		return array
-	}
+	// // Get only 4 discover cards, and minimum 2 stories.
+	// // Fisher-Yates (Knuth) Shuffle to shuffle an array
+	// const shuffleArray = (array) => {
+	// 	for (let i = array.length - 1; i > 0; i--) {
+	// 		const j = Math.floor(Math.random() * (i + 1))
+	// 		;[array[i], array[j]] = [array[j], array[i]]
+	// 	}
+	// 	return array
+	// }
 
-	// Function to get N random elements from an array
-	const getRandomN = (arr, n) => {
-		const shuffled = shuffleArray([...arr])
-		return shuffled.slice(0, n)
-	}
+	// // Function to get N random elements from an array
+	// const getRandomN = (arr, n) => {
+	// 	const shuffled = shuffleArray([...arr])
+	// 	return shuffled.slice(0, n)
+	// }
 
-	// Using useMemo to optimize the shuffling logic (so that it doesn't run on every render)
-	const shuffledDiscoverCards = useMemo(() => {
-		const storyCards = discover_cards.filter(
-			(card) => card.type === 'stories'
-		)
-		const otherCards = discover_cards.filter(
-			(card) => card.type !== 'stories'
-		)
-		const randomStoryCards = getRandomN(storyCards, 2)
-		const randomOtherCards = getRandomN(otherCards, 2)
+	// // Using useMemo to optimize the shuffling logic (so that it doesn't run on every render)
+	// const shuffledDiscoverCards = useMemo(() => {
+	// 	const storyCards = discover_cards.filter(
+	// 		(card) => card.type === 'stories'
+	// 	)
+	// 	const otherCards = discover_cards.filter(
+	// 		(card) => card.type !== 'stories'
+	// 	)
+	// 	const randomStoryCards = getRandomN(storyCards, 2)
+	// 	const randomOtherCards = getRandomN(otherCards, 2)
 
-		return shuffleArray([...randomStoryCards, ...randomOtherCards])
-	}, [discover_cards])
+	// 	return shuffleArray([...randomStoryCards, ...randomOtherCards])
+	// }, [discover_cards])
 
 	// Setup the video sources
 	const placeholder_video_src = configState.placeholder_video_src
@@ -210,7 +210,7 @@ function Main({ lenis, setValue }) {
 						</a> */}
 					</div>
 					<div className='section-discover__cards-wrapper'>
-						{shuffledDiscoverCards.map((card) => (
+						{discover_cards.map((card) => (
 							<DiscoverCard
 								key={card.id}
 								card={card}
