@@ -155,9 +155,11 @@ function Main({ lenis, setValue }) {
 		<React.Fragment>
 			<main>
 				<div className='hero'>
-					<h1 className='h1 main-title'>
+					<h1 className='h1 main-title lang-en'>
 						<div className='main-title__first-part'>
-							<Translate str='EXPLORE<br />URBAN' />
+							EXPLORE
+							<br />
+							URBAN
 						</div>
 						<div className='main-title__video' onClick={playVideo}>
 							<video autoPlay muted loop playsInline>
@@ -168,7 +170,25 @@ function Main({ lenis, setValue }) {
 							</video>
 						</div>
 						<span className='main-title__second-part'>
-							<Translate str={'SUSTAIN&shy;ABILITY'} />
+							SUSTAIN&shy;ABILITY
+						</span>
+					</h1>
+					<h1 className='h1 main-title lang-fr'>
+						<div className='main-title__first-part'>
+							EXPLORER LA
+						</div>
+						<div className='main-title__video' onClick={playVideo}>
+							<video autoPlay muted loop playsInline>
+								<source
+									src={placeholder_video_src}
+									type='video/mp4'
+								/>
+							</video>
+						</div>
+						<span className='main-title__second-part'>
+							DURABILITÉ
+							<br />
+							URBAINE
 						</span>
 					</h1>
 
