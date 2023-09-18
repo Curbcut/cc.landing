@@ -12636,16 +12636,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SvgIcon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../SvgIcon */ "./srcjs/components/SvgIcon.js");
 /* harmony import */ var _landing__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../landing */ "./srcjs/landing.jsx");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 
 
 
@@ -12718,9 +12718,40 @@ function Main(_ref3) {
   }
   var discover_cards = configState.discover_cards;
   var news_cards = configState.news_cards;
-  if (discover_cards.length > 4) {
-    console.error('discover_cards should not have a length higher than 4!');
-  }
+
+  // Get only 4 discover cards, and minimum 2 stories.
+  // Function to get N random elements from an array
+  var getRandomN = function getRandomN(arr, n) {
+    var shuffled = _toConsumableArray(arr).sort(function () {
+      return 0.5 - Math.random();
+    });
+    return shuffled.slice(0, n);
+  };
+  // Function to shuffle an array
+  var shuffleArray = function shuffleArray(arr) {
+    return arr.sort(function () {
+      return 0.5 - Math.random();
+    });
+  };
+
+  // Filtering cards that have type === 'stories'
+  var storyCards = discover_cards.filter(function (card) {
+    return card.type === 'stories';
+  });
+
+  // Filtering cards that have type !== 'stories'
+  var otherCards = discover_cards.filter(function (card) {
+    return card.type !== 'stories';
+  });
+
+  // Getting 2 random 'stories' cards
+  var randomStoryCards = getRandomN(storyCards, 2);
+
+  // Getting 2 random 'other' cards
+  var randomOtherCards = getRandomN(otherCards, 2);
+
+  // Combining the two arrays to get 4 cards to be displayed
+  var fourCardsToShow = shuffleArray([].concat(_toConsumableArray(randomStoryCards), _toConsumableArray(randomOtherCards)));
 
   // Setup the video sources
   var placeholder_video_src = configState.placeholder_video_src;
@@ -12836,7 +12867,7 @@ function Main(_ref3) {
     str: "Discover"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "section-discover__cards-wrapper"
-  }, discover_cards.map(function (card) {
+  }, fourCardsToShow.map(function (card) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(DiscoverCard, {
       key: card.id,
       card: card,

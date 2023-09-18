@@ -58,9 +58,34 @@ function Main({ lenis, setValue }) {
 	const discover_cards = configState.discover_cards
 	const news_cards = configState.news_cards
 
-	if (discover_cards.length > 4) {
-		console.error('discover_cards should not have a length higher than 4!')
+	// Get only 4 discover cards, and minimum 2 stories.
+	// Function to get N random elements from an array
+	const getRandomN = (arr, n) => {
+		const shuffled = [...arr].sort(() => 0.5 - Math.random())
+		return shuffled.slice(0, n)
 	}
+	// Function to shuffle an array
+	const shuffleArray = (arr) => {
+		return arr.sort(() => 0.5 - Math.random())
+	}
+
+	// Filtering cards that have type === 'stories'
+	const storyCards = discover_cards.filter((card) => card.type === 'stories')
+
+	// Filtering cards that have type !== 'stories'
+	const otherCards = discover_cards.filter((card) => card.type !== 'stories')
+
+	// Getting 2 random 'stories' cards
+	const randomStoryCards = getRandomN(storyCards, 2)
+
+	// Getting 2 random 'other' cards
+	const randomOtherCards = getRandomN(otherCards, 2)
+
+	// Combining the two arrays to get 4 cards to be displayed
+	const fourCardsToShow = shuffleArray([
+		...randomStoryCards,
+		...randomOtherCards,
+	])
 
 	// Setup the video sources
 	const placeholder_video_src = configState.placeholder_video_src
@@ -184,7 +209,7 @@ function Main({ lenis, setValue }) {
 						</a> */}
 					</div>
 					<div className='section-discover__cards-wrapper'>
-						{discover_cards.map((card) => (
+						{fourCardsToShow.map((card) => (
 							<DiscoverCard
 								key={card.id}
 								card={card}
