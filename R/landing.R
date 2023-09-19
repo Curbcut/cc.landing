@@ -71,9 +71,10 @@
 #' @param placeholder_video_src <`character`> External link to a publicly available
 #' mp4 video. The video will be used as the placeholder, until the user click on
 #' to watch the intro video. e.g. `https://s3.amazonaws.com/curbcut.public.resources/mtl_vid_placeholder.mp4`
-#' @param video_src <`character`> External link to a publicly available
-#' mp4 video. This is the full length official video the user will see when
-#' they click on to watch the intro video. e.g. `https://s3.amazonaws.com/curbcut.public.resources/mtl_vid_placeholder.mp4`
+#' @param video_src <`named list`> Every video must be named by the language it uses.
+#' The videos are as external link to a publicly available mp4 video. This is the
+#' full length official video the user will see when they click on to watch the
+#' intro video. e.g. `list(en = "https://s3.amazonaws.com/curbcut.public.resources/mtl_vid_en.mp4")`
 #'
 #' @return A ReactShiny input object.
 #' @export
@@ -95,6 +96,7 @@ landing_input <- function(inputId, pages, c_city_svg, news_cards,
   contributors <- jsonlite::toJSON(contributors)
   collabs <- jsonlite::toJSON(collabs)
   translation_df <- jsonlite::toJSON(translation_df)
+  video_src <- jsonlite::toJSON(video_src)
 
   # The input
   reactR::createReactShinyInput(

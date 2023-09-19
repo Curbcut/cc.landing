@@ -12751,13 +12751,19 @@ function Main(_ref3) {
 
   // Setup the video sources
   var placeholder_video_src = configState.placeholder_video_src;
-  var video_src = configState.video_src;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+    _useState2 = _slicedToArray(_useState, 2),
+    videoSrc = _useState2[0],
+    setVideoSrc = _useState2[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    setVideoSrc(configState.video_src[lang]);
+  }, [lang]); // Re-run the effect whenever `lang` changes
 
   // Setup the video
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    isModalOpen = _useState2[0],
-    setIsModalOpen = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    isModalOpen = _useState4[0],
+    setIsModalOpen = _useState4[1];
   var videoRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
 
   // Create a function to play the video which is used on clicks
@@ -12935,7 +12941,7 @@ function Main(_ref3) {
     controls: true,
     autoPlay: true
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("source", {
-    src: video_src,
+    src: videoSrc,
     type: "video/mp4"
   }))));
 }

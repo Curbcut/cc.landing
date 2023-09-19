@@ -90,7 +90,11 @@ function Main({ lenis, setValue }) {
 
 	// Setup the video sources
 	const placeholder_video_src = configState.placeholder_video_src
-	const video_src = configState.video_src
+	const [videoSrc, setVideoSrc] = useState(null)
+
+	useEffect(() => {
+		setVideoSrc(configState.video_src[lang])
+	}, [lang]) // Re-run the effect whenever `lang` changes
 
 	// Setup the video
 	const [isModalOpen, setIsModalOpen] = useState(false)
@@ -294,7 +298,7 @@ function Main({ lenis, setValue }) {
 						/>
 					</div>
 					<video ref={videoRef} controls autoPlay>
-						<source src={video_src} type='video/mp4' />
+						<source src={videoSrc} type='video/mp4' />
 					</video>
 				</dialog>
 			)}
