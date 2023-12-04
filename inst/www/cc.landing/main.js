@@ -13491,7 +13491,7 @@ var Landing = function Landing(_ref) {
     value = _ref.value,
     setValue = _ref.setValue;
   // Set language
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)('en'),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(configuration.lang || 'en'),
     _useState2 = _slicedToArray(_useState, 2),
     lang = _useState2[0],
     setLang = _useState2[1];

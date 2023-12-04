@@ -19,7 +19,7 @@ export const LanguageContext = createContext()
 
 const Landing = ({ configuration, value, setValue }) => {
 	// Set language
-	const [lang, setLang] = useState('en')
+	const [lang, setLang] = useState(configuration.lang || 'en')
 
 	// Set configState
 	const [configState, setConfigState] = useState(() => {
