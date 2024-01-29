@@ -6,6 +6,7 @@
 \usage{
 landing_input(
   inputId,
+  city_two_words,
   pages,
   c_city_svg,
   news_cards,
@@ -21,6 +22,9 @@ landing_input(
 }
 \arguments{
 \item{inputId}{<\code{character}> The ID of the input element.}
+
+\item{city_two_words}{<\code{character}> Two words of the city. It will take place
+as the big heading. If \verb{Metro Vancouver}, we will read "Explore Metro Vancouver".}
 
 \item{pages}{<\code{data.frame}>
 A data frame containing information about the pages. It should have the following columns:

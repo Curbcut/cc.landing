@@ -166,6 +166,8 @@ collabs <- tibble::tibble(
   name = c('The McGill Sustainability Systems Initiative', 'Centraide')
 )
 
+city_two_words <- "Metro Vancouver"
+
 ui <- fluidPage(
 
   tags$head(
@@ -178,6 +180,7 @@ ui <- fluidPage(
   ),
 
   landing_input("landing",
+                city_two_words = city_two_words,
                pages = pages,
                c_city_svg = c_city_svg,
                news_cards = news_cards,

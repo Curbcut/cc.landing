@@ -3,7 +3,10 @@
 #' The `landing_input` function generates a 'ReactShiny' input object for a
 #' Curbcut app. It encodes image data into base64 format and prepares several
 #' types of card data to be used in the landing page of the app.
+#'
 #' @param inputId <`character`> The ID of the input element.
+#' @param city_two_words <`character`> Two words of the city. It will take place
+#' as the big heading. If `Metro Vancouver`, we will read "Explore Metro Vancouver".
 #'
 #' @param pages <`data.frame`>
 #'   A data frame containing information about the pages. It should have the following columns:
@@ -78,7 +81,7 @@
 #'
 #' @return A ReactShiny input object.
 #' @export
-landing_input <- function(inputId, pages, c_city_svg, news_cards,
+landing_input <- function(inputId, city_two_words, pages, c_city_svg, news_cards,
                          discover_cards, team_cards, contributors,
                          collabs, translation_df, lang = "en",
                          placeholder_video_src, video_src) {
@@ -110,7 +113,8 @@ landing_input <- function(inputId, pages, c_city_svg, news_cards,
       script = "main.js"
     ),
     "",
-    list(pages = pages,
+    list(city_two_words = city_two_words,
+         pages = pages,
          c_city_svg = c_city_svg,
          news_cards = news_cards,
          discover_cards = discover_cards,

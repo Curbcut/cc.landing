@@ -12718,6 +12718,10 @@ function Main(_ref3) {
   }
   var discover_cards = configState.discover_cards;
   var news_cards = configState.news_cards;
+  var _configState$city_two = configState.city_two_words.split(' '),
+    _configState$city_two2 = _slicedToArray(_configState$city_two, 2),
+    firstWord = _configState$city_two2[0],
+    secondWord = _configState$city_two2[1];
 
   // // Get only 4 discover cards, and minimum 2 stories.
   // // Fisher-Yates (Knuth) Shuffle to shuffle an array
@@ -12821,10 +12825,10 @@ function Main(_ref3) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((react__WEBPACK_IMPORTED_MODULE_1___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("main", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "hero"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h1", {
-    className: "h1 main-title lang-en"
+    className: "h1 main-title"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "main-title__first-part"
-  }, "EXPLORE", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("br", null), "URBAN"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
+  }, "EXPLORE", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("br", null), firstWord), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "main-title__video",
     onClick: playVideo
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("video", {
@@ -12837,24 +12841,7 @@ function Main(_ref3) {
     type: "video/mp4"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", {
     className: "main-title__second-part"
-  }, "SUSTAIN\xADABILITY")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h1", {
-    className: "h1 main-title lang-fr"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
-    className: "main-title__first-part"
-  }, "EXPLORER LA"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
-    className: "main-title__video",
-    onClick: playVideo
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("video", {
-    autoPlay: true,
-    muted: true,
-    loop: true,
-    playsInline: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("source", {
-    src: placeholder_video_src,
-    type: "video/mp4"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", {
-    className: "main-title__second-part"
-  }, "DURABILIT\xC9", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("br", null), "URBAINE")), _toConsumableArray(Array(5)).map(function (e, i) {
+  }, secondWord)), _toConsumableArray(Array(5)).map(function (e, i) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", {
       key: i,
       className: "dot"
