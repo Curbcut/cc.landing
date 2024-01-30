@@ -175,6 +175,7 @@
 				@include mixins.tablet {
 					.grid > .column--cities {
 						display: block !important;
+						max-height: 170px;
 
 						.column__title {
 							display: block !important;

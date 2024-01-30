@@ -17,7 +17,8 @@ landing_input(
   translation_df,
   lang = "en",
   placeholder_video_src,
-  video_src
+  video_src,
+  show_cities = TRUE
 )
 }
 \arguments{
@@ -98,6 +99,9 @@ to watch the intro video. e.g. \verb{https://s3.amazonaws.com/curbcut.public.res
 The videos are as external link to a publicly available mp4 video. This is the
 full length official video the user will see when they click on to watch the
 intro video. e.g. \code{list(en = "https://s3.amazonaws.com/curbcut.public.resources/mtl_vid_en.mp4")}}
+
+\item{show_cities}{<\code{logical}> Should we be showing the list of Curbcut Cities
+in the footer? Defaults to TRUE.}
 }
 \value{
 A ReactShiny input object.

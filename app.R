@@ -191,7 +191,8 @@ ui <- fluidPage(
                collabs = collabs,
                placeholder_video_src = "https://s3.amazonaws.com/curbcut.public.resources/mtl_vid_placeholder.mp4",
                video_src = "https://s3.amazonaws.com/curbcut.public.resources/mtl_vid_placeholder.mp4",
-               lang = "fr"),
+               lang = "fr",
+               show_cities = FALSE),
 
   actionButton("lang", "lang", style = "position:absolute;z-index:99999;top:0px")
 )

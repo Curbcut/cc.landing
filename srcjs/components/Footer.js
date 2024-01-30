@@ -163,7 +163,6 @@ function Footer({ themes, pages, setValue }) {
 								<Translate str='Contact Us' />
 							</Link>
 						</div>
-
 						<div className='column'>
 							<div className='column__title'>
 								<Translate str='Newsletter' />
@@ -194,7 +193,6 @@ function Footer({ themes, pages, setValue }) {
 								</button>
 							</form>
 						</div>
-
 						<div className='column'>
 							<div className='column__title'>
 								<Translate str='Our collaborators' />
@@ -208,22 +206,23 @@ function Footer({ themes, pages, setValue }) {
 								/>
 							))}
 						</div>
-
-						<div className='column column--cities'>
-							<div className='column__title'>
-								<Translate str='Curbcut cities' />
+						{configState.show_cities && (
+							<div className='column column--cities'>
+								<div className='column__title'>
+									<Translate str='Curbcut cities' />
+								</div>
+								{cities.map((city, index) => (
+									<a href={city.href} key={city.id}>
+										<img
+											src={city.src}
+											alt={city.alt}
+											width='86'
+											height='38'
+										/>
+									</a>
+								))}
 							</div>
-							{cities.map((city, index) => (
-								<a href={city.href} key={city.id}>
-									<img
-										src={city.src}
-										alt={city.alt}
-										width='86'
-										height='38'
-									/>
-								</a>
-							))}
-						</div>
+						)}
 					</div>
 				</div>
 
