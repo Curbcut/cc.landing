@@ -12029,7 +12029,7 @@ function Footer(_ref3) {
       key: collab.id,
       alt: collab.name
     });
-  })), configState.show_cities && /*#__PURE__*/React.createElement("div", {
+  })), configState.show_cities[0] && /*#__PURE__*/React.createElement("div", {
     className: "column column--cities"
   }, /*#__PURE__*/React.createElement("div", {
     className: "column__title"

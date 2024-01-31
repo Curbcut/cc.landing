@@ -206,7 +206,7 @@ function Footer({ themes, pages, setValue }) {
 								/>
 							))}
 						</div>
-						{configState.show_cities && (
+						{configState.show_cities[0] && (
 							<div className='column column--cities'>
 								<div className='column__title'>
 									<Translate str='Curbcut cities' />
