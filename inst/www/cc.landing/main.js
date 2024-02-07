@@ -12694,8 +12694,11 @@ function NewsCard(_ref2) {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "news__title"
   }, card["title_".concat(lang)]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
-    className: "news__description"
-  }, card["text_".concat(lang)]), card.link ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("a", {
+    className: "news__description",
+    dangerouslySetInnerHTML: {
+      __html: card["text_".concat(lang)]
+    }
+  }), card.link ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("a", {
     className: "cta-text cta-text--underline",
     onClick: function onClick(e) {
       setValue({
