@@ -166,7 +166,8 @@ collabs <- tibble::tibble(
   name = c('The McGill Sustainability Systems Initiative', 'Centraide')
 )
 
-city_two_words <- "Metro Vancouver"
+h1_first_line <- list(en = "MONTREAL", fr = "RÉGION DE")
+h1_second_line <- list(en = "REGION", fr = "MONTRÉAL")
 
 ui <- fluidPage(
 
@@ -180,7 +181,8 @@ ui <- fluidPage(
   ),
 
   landing_input("landing",
-                city_two_words = city_two_words,
+                h1_first_line = h1_first_line,
+                h1_second_line = h1_second_line,
                pages = pages,
                c_city_svg = c_city_svg,
                news_cards = news_cards,

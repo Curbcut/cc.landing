@@ -60,7 +60,8 @@ function Main({ lenis, setValue }) {
 	}
 	const discover_cards = configState.discover_cards
 	const news_cards = configState.news_cards
-	const [firstWord, secondWord] = configState.city_two_words.split(' ')
+	const firstLine = configState.h1_first_line[lang]
+	const secondLine = configState.h1_second_line[lang]
 
 	// // Get only 4 discover cards, and minimum 2 stories.
 	// // Fisher-Yates (Knuth) Shuffle to shuffle an array
@@ -163,11 +164,9 @@ function Main({ lenis, setValue }) {
 		<React.Fragment>
 			<main>
 				<div className='hero'>
-					<h1 className='h1 main-title'>
+					<h1 className='h1 main-title lang-fr'>
 						<div className='main-title__first-part'>
-							EXPLORE
-							<br />
-							{firstWord}
+							{lang === 'en' ? 'EXPLORE THE' : 'EXPLORER LA'}
 						</div>
 						<div className='main-title__video' onClick={playVideo}>
 							<video autoPlay muted loop playsInline>
@@ -178,7 +177,9 @@ function Main({ lenis, setValue }) {
 							</video>
 						</div>
 						<span className='main-title__second-part'>
-							{secondWord}
+							{firstLine}
+							<br />
+							{secondLine}
 						</span>
 					</h1>
 

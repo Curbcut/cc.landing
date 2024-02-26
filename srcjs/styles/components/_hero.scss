@@ -88,7 +88,7 @@
 			}
 
 			&.lang-fr {
-				grid-template-columns: minmax(50%, 1fr) 200px;
+				grid-template-columns: minmax(50%, 1fr) 250px;
 				grid-column-gap: 28px;
 
 				@include mixins.laptop {
@@ -113,8 +113,9 @@
 
 				.main-title__video {
 					grid-area: 2 / 2 / 3 / 3;
-					width: 200px;
-					height: 215px;
+					width: 250px;
+					height: 100%;
+					max-height: 215px;
 
 					@include mixins.mobile {
 						width: 170px;
