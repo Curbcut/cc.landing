@@ -87,7 +87,8 @@
 				text-align: center;
 			}
 
-			&.lang-fr {
+			// This was previously lang-fr, but now added to ALL situations
+			&.all-langs {
 				grid-template-columns: minmax(50%, 1fr) 250px;
 				grid-column-gap: 28px;
 

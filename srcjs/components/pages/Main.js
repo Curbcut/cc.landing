@@ -164,7 +164,7 @@ function Main({ lenis, setValue }) {
 		<React.Fragment>
 			<main>
 				<div className='hero'>
-					<h1 className='h1 main-title lang-fr'>
+					<h1 className='h1 main-title all-langs'>
 						<div className='main-title__first-part'>
 							{lang === 'en' ? 'EXPLORE THE' : 'EXPLORER LA'}
 						</div>
