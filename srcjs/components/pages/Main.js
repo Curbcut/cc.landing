@@ -231,48 +231,39 @@ function Main({ lenis, setValue }) {
 						))}
 					</div>
 				</section>
-
-				<section className='section section-news'>
-					<div>
-						<span className='section__title'>
-							<Translate str='Latest news' />
-						</span>
-					</div>
-					<div>
-						<div id='swipe-cta-prev' className='swipe-cta'>
-							<img
-								src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMTUiIHZpZXdCb3g9IjAgMCAyNCAxNSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNC40MDA2IDE0LjQwMDFMMTQuNDAwNiAxMC40ODVDMTQuNDAwNiA5Ljk5NjM4IDE0Ljc5NjkgOS42MDAwNiAxNS4yODU1IDkuNjAwMDZMMTkuMiA5LjYwMDA2TDE5LjIgNS42ODQ5NUMxOS4yIDUuMTk2MzUgMTkuNTk2MyA0LjgwMDAzIDIwLjA4NDkgNC44MDAwM0wyNCA0LjgwMDAzTDI0IDBMMTkuMiAtMi4wOTgxNmUtMDdMMTkuMiAzLjkxNTEyQzE5LjIgNC40MDM3MiAxOC44MDM3IDQuODAwMDMgMTguMzE1MSA0LjgwMDAzTDE1LjI4NDkgNC44MDAwM0MxNC45OTMzIDQuODAwMDMgMTQuNjQwOSA0LjgwMDI3IDE0LjQwNDEgNC44MDA0NkwxNC40MDQxIDYuMjI4MzdMMTQuNDAwNiA2LjIyODM3TDE0LjQwMDYgOC43MTUxNUMxNC40MDA2IDkuMjAzNzUgMTQuMDA0MyA5LjYwMDA2IDEzLjUxNTcgOS42MDAwNkwxMC40ODU1IDkuNjAwMDZDOS45OTY4NiA5LjYwMDA2IDkuNjAwNTQgOS4yMDM3NSA5LjYwMDU0IDguNzE1MTVMOS42MDA1NCA2LjIyODM3TDkuNTk3MTcgNi4yMjgzN0w5LjU5NzE3IDQuODAzOTlMNy44MTY3OCA0LjgwMzk5TDcuODE2NzggNC44MDA2Nkw1LjY4NDc5IDQuODAwNjZDNS4xOTYxOSA0LjgwMDY2IDQuNzk5ODggNC40MDQzNSA0Ljc5OTg4IDMuOTE1NzVMNC43OTk4OCAwLjAwMDYzMDc3TC0wLjAwMDE1NDQ5NSAwLjAwMDYzMDU2TC0wLjAwMDE1NDcwNSA0LjgwMDY2TDMuOTE0OTYgNC44MDA2NkM0LjQwMzU2IDQuODAwNjYgNC43OTk4OCA1LjE5Njk4IDQuNzk5ODggNS42ODU1OEw0Ljc5OTg4IDkuNjAwNjlMOC43MTQ5OSA5LjYwMDY5QzkuMjAzNTkgOS42MDA2OSA5LjU5OTkxIDkuOTk3MDEgOS41OTk5MSAxMC40ODU2TDkuNTk5OTEgMTQuNDAwN0wxNC40MDA2IDE0LjQwMDdMMTQuNDAwNiAxNC40MDAxWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+'
-								alt=''
-								width='32'
-								height='19'
-							/>
+				{news_cards && news_cards.length > 0 && (
+					<section className='section section-news'>
+						<div>
+							<span className='section__title'>
+								<Translate str='Latest news' />
+							</span>
 						</div>
-						<div id='swipe-cta-next' className='swipe-cta'>
-							<img
-								src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMTUiIHZpZXdCb3g9IjAgMCAyNCAxNSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNC40MDA2IDE0LjQwMDFMMTQuNDAwNiAxMC40ODVDMTQuNDAwNiA5Ljk5NjM4IDE0Ljc5NjkgOS42MDAwNiAxNS4yODU1IDkuNjAwMDZMMTkuMiA5LjYwMDA2TDE5LjIgNS42ODQ5NUMxOS4yIDUuMTk2MzUgMTkuNTk2MyA0LjgwMDAzIDIwLjA4NDkgNC44MDAwM0wyNCA0LjgwMDAzTDI0IDBMMTkuMiAtMi4wOTgxNmUtMDdMMTkuMiAzLjkxNTEyQzE5LjIgNC40MDM3MiAxOC44MDM3IDQuODAwMDMgMTguMzE1MSA0LjgwMDAzTDE1LjI4NDkgNC44MDAwM0MxNC45OTMzIDQuODAwMDMgMTQuNjQwOSA0LjgwMDI3IDE0LjQwNDEgNC44MDA0NkwxNC40MDQxIDYuMjI4MzdMMTQuNDAwNiA2LjIyODM3TDE0LjQwMDYgOC43MTUxNUMxNC40MDA2IDkuMjAzNzUgMTQuMDA0MyA5LjYwMDA2IDEzLjUxNTcgOS42MDAwNkwxMC40ODU1IDkuNjAwMDZDOS45OTY4NiA5LjYwMDA2IDkuNjAwNTQgOS4yMDM3NSA5LjYwMDU0IDguNzE1MTVMOS42MDA1NCA2LjIyODM3TDkuNTk3MTcgNi4yMjgzN0w5LjU5NzE3IDQuODAzOTlMNy44MTY3OCA0LjgwMzk5TDcuODE2NzggNC44MDA2Nkw1LjY4NDc5IDQuODAwNjZDNS4xOTYxOSA0LjgwMDY2IDQuNzk5ODggNC40MDQzNSA0Ljc5OTg4IDMuOTE1NzVMNC43OTk4OCAwLjAwMDYzMDc3TC0wLjAwMDE1NDQ5NSAwLjAwMDYzMDU2TC0wLjAwMDE1NDcwNSA0LjgwMDY2TDMuOTE0OTYgNC44MDA2NkM0LjQwMzU2IDQuODAwNjYgNC43OTk4OCA1LjE5Njk4IDQuNzk5ODggNS42ODU1OEw0Ljc5OTg4IDkuNjAwNjlMOC43MTQ5OSA5LjYwMDY5QzkuMjAzNTkgOS42MDA2OSA5LjU5OTkxIDkuOTk3MDEgOS41OTk5MSAxMC40ODU2TDkuNTk5OTEgMTQuNDAwN0wxNC40MDA2IDE0LjQwMDdMMTQuNDAwNiAxNC40MDAxWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+'
-								alt=''
-								width='32'
-								height='19'
-							/>
-						</div>
-						<div
-							id='news-slider'
-							className='swiper'
-							ref={sliderRef}
-						>
-							<div className='swiper-wrapper'>
-								{news_cards.map((card) => (
-									<NewsCard
-										key={card.id}
-										card={card}
-										lang={lang}
-										setValue={setValue}
-									/>
-								))}
+						<div>
+							<div id='swipe-cta-prev' className='swipe-cta'>
+								<img src='' alt='' width='32' height='19' />
+							</div>
+							<div id='swipe-cta-next' className='swipe-cta'>
+								<img src='' alt='' width='32' height='19' />
+							</div>
+							<div
+								id='news-slider'
+								className='swiper'
+								ref={sliderRef}
+							>
+								<div className='swiper-wrapper'>
+									{news_cards.map((card) => (
+										<NewsCard
+											key={card.id}
+											card={card}
+											lang={lang}
+											setValue={setValue}
+										/>
+									))}
+								</div>
 							</div>
 						</div>
-					</div>
-				</section>
+					</section>
+				)}
 			</main>
 			{isModalOpen && (
 				<dialog id='video-modal' open onClick={handleDialogClick}>

@@ -87,7 +87,7 @@
 #'
 #' @return A ReactShiny input object.
 #' @export
-landing_input <- function(inputId, h1_first_line, h1_second_line, pages, c_city_svg, news_cards,
+landing_input <- function(inputId, h1_first_line, h1_second_line, pages, c_city_svg, news_cards = NULL,
                          discover_cards, team_cards, contributors,
                          collabs, translation_df, lang = "en",
                          placeholder_video_src, video_src, show_cities = TRUE) {

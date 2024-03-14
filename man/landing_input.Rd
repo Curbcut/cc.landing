@@ -10,7 +10,7 @@ landing_input(
   h1_second_line,
   pages,
   c_city_svg,
-  news_cards,
+  news_cards = NULL,
   discover_cards,
   team_cards,
   contributors,

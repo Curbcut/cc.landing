@@ -185,7 +185,7 @@ ui <- fluidPage(
                 h1_second_line = h1_second_line,
                pages = pages,
                c_city_svg = c_city_svg,
-               news_cards = news_cards,
+               # news_cards = news_cards,
                discover_cards = discover_cards,
                team_cards = team_cards,
                contributors = contributors,
