@@ -97,8 +97,9 @@ function Nav({ lenis, setLang, setValue }) {
 									<img
 										src={c_city_svg}
 										alt=''
-										width='115'
-										height='24'
+										style={{
+											height: '21px',
+										}}
 									/>
 								</Link>
 							</div>

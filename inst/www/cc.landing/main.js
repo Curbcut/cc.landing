@@ -12188,8 +12188,9 @@ function Nav(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("img", {
     src: c_city_svg,
     alt: "",
-    width: "115",
-    height: "24"
+    style: {
+      height: '21px'
+    }
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
     to: "/about",
     className: "cta-text cta-text--underline"
