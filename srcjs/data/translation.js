@@ -76,8 +76,8 @@ export const translation_df = [
 		fr: "S'INSCRIRE",
 	},
 	{
-		en: 'Our collaborators',
-		fr: 'Nos partenaires',
+		en: 'Collaborators',
+		fr: 'Partenaires',
 	},
 	{
 		en: 'Curbcut cities',

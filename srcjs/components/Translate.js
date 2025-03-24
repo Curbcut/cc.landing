@@ -1,36 +1,39 @@
-import { useContext } from 'react'
-import { LanguageContext } from '../landing'
-import he from 'he'
+import { useContext } from "react";
+import { LanguageContext } from "../landing";
+import he from "he";
 
 function Translate({ str }) {
-	// Use the useContext hook to get the language from the LanguageContext
-	const contextValue = useContext(LanguageContext)
-	const lang = contextValue.lang
-	const configState = contextValue.configState
-	if (!configState) {
-		return null
-	}
-	const translation_df = configState.translation_df
+  // Use the useContext hook to get the language from the LanguageContext
+  const contextValue = useContext(LanguageContext);
+  const lang = contextValue.lang;
+  const configState = contextValue.configState;
+  if (!configState) {
+    return null;
+  }
+  const translation_df = configState.translation_df;
 
-	// Find the translation in the translation_df
-	const translation = translation_df.find((row) => row.en === str)
+  // Find the translation in the translation_df
+  const translation = translation_df.find((row) => row.en === str);
 
-	let out = translation === undefined ? str : translation[lang]
+  // Return same language if translation is not found
+  if (!translation) return str;
 
-	// Decode HTML entities if they exist in the translation
-	if (out.includes('&')) {
-		out = he.decode(out)
-	}
+  let out = translation === undefined ? str : translation[lang];
 
-	// Render HTML if it exists in the translation
-	if (out.includes('<')) {
-		out = <span dangerouslySetInnerHTML={{ __html: out }} />
-	} else {
-		out = <span>{out}</span>
-	}
+  // Decode HTML entities if they exist in the translation
+  if (out.includes("&")) {
+    out = he.decode(out);
+  }
 
-	// Return the translation for the language
-	return out
+  // Render HTML if it exists in the translation
+  if (out.includes("<")) {
+    out = <span dangerouslySetInnerHTML={{ __html: out }} />;
+  } else {
+    out = <span>{out}</span>;
+  }
+
+  // Return the translation for the language
+  return out;
 }
 
-export default Translate
+export default Translate;
