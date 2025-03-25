@@ -139,4 +139,8 @@ export const translation_df = [
 		en: 'Home',
 		fr: 'Accueil',
 	},
+	{
+		en: 'POWERED BY',
+		fr: 'PROPULSÉ PAR',
+	},
 ]

@@ -15,6 +15,9 @@ function Translate({ str }) {
 	// Find the translation in the translation_df
 	const translation = translation_df.find((row) => row.en === str)
 
+	  // Return same language if translation is not found
+  if (!translation) return str;
+
 	let out = translation === undefined ? str : translation[lang]
 
 	// Decode HTML entities if they exist in the translation

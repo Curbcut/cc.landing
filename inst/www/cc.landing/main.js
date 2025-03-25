@@ -11733,70 +11733,6 @@ function createMemoryRouter(routes, opts) {
 
 /***/ }),
 
-/***/ "./srcjs/components/ChooseMap.js":
-/*!***************************************!*\
-  !*** ./srcjs/components/ChooseMap.js ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Translate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Translate */ "./srcjs/components/Translate.js");
-
-
-function ChooseMap(_ref) {
-  var lenis = _ref.lenis;
-  var chooseMapRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  var handleChooseMapClick = function handleChooseMapClick() {
-    var categoriesMenu = document.getElementById('categories-menu');
-    lenis.stop();
-    document.body.classList.add('bg-background');
-    if (categoriesMenu) {
-      categoriesMenu.classList.add('is-visible');
-    }
-  };
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    var categoriesMenu = document.getElementById('categories-menu');
-    var handleCloseCtaClick = function handleCloseCtaClick() {
-      lenis.start();
-      document.body.classList.remove('bg-background');
-      if (categoriesMenu) {
-        categoriesMenu.classList.remove('is-visible');
-      }
-    };
-    var closeCta = categoriesMenu ? categoriesMenu.querySelector('.close-cta') : null;
-    if (closeCta) {
-      closeCta.addEventListener('click', handleCloseCtaClick);
-    }
-
-    // Clean up the event listener on component unmount
-    return function () {
-      if (closeCta) {
-        closeCta.removeEventListener('click', handleCloseCtaClick);
-      }
-    };
-  }, [lenis]); // Empty dependency array to run this effect only once on component mount
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    id: "choose-map-mobile-cta",
-    ref: chooseMapRef,
-    onClick: handleChooseMapClick,
-    style: {
-      cursor: 'pointer'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Translate__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    str: "Choose your map"
-  }));
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ChooseMap);
-
-/***/ }),
-
 /***/ "./srcjs/components/Footer.js":
 /*!************************************!*\
   !*** ./srcjs/components/Footer.js ***!
@@ -11812,7 +11748,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _landing__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../landing */ "./srcjs/landing.jsx");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var _assets_mssi_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../assets/mssi.png */ "./srcjs/assets/mssi.png");
+/* harmony import */ var _assets_cisss_jpg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../assets/cisss.jpg */ "./srcjs/assets/cisss.jpg");
+/* harmony import */ var _assets_laval_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../assets/laval.png */ "./srcjs/assets/laval.png");
+/* harmony import */ var _assets_prds_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../assets/prds.png */ "./srcjs/assets/prds.png");
+
+
+
+
 
 
 
@@ -11821,24 +11765,19 @@ var ThemesDesktop = function ThemesDesktop(_ref) {
   var themes = _ref.themes,
     pages = _ref.pages,
     setValue = _ref.setValue;
-  return themes.map(function (theme, i) {
-    // List every page corresponding to the theme
-    var theme_pages = pages.filter(function (page) {
+  return themes.filter(function (theme) {
+    return theme !== "Explorateur de lieux";
+  }) // Exclude Place Explorer
+  .map(function (theme, i) {
+    // Get the current theme data
+    var themeData = pages.find(function (page) {
       return page.theme === theme;
-    }).map(function (page, j) {
-      return /*#__PURE__*/React.createElement("span", {
-        key: "".concat(i, "-").concat(j),
-        onClick: function onClick() {
-          return setValue({
-            event: 'page_link',
-            page: page.id
-          });
-        },
-        className: "cta-text-lower"
-      }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
-        str: page.nav_title
-      }));
     });
+
+    // If no theme data or no subcategories, skip
+    if (!themeData || !themeData.subcategories) return null;
+
+    // Group pages by subcategory
     return /*#__PURE__*/React.createElement("div", {
       className: "column",
       key: i
@@ -11846,33 +11785,48 @@ var ThemesDesktop = function ThemesDesktop(_ref) {
       className: "column__title"
     }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
       str: theme
-    })), theme_pages);
+    })), themeData.subcategories.map(function (subcategory, subIndex) {
+      return /*#__PURE__*/React.createElement("div", {
+        key: subIndex,
+        className: "subcategory-group"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "subcategory-title"
+      }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        str: subcategory.title
+      })), subcategory.pages.map(function (page, pageIndex) {
+        return /*#__PURE__*/React.createElement("span", {
+          key: "".concat(i, "-").concat(subIndex, "-").concat(pageIndex),
+          onClick: function onClick() {
+            return setValue({
+              event: "page_link",
+              page: page.id
+            });
+          },
+          className: "cta-text-lower"
+        }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
+          str: page.title
+        }));
+      }));
+    }));
   });
 };
 
-// Define the ThemesMobile component
+// Define the ThemesMobile component with subcategories
 var ThemesMobile = function ThemesMobile(_ref2) {
   var themes = _ref2.themes,
     pages = _ref2.pages,
     setValue = _ref2.setValue;
-  return themes.map(function (theme, i) {
-    // List every page corresponding to the theme
-    var theme_pages = pages.filter(function (page) {
+  return themes.filter(function (theme) {
+    return theme !== "Explorateur de lieux";
+  }) // Exclude Place Explorer
+  .map(function (theme, i) {
+    // Get the current theme data
+    var themeData = pages.find(function (page) {
       return page.theme === theme;
-    }).map(function (page, j) {
-      return /*#__PURE__*/React.createElement("span", {
-        key: "".concat(i, "-").concat(j),
-        onClick: function onClick() {
-          return setValue({
-            event: 'page_link',
-            page: page.id
-          });
-        },
-        className: "cta-text-lower"
-      }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
-        str: page.nav_title
-      }));
     });
+
+    // If no theme data or no subcategories, skip
+    if (!themeData || !themeData.subcategories) return null;
     return /*#__PURE__*/React.createElement("details", {
       className: "nav-item",
       key: i
@@ -11884,7 +11838,33 @@ var ThemesMobile = function ThemesMobile(_ref2) {
       str: theme
     })), /*#__PURE__*/React.createElement("span", {
       className: "plus-sign"
-    })), /*#__PURE__*/React.createElement("div", null, theme_pages));
+    })), /*#__PURE__*/React.createElement("div", {
+      className: "subcategories-container"
+    }, themeData.subcategories.map(function (subcategory, subIndex) {
+      return /*#__PURE__*/React.createElement("div", {
+        key: subIndex,
+        className: "subcategory-group"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "subcategory-title"
+      }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
+        str: subcategory.title
+      })), /*#__PURE__*/React.createElement("div", {
+        className: "pages-container"
+      }, subcategory.pages.map(function (page, pageIndex) {
+        return /*#__PURE__*/React.createElement("span", {
+          key: "".concat(i, "-").concat(subIndex, "-").concat(pageIndex),
+          onClick: function onClick() {
+            return setValue({
+              event: "page_link",
+              page: page.id
+            });
+          },
+          className: "cta-text-lower"
+        }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
+          str: page.title
+        }));
+      })));
+    })));
   });
 };
 function Footer(_ref3) {
@@ -11899,15 +11879,15 @@ function Footer(_ref3) {
   }
   var collabs = configState.collabs;
   var cities = [{
-    id: 'Montréal',
-    href: 'https://montreal.curbcut.ca',
-    src: 'data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MyAzOCI+CiAgPGcgY2xpcC1wYXRoPSJ1cmwoI2EpIj4KICAgIDxwYXRoIGQ9Ik0yMi44NzggMTguODU3Yy0yLjI3OS0uMDAyLTQuMTI2LTEuODgtNC4xMjYtNC4xOTZWLS4wMDJIMFYxNC44NWMwIDIuMzE3IDEuODUgNC4xOTYgNC4xMzEgNC4xOTZIMTQuNDdjMi4yODEgMCA0LjEzMiAxLjg4IDQuMTMyIDQuMTk2djEwLjU2MmMwIDIuMzE3IDEuODUgNC4xOTYgNC4xMyA0LjE5Nkg5M1YxOC44NTdIMjIuODc4WiIgZmlsbD0iI0UwODU2NSIvPgogICAgPHBhdGggZD0iTTIyLjE0MiAyMi4yOTVoMi4zNmwzLjYyMyAxMC41MTRoLjAzNGwzLjYyNC0xMC41MTRoMi4zNTl2MTIuMzI5aC0xLjU3OXYtNy44NTZjMC0uNzA1LjAxOC0xLjQxLjAxOC0yLjExNGgtLjAzNGwtMy40ODYgOS45N2gtMS44MzlsLTMuNDg2LTkuOTdoLS4wMzRjMCAuNzA1LjAxOCAxLjQxLjAxOCAyLjExNHY3Ljg1NkgyMi4xNHYtMTIuMzNoLjAwMVpNMzUuNzE5IDI5Ljc4MmMwLTMuMjU5IDIuMDk5LTUuMTA4IDQuNzM0LTUuMTA4IDIuNjM2IDAgNC43MzQgMS44NSA0LjczNCA1LjEwOCAwIDMuMjU4LTIuMDk4IDUuMTA3LTQuNzM0IDUuMTA3LTIuNjM1IDAtNC43MzQtMS44NS00LjczNC01LjEwOFptNC43MzQgMy43MzNjMS43MzQgMCAzLjEwNC0xLjI2OCAzLjEwNC0zLjczMyAwLTIuNDY2LTEuMzctMy43MzQtMy4xMDQtMy43MzRzLTMuMTAzIDEuMjY4LTMuMTAzIDMuNzM0YzAgMi40NjUgMS4zNyAzLjczMyAzLjEwMyAzLjczM1pNNDYuNTQgMjQuOTM4aDEuNTI2djEuODE0aC4wMzVjLjU3Mi0xLjI4NiAxLjY4Mi0yLjA3OCAzLjE1Ni0yLjA3OCAyLjAxMiAwIDMuMjI2IDEuNDYyIDMuMjI2IDQuMTM5djUuODEyaC0xLjU2MXYtNS42NTRjMC0yLjA5Ni0uOTAyLTIuODg4LTIuMTUtMi44ODgtMS4zNTMgMC0yLjY3Ljk1LTIuNjcgMy4yOTN2NS4yNDloLTEuNTZ2LTkuNjg3aC0uMDAyWk01Ny4yIDMyLjA3MXYtNS43MjRoLTEuOTA3di0xLjQxaDEuOTA4di0yLjY0MWgxLjU2djIuNjQyaDMuMDE5djEuNDA5aC0zLjAxOHY1LjcyNGMwIC44MjguNDE1IDEuMTQ1IDEuMTQ1IDEuMTQ1aDEuOTZ2MS40MDloLTIuMTM0Yy0xLjY2NSAwLTIuNTMyLS44NDYtMi41MzItMi41NTRaTTYyLjg5MSAyNC45MzhoMS41Mjd2MS42OTFoLjAzNGMuNDUxLTEuMDIyLjk3Mi0xLjY5MSAyLjQ5Ni0xLjY5MWguOTJ2MS40MDlINjYuNzRjLTEuNTk1IDAtMi4yODkuOTY5LTIuMjg5IDIuODE4djUuNDZoLTEuNTZ2LTkuNjg3Wk02Ny45ODEgMjkuNzgyYzAtMy4xMTggMS45MDgtNS4xMDggNC42NDgtNS4xMDggMi41NjYgMCA0LjUyNiAxLjcyNiA0LjUyNiA0LjU5N3YxLjAzOUg2OS42M2MuMTIxIDEuODE0IDEuMjE0IDMuMjA1IDMuMDM0IDMuMjA1IDEuMzE5IDAgMi4zNDEtLjcyMyAyLjcyMy0xLjg2N2gxLjY4MWMtLjM5OSAxLjkwMi0yLjEzMyAzLjI0LTQuNDA0IDMuMjQtMi44MDggMC00LjY4MS0yLjAyNi00LjY4MS01LjEwOGwtLjAwMi4wMDJabTcuNTQzLS44MjhjMC0xLjcyNi0xLjA3NS0yLjkwNi0yLjg0My0yLjkwNi0xLjc2OSAwLTIuODA5IDEuMjY4LTMuMDE3IDIuOTA2aDUuODYyLS4wMDJabS0yLjI4OC03LjcxNWgxLjczNGwtMS43MzQgMi41ODloLTEuMzg4bDEuMzg4LTIuNTg5Wk04MS4xOTUgMzQuODljLTEuODIxIDAtMy4yNi0xLjA1Ny0zLjI2LTMuMDY1IDAtMi4xODMgMS43MzMtMy4wMyAzLjYyMy0zLjAzaDEuNTA4Yy45NTQgMCAxLjQ0LS40MDQgMS40NC0xLjE2MiAwLTEuMDU3LS45NTQtMS41ODUtMi4xNS0xLjU4NS0xLjQwNSAwLTIuMzkzLjcyMi0yLjQ5NiAyLjAyNWgtMS41NjFjLjEzOS0yLjA2IDEuNDc0LTMuNCA0LjA1Ny0zLjRzMy43MSAxLjM5MiAzLjcxIDMuMjk0VjMyLjZjMCAuNDU4LjE1Ni42MTYuNjA3LjYxNmguNDM0djEuNDA5aC0xLjAyM2MtLjkxOSAwLTEuNDkxLS41NjMtMS40OTEtMS40NDR2LS41NjNoLS4wMzVjLS42MDcgMS41NS0xLjg1NSAyLjI3MS0zLjM2MyAyLjI3MVptLjI5NC0xLjM3NWMxLjU3OSAwIDMuMDE3LTEuMDU3IDMuMDE3LTMuMzI4di0xLjA5MmgtLjAzNWMtLjMyOS43MDUtLjkzNSAxLjA1Ny0yLjA5OCAxLjA1N2gtLjc4Yy0xLjQ5MiAwLTIuMDMuNzkyLTIuMDMgMS42NzMgMCAuODguNTU1IDEuNjkyIDEuOTI2IDEuNjkydi0uMDAyWk04OC4yNDMgMjAuODY5aDEuNTZ2MTMuNzU2aC0xLjU2VjIwLjg2OVpNMTUuOTgxIDcuOTIzVjUuMzVoLTEuNzg1YS43Mi43MiAwIDAgMS0uNzE1LS43MjdWMi44MTVINS4yNzZ2MS44MTFhLjcyLjcyIDAgMCAxLS43MTUuNzI3SDIuNzcydjguMzM1aDEuNzg5YS43Mi43MiAwIDAgMSAuNzE1LjcyNnYxLjgxN2g4LjIwNXYtMS44MTdhLjcyLjcyIDAgMCAxIC43MTUtLjcyNmgxLjc4NXYtMi41NzVoLTIuNTM0djEuODE3YS43Mi43MiAwIDAgMS0uNzE2LjcyNkg2LjAyM2EuNzIuNzIgMCAwIDEtLjcxNS0uNzI2VjYuMTE3YS43Mi43MiAwIDAgMSAuNzE1LS43MjdoNi43MDhhLjcyLjcyIDAgMCAxIC43MTYuNzI3djEuODA2aDIuNTM0WiIgZmlsbD0iIzAwMCIvPgogIDwvZz4KICA8ZGVmcz4KICAgIDxjbGlwUGF0aCBpZD0iYSI+CiAgICAgIDxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0wIDBoOTN2MzhIMHoiLz4KICAgIDwvY2xpcFBhdGg+CiAgPC9kZWZzPgo8L3N2Zz4=',
-    alt: 'Curbcut Montréal'
+    id: "Montréal",
+    href: "https://montreal.curbcut.ca",
+    src: "data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MyAzOCI+CiAgPGcgY2xpcC1wYXRoPSJ1cmwoI2EpIj4KICAgIDxwYXRoIGQ9Ik0yMi44NzggMTguODU3Yy0yLjI3OS0uMDAyLTQuMTI2LTEuODgtNC4xMjYtNC4xOTZWLS4wMDJIMFYxNC44NWMwIDIuMzE3IDEuODUgNC4xOTYgNC4xMzEgNC4xOTZIMTQuNDdjMi4yODEgMCA0LjEzMiAxLjg4IDQuMTMyIDQuMTk2djEwLjU2MmMwIDIuMzE3IDEuODUgNC4xOTYgNC4xMyA0LjE5Nkg5M1YxOC44NTdIMjIuODc4WiIgZmlsbD0iI0UwODU2NSIvPgogICAgPHBhdGggZD0iTTIyLjE0MiAyMi4yOTVoMi4zNmwzLjYyMyAxMC41MTRoLjAzNGwzLjYyNC0xMC41MTRoMi4zNTl2MTIuMzI5aC0xLjU3OXYtNy44NTZjMC0uNzA1LjAxOC0xLjQxLjAxOC0yLjExNGgtLjAzNGwtMy40ODYgOS45N2gtMS44MzlsLTMuNDg2LTkuOTdoLS4wMzRjMCAuNzA1LjAxOCAxLjQxLjAxOCAyLjExNHY3Ljg1NkgyMi4xNHYtMTIuMzNoLjAwMVpNMzUuNzE5IDI5Ljc4MmMwLTMuMjU5IDIuMDk5LTUuMTA4IDQuNzM0LTUuMTA4IDIuNjM2IDAgNC43MzQgMS44NSA0LjczNCA1LjEwOCAwIDMuMjU4LTIuMDk4IDUuMTA3LTQuNzM0IDUuMTA3LTIuNjM1IDAtNC43MzQtMS44NS00LjczNC01LjEwOFptNC43MzQgMy43MzNjMS43MzQgMCAzLjEwNC0xLjI2OCAzLjEwNC0zLjczMyAwLTIuNDY2LTEuMzctMy43MzQtMy4xMDQtMy43MzRzLTMuMTAzIDEuMjY4LTMuMTAzIDMuNzM0YzAgMi40NjUgMS4zNyAzLjczMyAzLjEwMyAzLjczM1pNNDYuNTQgMjQuOTM4aDEuNTI2djEuODE0aC4wMzVjLjU3Mi0xLjI4NiAxLjY4Mi0yLjA3OCAzLjE1Ni0yLjA3OCAyLjAxMiAwIDMuMjI2IDEuNDYyIDMuMjI2IDQuMTM5djUuODEyaC0xLjU2MXYtNS42NTRjMC0yLjA5Ni0uOTAyLTIuODg4LTIuMTUtMi44ODgtMS4zNTMgMC0yLjY3Ljk1LTIuNjcgMy4yOTN2NS4yNDloLTEuNTZ2LTkuNjg3aC0uMDAyWk01Ny4yIDMyLjA3MXYtNS43MjRoLTEuOTA3di0xLjQxaDEuOTA4di0yLjY0MWgxLjU2djIuNjQyaDMuMDE5djEuNDA5aC0zLjAxOHY1LjcyNGMwIC44MjguNDE1IDEuMTQ1IDEuMTQ1IDEuMTQ1aDEuOTZ2MS40MDloLTIuMTM0Yy0xLjY2NSAwLTIuNTMyLS44NDYtMi41MzItMi41NTRaTTYyLjg5MSAyNC45MzhoMS41Mjd2MS42OTFoLjAzNGMuNDUxLTEuMDIyLjk3Mi0xLjY5MSAyLjQ5Ni0xLjY5MWguOTJ2MS40MDlINjYuNzRjLTEuNTk1IDAtMi4yODkuOTY5LTIuMjg5IDIuODE4djUuNDZoLTEuNTZ2LTkuNjg3Wk02Ny45ODEgMjkuNzgyYzAtMy4xMTggMS45MDgtNS4xMDggNC42NDgtNS4xMDggMi41NjYgMCA0LjUyNiAxLjcyNiA0LjUyNiA0LjU5N3YxLjAzOUg2OS42M2MuMTIxIDEuODE0IDEuMjE0IDMuMjA1IDMuMDM0IDMuMjA1IDEuMzE5IDAgMi4zNDEtLjcyMyAyLjcyMy0xLjg2N2gxLjY4MWMtLjM5OSAxLjkwMi0yLjEzMyAzLjI0LTQuNDA0IDMuMjQtMi44MDggMC00LjY4MS0yLjAyNi00LjY4MS01LjEwOGwtLjAwMi4wMDJabTcuNTQzLS44MjhjMC0xLjcyNi0xLjA3NS0yLjkwNi0yLjg0My0yLjkwNi0xLjc2OSAwLTIuODA5IDEuMjY4LTMuMDE3IDIuOTA2aDUuODYyLS4wMDJabS0yLjI4OC03LjcxNWgxLjczNGwtMS43MzQgMi41ODloLTEuMzg4bDEuMzg4LTIuNTg5Wk04MS4xOTUgMzQuODljLTEuODIxIDAtMy4yNi0xLjA1Ny0zLjI2LTMuMDY1IDAtMi4xODMgMS43MzMtMy4wMyAzLjYyMy0zLjAzaDEuNTA4Yy45NTQgMCAxLjQ0LS40MDQgMS40NC0xLjE2MiAwLTEuMDU3LS45NTQtMS41ODUtMi4xNS0xLjU4NS0xLjQwNSAwLTIuMzkzLjcyMi0yLjQ5NiAyLjAyNWgtMS41NjFjLjEzOS0yLjA2IDEuNDc0LTMuNCA0LjA1Ny0zLjRzMy43MSAxLjM5MiAzLjcxIDMuMjk0VjMyLjZjMCAuNDU4LjE1Ni42MTYuNjA3LjYxNmguNDM0djEuNDA5aC0xLjAyM2MtLjkxOSAwLTEuNDkxLS41NjMtMS40OTEtMS40NDR2LS41NjNoLS4wMzVjLS42MDcgMS41NS0xLjg1NSAyLjI3MS0zLjM2MyAyLjI3MVptLjI5NC0xLjM3NWMxLjU3OSAwIDMuMDE3LTEuMDU3IDMuMDE3LTMuMzI4di0xLjA5MmgtLjAzNWMtLjMyOS43MDUtLjkzNSAxLjA1Ny0yLjA5OCAxLjA1N2gtLjc4Yy0xLjQ5MiAwLTIuMDMuNzkyLTIuMDMgMS42NzMgMCAuODguNTU1IDEuNjkyIDEuOTI2IDEuNjkydi0uMDAyWk04OC4yNDMgMjAuODY5aDEuNTZ2MTMuNzU2aC0xLjU2VjIwLjg2OVpNMTUuOTgxIDcuOTIzVjUuMzVoLTEuNzg1YS43Mi43MiAwIDAgMS0uNzE1LS43MjdWMi44MTVINS4yNzZ2MS44MTFhLjcyLjcyIDAgMCAxLS43MTUuNzI3SDIuNzcydjguMzM1aDEuNzg5YS43Mi43MiAwIDAgMSAuNzE1LjcyNnYxLjgxN2g4LjIwNXYtMS44MTdhLjcyLjcyIDAgMCAxIC43MTUtLjcyNmgxLjc4NXYtMi41NzVoLTIuNTM0djEuODE3YS43Mi43MiAwIDAgMS0uNzE2LjcyNkg2LjAyM2EuNzIuNzIgMCAwIDEtLjcxNS0uNzI2VjYuMTE3YS43Mi43MiAwIDAgMSAuNzE1LS43MjdoNi43MDhhLjcyLjcyIDAgMCAxIC43MTYuNzI3djEuODA2aDIuNTM0WiIgZmlsbD0iIzAwMCIvPgogIDwvZz4KICA8ZGVmcz4KICAgIDxjbGlwUGF0aCBpZD0iYSI+CiAgICAgIDxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0wIDBoOTN2MzhIMHoiLz4KICAgIDwvY2xpcFBhdGg+CiAgPC9kZWZzPgo8L3N2Zz4=",
+    alt: "Curbcut Montréal"
   }, {
-    id: 'Toronto',
-    href: 'https://toronto.curbcut.ca',
-    src: 'data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NiAzOCI+CiAgPGcgY2xpcC1wYXRoPSJ1cmwoI2EpIj4KICAgIDxwYXRoIGQ9Ik0yMy4wODUgMTguNzVjLTIuMjc5LS4wMDItNC4xMjctMS44NjktNC4xMjctNC4xNzFWMEguMTk4djE0Ljc2OGMwIDIuMzA0IDEuODUgNC4xNzIgNC4xMzIgNC4xNzJIMTQuNjc0YzIuMjgxIDAgNC4xMzIgMS44NjkgNC4xMzIgNC4xNzJ2MTAuNTAxYzAgMi4zMDMgMS44NSA0LjE3MiA0LjEzMyA0LjE3Mkg4NlYxOC43NUgyMy4wODVaIiBmaWxsPSIjNzNBRDgwIi8+CiAgICA8cGF0aCBkPSJNMjYuMzkzIDIzLjYyMkgyMi4yM1YyMi4xN2g5Ljk0djEuNDUzaC00LjE2NHYxMC44MDZoLTEuNjEzVjIzLjYyMlpNMzAuODE2IDI5LjYxM2MwLTMuMjQgMi4xLTUuMDc5IDQuNzM2LTUuMDc5IDIuNjM3IDAgNC43MzYgMS44MzkgNC43MzYgNS4wNzkgMCAzLjI0LTIuMSA1LjA3OS00LjczNiA1LjA3OS0yLjYzOCAwLTQuNzM2LTEuODQtNC43MzYtNS4wOFptNC43MzYgMy43MTJjMS43MzUgMCAzLjEwNS0xLjI2IDMuMTA1LTMuNzEycy0xLjM3LTMuNzEzLTMuMTA1LTMuNzEzYy0xLjczNSAwLTMuMTA1IDEuMjYxLTMuMTA1IDMuNzEzczEuMzcgMy43MTIgMy4xMDUgMy43MTJaTTQxLjY0IDI0Ljc5N2gxLjUyN3YxLjY4MWguMDM0Yy40NTItMS4wMTYuOTcyLTEuNjgxIDIuNDk4LTEuNjgxaC45MnYxLjRINDUuNDljLTEuNTk2IDAtMi4yOS45NjQtMi4yOSAyLjgwM3Y1LjQzaC0xLjU2di05LjYzM1pNNDYuNzIgMjkuNjEzYzAtMy4yNCAyLjEtNS4wNzkgNC43MzYtNS4wNzkgMi42MzcgMCA0LjczNiAxLjgzOSA0LjczNiA1LjA3OSAwIDMuMjQtMi4xIDUuMDc5LTQuNzM2IDUuMDc5LTIuNjM2IDAtNC43MzYtMS44NC00LjczNi01LjA4Wm00LjczNiAzLjcxMmMxLjczNSAwIDMuMTA1LTEuMjYgMy4xMDUtMy43MTJzLTEuMzctMy43MTMtMy4xMDUtMy43MTNjLTEuNzM0IDAtMy4xMDQgMS4yNjEtMy4xMDQgMy43MTNzMS4zNyAzLjcxMiAzLjEwNCAzLjcxMlpNNTcuNTQ2IDI0Ljc5N2gxLjUyN1YyNi42aC4wMzRjLjU3My0xLjI3OSAxLjY4Mi0yLjA2NyAzLjE1Ny0yLjA2NyAyLjAxMyAwIDMuMjI3IDEuNDU0IDMuMjI3IDQuMTE2djUuNzhINjMuOTN2LTUuNjIzYzAtMi4wODQtLjkwMi0yLjg3Mi0yLjE1LTIuODcyLTEuMzU0IDAtMi42NzIuOTQ1LTIuNjcyIDMuMjc1djUuMjJoLTEuNTZ2LTkuNjMzaC0uMDAyWk02OC4yMSAzMS44OXYtNS42OTJoLTEuOTA4di0xLjQwMWgxLjkwOFYyMi4xN2gxLjU2MnYyLjYyN2gzLjAxOXYxLjRoLTMuMDJ2NS42OTNjMCAuODIyLjQxNiAxLjEzOCAxLjE0NiAxLjEzOGgxLjk2djEuNDAxaC0yLjEzM2MtMS42NjYgMC0yLjUzNC0uODQtMi41MzQtMi41NFpNNzMuMDk0IDI5LjYxM2MwLTMuMjQgMi4xLTUuMDc5IDQuNzM2LTUuMDc5IDIuNjM3IDAgNC43MzYgMS44MzkgNC43MzYgNS4wNzkgMCAzLjI0LTIuMSA1LjA3OS00LjczNiA1LjA3OS0yLjYzNiAwLTQuNzM2LTEuODQtNC43MzYtNS4wOFptNC43MzYgMy43MTJjMS43MzUgMCAzLjEwNS0xLjI2IDMuMTA1LTMuNzEyUzc5LjU2NSAyNS45IDc3LjgzIDI1LjljLTEuNzM0IDAtMy4xMDQgMS4yNjEtMy4xMDQgMy43MTNzMS4zNyAzLjcxMiAzLjEwNCAzLjcxMlpNMTYuMTg1IDcuODc4di0yLjU2aC0xLjc4NmEuNzE5LjcxOSAwIDAgMS0uNzE1LS43MjJWMi44SDUuNDc2djEuOGMwIC4zOTktLjMyLjcyMi0uNzE2LjcyMkgyLjk3djguMjg4aDEuNzljLjM5NiAwIC43MTYuMzIzLjcxNi43MjN2MS44MDZoOC4yMDh2LTEuODA2YzAtLjQuMzItLjcyMy43MTUtLjcyM2gxLjc4NnYtMi41NmgtMi41Mzd2MS44MDdjMCAuMzk5LS4zMi43MjItLjcxNi43MjJoLTYuNzFhLjcxOS43MTkgMCAwIDEtLjcxNi0uNzIyVjYuMDgyYzAtLjQuMzItLjcyMi43MTYtLjcyMmg2LjcxYy4zOTYgMCAuNzE2LjMyMy43MTYuNzIydjEuNzk2aDIuNTM3WiIgZmlsbD0iIzAwMCIvPgogIDwvZz4KICA8ZGVmcz4KICAgIDxjbGlwUGF0aCBpZD0iYSI+CiAgICAgIDxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0wIDBoODZ2MzhIMHoiLz4KICAgIDwvY2xpcFBhdGg+CiAgPC9kZWZzPgo8L3N2Zz4=',
-    alt: 'Curbcut Toronto'
+    id: "Toronto",
+    href: "https://toronto.curbcut.ca",
+    src: "data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NiAzOCI+CiAgPGcgY2xpcC1wYXRoPSJ1cmwoI2EpIj4KICAgIDxwYXRoIGQ9Ik0yMy4wODUgMTguNzVjLTIuMjc5LS4wMDItNC4xMjctMS44NjktNC4xMjctNC4xNzFWMEguMTk4djE0Ljc2OGMwIDIuMzA0IDEuODUgNC4xNzIgNC4xMzIgNC4xNzJIMTQuNjc0YzIuMjgxIDAgNC4xMzIgMS44NjkgNC4xMzIgNC4xNzJ2MTAuNTAxYzAgMi4zMDMgMS44NSA0LjE3MiA0LjEzMyA0LjE3Mkg4NlYxOC43NUgyMy4wODVaIiBmaWxsPSIjNzNBRDgwIi8+CiAgICA8cGF0aCBkPSJNMjYuMzkzIDIzLjYyMkgyMi4yM1YyMi4xN2g5Ljk0djEuNDUzaC00LjE2NHYxMC44MDZoLTEuNjEzVjIzLjYyMlpNMzAuODE2IDI5LjYxM2MwLTMuMjQgMi4xLTUuMDc5IDQuNzM2LTUuMDc5IDIuNjM3IDAgNC43MzYgMS44MzkgNC43MzYgNS4wNzkgMCAzLjI0LTIuMSA1LjA3OS00LjczNiA1LjA3OS0yLjYzOCAwLTQuNzM2LTEuODQtNC43MzYtNS4wOFptNC43MzYgMy43MTJjMS43MzUgMCAzLjEwNS0xLjI2IDMuMTA1LTMuNzEycy0xLjM3LTMuNzEzLTMuMTA1LTMuNzEzYy0xLjczNSAwLTMuMTA1IDEuMjYxLTMuMTA1IDMuNzEzczEuMzcgMy43MTIgMy4xMDUgMy43MTJaTTQxLjY0IDI0Ljc5N2gxLjUyN3YxLjY4MWguMDM0Yy40NTItMS4wMTYuOTcyLTEuNjgxIDIuNDk4LTEuNjgxaC45MnYxLjRINDUuNDljLTEuNTk2IDAtMi4yOS45NjQtMi4yOSAyLjgwM3Y1LjQzaC0xLjU2di05LjYzM1pNNDYuNzIgMjkuNjEzYzAtMy4yNCAyLjEtNS4wNzkgNC43MzYtNS4wNzkgMi42MzcgMCA0LjczNiAxLjgzOSA0LjczNiA1LjA3OSAwIDMuMjQtMi4xIDUuMDc5LTQuNzM2IDUuMDc5LTIuNjM2IDAtNC43MzYtMS44NC00LjczNi01LjA4Wm00LjczNiAzLjcxMmMxLjczNSAwIDMuMTA1LTEuMjYgMy4xMDUtMy43MTJzLTEuMzctMy43MTMtMy4xMDUtMy43MTNjLTEuNzM0IDAtMy4xMDQgMS4yNjEtMy4xMDQgMy43MTNzMS4zNyAzLjcxMiAzLjEwNCAzLjcxMlpNNTcuNTQ2IDI0Ljc5N2gxLjUyN1YyNi42aC4wMzRjLjU3My0xLjI3OSAxLjY4Mi0yLjA2NyAzLjE1Ny0yLjA2NyAyLjAxMyAwIDMuMjI3IDEuNDU0IDMuMjI3IDQuMTE2djUuNzhINjMuOTN2LTUuNjIzYzAtMi4wODQtLjkwMi0yLjg3Mi0yLjE1LTIuODcyLTEuMzU0IDAtMi42NzIuOTQ1LTIuNjcyIDMuMjc1djUuMjJoLTEuNTZ2LTkuNjMzaC0uMDAyWk02OC4yMSAzMS44OXYtNS42OTJoLTEuOTA4di0xLjQwMWgxLjkwOFYyMi4xN2gxLjU2MnYyLjYyN2gzLjAxOXYxLjRoLTMuMDJ2NS42OTNjMCAuODIyLjQxNiAxLjEzOCAxLjE0NiAxLjEzOGgxLjk2djEuNDAxaC0yLjEzM2MtMS42NjYgMC0yLjUzNC0uODQtMi41MzQtMi41NFpNNzMuMDk0IDI5LjYxM2MwLTMuMjQgMi4xLTUuMDc5IDQuNzM2LTUuMDc5IDIuNjM3IDAgNC43MzYgMS44MzkgNC43MzYgNS4wNzkgMCAzLjI0LTIuMSA1LjA3OS00LjczNiA1LjA3OS0yLjYzNiAwLTQuNzM2LTEuODQtNC43MzYtNS4wOFptNC43MzYgMy43MTJjMS43MzUgMCAzLjEwNS0xLjI2IDMuMTA1LTMuNzEyUzc5LjU2NSAyNS45IDc3LjgzIDI1LjljLTEuNzM0IDAtMy4xMDQgMS4yNjEtMy4xMDQgMy43MTNzMS4zNyAzLjcxMiAzLjEwNCAzLjcxMlpNMTYuMTg1IDcuODc4di0yLjU2aC0xLjc4NmEuNzE5LjcxOSAwIDAgMS0uNzE1LS43MjJWMi44SDUuNDc2djEuOGMwIC4zOTktLjMyLjcyMi0uNzE2LjcyMkgyLjk3djguMjg4aDEuNzljLjM5NiAwIC43MTYuMzIzLjcxNi43MjN2MS44MDZoOC4yMDh2LTEuODA2YzAtLjQuMzItLjcyMy43MTUtLjcyM2gxLjc4NnYtMi41NmgtMi41Mzd2MS44MDdjMCAuMzk5LS4zMi43MjItLjcxNi43MjJoLTYuNzFhLjcxOS43MTkgMCAwIDEtLjcxNi0uNzIyVjYuMDgyYzAtLjQuMzItLjcyMi43MTYtLjcyMmg2LjcxYy4zOTYgMCAuNzE2LjMyMy43MTYuNzIydjEuNzk2aDIuNTM3WiIgZmlsbD0iIzAwMCIvPgogIDwvZz4KICA8ZGVmcz4KICAgIDxjbGlwUGF0aCBpZD0iYSI+CiAgICAgIDxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0wIDBoODZ2MzhIMHoiLz4KICAgIDwvY2xpcFBhdGg+CiAgPC9kZWZzPgo8L3N2Zz4=",
+    alt: "Curbcut Toronto"
   }];
   return /*#__PURE__*/React.createElement("footer", null, /*#__PURE__*/React.createElement("div", {
     className: "footer__banner"
@@ -11959,15 +11939,15 @@ function Footer(_ref3) {
     str: "About"
   })), /*#__PURE__*/React.createElement("span", {
     className: "plus-sign"
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
     to: "/about"
   }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "About Curbcut"
-  })), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+  })), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
     to: "/team"
   }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "The Team"
-  })), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+  })), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
     to: "mailto:contact@curbcut.ca"
   }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "Contact Us"
@@ -11977,15 +11957,15 @@ function Footer(_ref3) {
     className: "column__title"
   }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "About"
-  })), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+  })), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
     to: "/about"
   }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "About Curbcut"
-  })), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+  })), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
     to: "/team"
   }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "The Team"
-  })), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+  })), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
     to: "mailto:contact@curbcut.ca"
   }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "Contact Us"
@@ -12009,7 +11989,7 @@ function Footer(_ref3) {
     name: "EMAIL",
     className: "required email",
     id: "mce-EMAIL",
-    placeholder: lang === 'en' ? 'Email address' : 'Adresse courriel',
+    placeholder: lang === "en" ? "Email address" : "Adresse courriel",
     required: true
   }), /*#__PURE__*/React.createElement("button", {
     type: "submit",
@@ -12021,14 +12001,30 @@ function Footer(_ref3) {
   }, /*#__PURE__*/React.createElement("div", {
     className: "column__title"
   }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
-    str: "Our collaborators"
-  })), collabs.map(function (collab) {
-    return /*#__PURE__*/React.createElement("img", {
-      src: collab.img,
-      height: "43",
-      key: collab.id,
-      alt: collab.name
-    });
+    str: "Collaborators"
+  })), /*#__PURE__*/React.createElement("img", {
+    src: _assets_mssi_png__WEBPACK_IMPORTED_MODULE_3__,
+    key: "MSSI",
+    alt: "MSSI"
+  }), /*#__PURE__*/React.createElement("img", {
+    src: _assets_laval_png__WEBPACK_IMPORTED_MODULE_5__,
+    key: "laval",
+    alt: "Ville de Laval"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "column"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "column__title",
+    style: {
+      border: "0px"
+    }
+  }), /*#__PURE__*/React.createElement("img", {
+    src: _assets_prds_png__WEBPACK_IMPORTED_MODULE_6__,
+    key: "PRDS",
+    alt: "PRDS"
+  }), /*#__PURE__*/React.createElement("img", {
+    src: _assets_cisss_jpg__WEBPACK_IMPORTED_MODULE_4__,
+    key: "cisss",
+    alt: "cisss"
   })), configState.show_cities[0] && /*#__PURE__*/React.createElement("div", {
     className: "column column--cities"
   }, /*#__PURE__*/React.createElement("div", {
@@ -12070,12 +12066,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _landing__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../landing */ "./srcjs/landing.jsx");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var _assets_prds_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../assets/prds.png */ "./srcjs/assets/prds.png");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -12086,11 +12079,12 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function Nav(_ref) {
   var lenis = _ref.lenis,
     setLang = _ref.setLang,
     setValue = _ref.setValue;
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   // Set the main header and mobile nav refs to update their classes dynamically
   var mainHeaderRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
   var mobileNavRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
@@ -12098,11 +12092,6 @@ function Nav(_ref) {
   // Get the language and the Curbcut City svg from the context
   var contextValue = (0,react__WEBPACK_IMPORTED_MODULE_2__.useContext)(_landing__WEBPACK_IMPORTED_MODULE_1__.LanguageContext);
   var lang = contextValue.lang;
-  var configState = contextValue.configState;
-  if (!configState) {
-    return null;
-  }
-  var c_city_svg = configState.c_city_svg;
 
   // Set the state for the main header and mobile nav
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
@@ -12123,12 +12112,12 @@ function Nav(_ref) {
     setMainHeaderOpened(!mainHeaderOpened);
     setMobileNavVisible(!mobileNavVisible);
     if (!mobileNavVisible) {
-      mainHeaderRef.current.classList.add('header--opened');
-      mobileNavRef.current.classList.add('mobile-nav--visible');
+      mainHeaderRef.current.classList.add("header--opened");
+      mobileNavRef.current.classList.add("mobile-nav--visible");
       setLenisAnimation(false);
     } else {
-      mainHeaderRef.current.classList.remove('header--opened');
-      mobileNavRef.current.classList.remove('mobile-nav--visible');
+      mainHeaderRef.current.classList.remove("header--opened");
+      mobileNavRef.current.classList.remove("mobile-nav--visible");
       setLenisAnimation(true);
     }
   };
@@ -12151,30 +12140,35 @@ function Nav(_ref) {
     var handleScroll = function handleScroll(event) {
       var topPageScrollPosition = 3;
       if (event.direction === 1 && event.animatedScroll > topPageScrollPosition) {
-        mainHeaderRef.current.classList.add('header--hidden');
+        mainHeaderRef.current.classList.add("header--hidden");
       } else {
-        mainHeaderRef.current.classList.remove('header--hidden');
+        mainHeaderRef.current.classList.remove("header--hidden");
       }
       if (event.animatedScroll < topPageScrollPosition) {
-        mainHeaderRef.current.classList.remove('header--background');
-      } else mainHeaderRef.current.classList.add('header--background');
+        mainHeaderRef.current.classList.remove("header--background");
+      } else mainHeaderRef.current.classList.add("header--background");
     };
 
     // Add the scroll event listener
-    lenis.on('scroll', handleScroll);
+    lenis.on("scroll", handleScroll);
     return function () {
-      lenis.off('scroll', handleScroll);
+      lenis.off("scroll", handleScroll);
     };
   }, [lenis, mainHeaderOpened]);
+  var configState = contextValue.configState;
+  if (!configState) {
+    return null;
+  }
+  var c_city_svg = configState.c_city_svg;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement((react__WEBPACK_IMPORTED_MODULE_2___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("header", {
     ref: mainHeaderRef,
     id: "main-header"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("img", {
     onClick: function onClick() {
-      return navigate('/');
+      return navigate("/");
     },
     style: {
-      cursor: 'pointer'
+      cursor: "pointer"
     },
     className: "curbcut-logo",
     src: "data:image/jpg;base64,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",
@@ -12183,37 +12177,37 @@ function Nav(_ref) {
     height: "25"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("nav", {
     className: "main-nav"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
     to: "/"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("img", {
-    src: c_city_svg,
+    src: _assets_prds_png__WEBPACK_IMPORTED_MODULE_3__,
     alt: "",
     style: {
-      height: '21px'
+      height: "45px"
     }
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
     to: "/about",
-    className: "cta-text cta-text--underline"
+    className: "cta-text cta-text"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "About Curbcut"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
     to: "/team",
-    className: "cta-text cta-text--underline"
+    className: "cta-text cta-text"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "The Team"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("a", {
     href: "mailto:contact@curbcut.ca",
-    className: "cta-text cta-text--underline"
+    className: "cta-text cta-text"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "Contact Us"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("li", {
     className: "language-switcher"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("span", {
     onClick: function onClick() {
-      var newLang = lang === 'fr' ? 'en' : 'fr';
+      var newLang = lang === "fr" ? "en" : "fr";
       setLang(newLang);
       setValue({
-        event: 'lang_change',
+        event: "lang_change",
         lang: newLang
       });
     },
@@ -12233,24 +12227,19 @@ function Nav(_ref) {
     className: "h2"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "About"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
     to: "/about"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "About Curbcut"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
     to: "/team"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "The Team"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("li", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
     to: "mailto:contact@curbcut.ca"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "Contact Us"
-  }))))), _toConsumableArray(Array(10)).map(function (e, i) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default().createElement("span", {
-      key: i,
-      className: "dot"
-    });
-  })));
+  })))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Nav);
 
@@ -12271,24 +12260,24 @@ __webpack_require__.r(__webpack_exports__);
 function SvgIcon(_ref) {
   var theme_lowercased = _ref.theme_lowercased,
     _ref$size = _ref.size,
-    size = _ref$size === void 0 ? '45px' : _ref$size,
+    size = _ref$size === void 0 ? "45px" : _ref$size,
     _ref$color = _ref.color,
-    color = _ref$color === void 0 ? 'black' : _ref$color;
+    color = _ref$color === void 0 ? "black" : _ref$color;
   var svgData = null;
   switch (theme_lowercased) {
-    case 'climate':
+    case "climate":
       svgData = "<svg fill=\"".concat(color, "\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 46 45\"><path d=\"M27.03 16.34V0h-9v16.34A1.66 1.66 0 0 1 16.37 18H.03v9h16.34c.916 0 1.66.743 1.66 1.66V45h9V28.66c0-.917.743-1.66 1.659-1.66h16.34v-9H28.69c-.918 0-1.66-.743-1.66-1.66Zm0 3.319v5.682A1.66 1.66 0 0 1 25.37 27h-5.682a1.66 1.66 0 0 1-1.659-1.66v-5.682c0-.916.743-1.66 1.66-1.66h5.681c.916 0 1.66.744 1.66 1.66ZM9.03 0h-9v9h9V0ZM9.03 36h-9v9h9v-9ZM45.03 0h-9v9h9V0ZM45.03 36h-9v9h9v-9Z\" /></svg>");
       break;
-    case 'demographics':
+    case "demographics":
       svgData = "<svg fill=\"".concat(color, "\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 45 45\"><path d=\"M28.795 18H36v-7.2c0-.928.843-1.8 1.775-1.8H45V0l-9.002.006v7.263c0 .93-.837 1.73-1.77 1.73h-6.093a.474.474 0 0 1-.337-.807l1.126-1.136-6.422-6.4-6.422 6.4 1.123 1.137c.295.3.082.807-.338.807h-6.027c-.932 0-1.84-.708-1.84-1.637V.006H0V9h7.292c.933 0 1.704.873 1.704 1.802v7.199h7.275c.933 0 1.726.91 1.726 1.84v5.412c0 .93-.793 1.747-1.726 1.747l-7.28-.012v7.198c0 .93-.767 1.813-1.699 1.813H0v8.994h8.995V37.73c0-.93.908-1.73 1.841-1.73h7.16v-7.216c0-.93.889-1.785 1.82-1.785h5.434c.933 0 1.747.856 1.747 1.785v7.215h7.232c.933 0 1.77.802 1.77 1.73V45H45v-9h-7.225C36.843 36 36 35.125 36 34.197V27h-7.203c-.933 0-1.799-.818-1.799-1.747v-5.506c0-.93.864-1.747 1.797-1.747Zm-3.545 0h-5.434c-.932 0-1.82-.764-1.82-1.693v-6.171c0-.42.51-.633.808-.337l3.696 3.655L26.189 9.8a.475.475 0 0 1 .808.337v6.17c0 .93-.815 1.693-1.747 1.693Z\" /></svg>");
       break;
-    case 'ecology':
+    case "ecology":
       svgData = "<svg fill=\"".concat(color, "\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 45 45\"><path d=\"m35.999 26.98-7.204 14.424c-.448.895-1.797.576-1.797-.425V24.083c0-.422.511-.634.81-.335l.68.68 6.188-6.194-4.833-4.84a1.662 1.662 0 0 1 0-2.349l4.834-4.84L28.49.011l-4.812 4.817a1.658 1.658 0 0 1-2.346 0L16.509 0l-6.187 6.195 4.834 4.84c.648.648.648 1.7 0 2.349l-4.834 4.84 6.188 6.194.681-.68a.473.473 0 0 1 .808.336v16.904c0 1.001-1.348 1.32-1.796.425L9 26.98H0L9 45h27l9-18.02h-9.001Zm-8.864-13.586-3.458 3.461a1.658 1.658 0 0 1-2.346 0l-3.468-3.471a1.662 1.662 0 0 1 0-2.35l3.457-3.46a1.657 1.657 0 0 1 2.347 0l3.468 3.471a1.662 1.662 0 0 1 0 2.35Zm-3.468 6.208 2.02 2.023a.475.475 0 0 1-.335.81h-5.718a.475.475 0 0 1-.336-.81l2.021-2.023c.65-.648 1.7-.648 2.348 0Z\" /></svg>");
       break;
-    case 'economy':
+    case "economy":
       svgData = "<svg fill=\"".concat(color, "\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 45 45\"><path d=\"M 36.214844 10.289062 L 42.855469 10.289062 L 42.855469 2.144531 L 34.710938 2.144531 L 34.710938 8.785156 C 34.710938 9.613281 34.039062 10.285156 33.210938 10.285156 L 26.570312 10.285156 L 26.570312 16.925781 C 26.570312 17.757812 25.898438 18.429688 25.070312 18.429688 L 18.429688 18.429688 L 18.429688 25.070312 C 18.429688 25.898438 17.757812 26.570312 16.925781 26.570312 L 10.289062 26.570312 L 10.289062 33.210938 C 10.289062 34.042969 9.613281 34.714844 8.785156 34.714844 L 2.144531 34.714844 L 2.144531 42.855469 L 10.289062 42.855469 L 10.289062 36.214844 C 10.289062 35.386719 10.960938 34.714844 11.789062 34.714844 L 16.929688 34.714844 C 17.757812 34.714844 18.429688 35.386719 18.429688 36.214844 L 18.429688 42.855469 L 26.574219 42.855469 L 26.574219 36.214844 C 26.574219 35.386719 27.246094 34.714844 28.074219 34.714844 L 33.214844 34.714844 C 34.042969 34.714844 34.714844 35.386719 34.714844 36.214844 L 34.714844 42.855469 L 42.859375 42.855469 L 42.859375 34.714844 L 36.214844 34.714844 C 35.386719 34.714844 34.714844 34.042969 34.714844 33.210938 L 34.714844 28.074219 C 34.714844 27.242188 35.386719 26.570312 36.214844 26.570312 L 42.859375 26.570312 L 42.859375 18.429688 L 36.214844 18.429688 C 35.386719 18.429688 34.714844 17.757812 34.714844 16.925781 L 34.714844 11.789062 C 34.710938 10.957031 35.386719 10.289062 36.214844 10.289062 Z M 25.070312 34.710938 L 19.929688 34.710938 C 19.101562 34.710938 18.429688 34.039062 18.429688 33.210938 L 18.429688 28.070312 C 18.429688 27.242188 19.101562 26.570312 19.929688 26.570312 L 25.070312 26.570312 C 25.898438 26.570312 26.570312 27.242188 26.570312 28.070312 L 26.570312 33.210938 C 26.570312 34.039062 25.898438 34.710938 25.070312 34.710938 Z M 34.710938 25.070312 C 34.710938 25.898438 34.039062 26.570312 33.210938 26.570312 L 28.074219 26.570312 C 27.242188 26.570312 26.570312 25.898438 26.574219 25.066406 L 26.578125 19.9375 C 26.574219 19.105469 27.246094 18.429688 28.078125 18.429688 L 33.210938 18.429688 C 34.039062 18.429688 34.710938 19.101562 34.710938 19.929688 Z M 34.710938 25.070312 \" /></svg>");
       break;
-    case 'health':
+    case "health":
       svgData = "<svg fill=\"".concat(color, "\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 45 46\"><path d=\"M44.998 9.058h-7.341a1.66 1.66 0 0 1-1.66-1.659V.06h-9v7.34a1.66 1.66 0 0 1-1.659 1.66h-5.681a1.66 1.66 0 0 1-1.66-1.66V.06H9v7.34a1.66 1.66 0 0 1-1.66 1.66H0v17.999h7.34c.917 0 1.66.743 1.66 1.659v7.34h7.34c.917 0 1.66.744 1.66 1.66v7.341h9v-7.34c0-.917.743-1.66 1.66-1.66H36v-7.341c0-.916.743-1.66 1.66-1.66H45V9.059h-.002ZM25.34 36.057h-5.682a1.66 1.66 0 0 1-1.66-1.66v-7.34h-7.34a1.66 1.66 0 0 1-1.66-1.66v-14.68c0-.916.744-1.659 1.66-1.659h5.682c.916 0 1.659.743 1.659 1.66v7.34h9v-7.34c0-.917.743-1.66 1.659-1.66h5.682c.916 0 1.659.743 1.659 1.66v14.68a1.66 1.66 0 0 1-1.66 1.66H27v7.34a1.66 1.66 0 0 1-1.66 1.659Z\" /></svg>");
       break;
     case "housing":
@@ -12342,8 +12331,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Translate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Translate */ "./srcjs/components/Translate.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _SvgIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SvgIcon */ "./srcjs/components/SvgIcon.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -12353,13 +12341,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
+var curbcutLogo = "data:image/jpg;base64,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";
 function ThemesMenu(_ref) {
   var lenis = _ref.lenis,
     themes = _ref.themes,
     pages = _ref.pages,
     setValue = _ref.setValue;
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
   // Create a reference to the categories menu
   var categoriesMenuRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)();
 
@@ -12380,97 +12368,147 @@ function ThemesMenu(_ref) {
   var clearBackgroundColor = function clearBackgroundColor() {
     if (categoriesMenuRef.current.dataset.theme) {
       categoriesMenuRef.current.classList.remove("bg-".concat(categoriesMenuRef.current.dataset.theme));
-      categoriesMenuRef.current.dataset.theme = '';
+      categoriesMenuRef.current.dataset.theme = "";
     }
   };
 
-  // State to hold the currently open category
+  // State to hold the currently active theme (null for main menu)
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
-    openTheme = _useState2[0],
-    setopenTheme = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
-    _useState4 = _slicedToArray(_useState3, 2),
-    themesMenu = _useState4[0],
-    setThemesMenu = _useState4[1];
+    activeTheme = _useState2[0],
+    setActiveTheme = _useState2[1];
 
-  // Create the themes menu
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    // Function to handle opening a new category
-    var handleToggle = function handleToggle(event) {
-      var currentCategory = event.currentTarget.parentNode.dataset.category;
-      if (currentCategory !== openTheme) {
-        setopenTheme(currentCategory);
-      }
-    };
-    setThemesMenu(themes.map(function (theme, i) {
-      var theme_pages = pages.filter(function (page) {
-        return page.theme === theme;
-      }).map(function (page, j) {
-        return /*#__PURE__*/React.createElement("li", {
-          key: j,
-          onClick: function onClick() {
-            return setValue({
-              event: 'page_link',
-              page: page.id
-            });
-          },
-          className: "cta-text-lower"
-        }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
-          str: page.nav_title
-        }));
-      });
-      var theme_lowercased = theme.toLowerCase().split(' ')[0];
-      return /*#__PURE__*/React.createElement("details", {
+  // Function to handle theme selection
+  var handleThemeClick = function handleThemeClick(themeData) {
+    setActiveTheme(themeData);
+  };
+
+  // Function to go back to main menu
+  var handleBackClick = function handleBackClick() {
+    setActiveTheme(null);
+  };
+
+  // Function to handle page navigation
+  var handlePageClick = function handlePageClick(pageId) {
+    navigate("/".concat(pageId));
+  };
+
+  // Render the main menu with all themes
+  var renderMainMenu = function renderMainMenu() {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, pages.map(function (themeData, i) {
+      var theme = themeData.theme;
+      var theme_color = themeData.color;
+      return /*#__PURE__*/React.createElement("div", {
         key: i,
         className: "nav-item",
-        "data-category": theme_lowercased,
-        open: openTheme === theme_lowercased,
+        "data-category": theme_color,
         onMouseEnter: changeBackgroundColor,
-        onMouseLeave: clearBackgroundColor
-      }, /*#__PURE__*/React.createElement("summary", {
-        className: "nav-item__category",
-        onClick: handleToggle
+        onMouseLeave: clearBackgroundColor,
+        onClick: function onClick() {
+          return handleThemeClick(themeData);
+        }
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "nav-item__category"
       }, /*#__PURE__*/React.createElement("span", {
-        className: "h2"
+        className: "h3"
       }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
         str: theme
-      }), /*#__PURE__*/React.createElement("svg", {
+      })), /*#__PURE__*/React.createElement("svg", {
         className: "caret_land",
         width: "24",
-        height: "15",
-        viewBox: "0 0 24 15",
+        height: "24",
         fill: "none",
         xmlns: "http://www.w3.org/2000/svg"
       }, /*#__PURE__*/React.createElement("path", {
         fillRule: "evenodd",
         clipRule: "evenodd",
-        d: "M14.4006 14.4001L14.4006 10.485C14.4006 9.99638 14.7969 9.60006 15.2855 9.60006L19.2 9.60006L19.2 5.68495C19.2 5.19635 19.5963 4.80003 20.0849 4.80003L24 4.80003L24 0L19.2 -2.09816e-07L19.2 3.91512C19.2 4.40372 18.8037 4.80003 18.3151 4.80003L15.2849 4.80003C14.9933 4.80003 14.6409 4.80027 14.4041 4.80046L14.4041 6.22837L14.4006 6.22837L14.4006 8.71515C14.4006 9.20375 14.0043 9.60006 13.5157 9.60006L10.4855 9.60006C9.99686 9.60006 9.60054 9.20375 9.60054 8.71515L9.60054 6.22837L9.59717 6.22837L9.59717 4.80399L7.81678 4.80399L7.81678 4.80066L5.68479 4.80066C5.19619 4.80066 4.79988 4.40435 4.79988 3.91575L4.79988 0.00063077L-0.000154495 0.00063056L-0.000154705 4.80066L3.91496 4.80066C4.40356 4.80066 4.79988 5.19698 4.79988 5.68558L4.79988 9.60069L8.71499 9.60069C9.20359 9.60069 9.59991 9.99701 9.59991 10.4856L9.59991 14.4007L14.4006 14.4007L14.4006 14.4001Z",
+        d: "M14.4001 9.5994L10.485 9.5994C9.99638 9.5994 9.60006 9.2031 9.60006 8.7145L9.60006 4.8L5.68495 4.8C5.19635 4.8 4.80003 4.4037 4.80003 3.9151L4.80003 0L0 0L-2.09816e-07 4.8L3.91512 4.8C4.40372 4.8 4.80003 5.1963 4.80003 5.6849L4.80003 8.7151C4.80003 9.0067 4.80027 9.3591 4.80046 9.5959L6.22837 9.5959L6.22837 9.5994L8.71515 9.5994C9.20375 9.5994 9.60006 9.9957 9.60006 10.4843L9.60006 13.5145C9.60006 14.0031 9.20375 14.3995 8.71515 14.3995L6.22837 14.3995L6.22837 14.4028L4.80399 14.4028L4.80399 16.1832L4.80066 16.1832L4.80066 18.3152C4.80066 18.8038 4.40435 19.2001 3.91575 19.2001L0.00063077 19.2001L0.00063056 24.0002L4.80066 24.0002L4.80066 20.085C4.80066 19.5964 5.19698 19.2001 5.68558 19.2001L9.60069 19.2001L9.60069 15.285C9.60069 14.7964 9.99701 14.4001 10.4856 14.4001L14.4007 14.4001L14.4007 9.5994L14.4001 9.5994Z",
         fill: "black"
-      }))), /*#__PURE__*/React.createElement(_SvgIcon__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        theme_lowercased: theme_lowercased
-      })), /*#__PURE__*/React.createElement("ul", null, theme_pages));
+      }))));
     }));
-  }, [openTheme, pages, themes, setValue]);
+  };
+
+  // Render the subcategory menu for a specific theme
+  // Modify your renderSubcategoryMenu function to include this structure:
+
+  var renderSubcategoryMenu = function renderSubcategoryMenu(themeData) {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+      className: "fixed-header"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "back-button",
+      onClick: handleBackClick
+    }, /*#__PURE__*/React.createElement("svg", {
+      width: "24",
+      height: "24",
+      viewBox: "0 0 24 24",
+      fill: "none",
+      xmlns: "http://www.w3.org/2000/svg"
+    }, /*#__PURE__*/React.createElement("path", {
+      d: "M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z",
+      fill: "black"
+    })), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
+      str: "GO BACK"
+    })))), /*#__PURE__*/React.createElement("div", {
+      className: "scrollable-content"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "theme-title",
+      "data-category": themeData.color
+    }, /*#__PURE__*/React.createElement("h2", {
+      className: "h3"
+    }, themeData.theme)), themeData.subcategories.map(function (subcategory, subIndex) {
+      return /*#__PURE__*/React.createElement("div", {
+        key: subIndex,
+        className: "subcategory-section"
+      }, /*#__PURE__*/React.createElement("h3", {
+        className: "subcategory-title"
+      }, subcategory.title), /*#__PURE__*/React.createElement("ul", {
+        className: "pages-list"
+      }, subcategory.pages.map(function (page, pageIndex) {
+        return /*#__PURE__*/React.createElement("li", {
+          key: pageIndex,
+          className: "page-item"
+        }, /*#__PURE__*/React.createElement("a", {
+          className: "page-link",
+          onClick: function onClick() {
+            return setValue({
+              event: "page_link",
+              page: page.id
+            });
+          }
+        }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
+          str: page.title
+        })));
+      })));
+    })));
+  };
 
   // Return the themes menu
+  // Update the return statement in your ThemesMenu component:
+
   return /*#__PURE__*/React.createElement("div", {
     id: "categories-menu",
+    className: activeTheme ? "submenu-active" : "",
     "data-lenis-prevent": true,
+    "data-category": (activeTheme === null || activeTheme === void 0 ? void 0 : activeTheme.color) || "",
     ref: categoriesMenuRef
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "curbcut-logo"
+  }, /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    str: "POWERED BY"
+  })), /*#__PURE__*/React.createElement("a", {
+    href: "https://curbcut.ca"
   }, /*#__PURE__*/React.createElement("img", {
     onClick: function onClick() {
-      return navigate('/');
+      return navigate("/");
     },
     style: {
-      cursor: 'pointer'
+      cursor: "pointer"
     },
-    className: "curbcut-logo",
-    src: "data:image/jpg;base64,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",
+    src: curbcutLogo,
     alt: "Curbcut",
-    width: "400",
+    width: "150",
     height: "83"
-  }), /*#__PURE__*/React.createElement("div", {
+  }))), /*#__PURE__*/React.createElement("div", {
     className: "close-cta"
   }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "CLOSE"
@@ -12481,7 +12519,19 @@ function ThemesMenu(_ref) {
     height: "34"
   })), /*#__PURE__*/React.createElement("nav", {
     className: "categories-nav"
-  }, themesMenu));
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "main-menu-container"
+  }, renderMainMenu()), /*#__PURE__*/React.createElement("div", {
+    className: "submenu-container"
+  }, activeTheme && renderSubcategoryMenu(activeTheme))), !activeTheme && /*#__PURE__*/React.createElement("div", {
+    className: "en-savoir-plus"
+  }, /*#__PURE__*/React.createElement("a", {
+    onClick: function onClick() {
+      return navigate("/about");
+    }
+  }, /*#__PURE__*/React.createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    str: "En savoir plus sur Curbcut"
+  }))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ThemesMenu);
 
@@ -12521,15 +12571,18 @@ function Translate(_ref) {
   var translation = translation_df.find(function (row) {
     return row.en === str;
   });
+
+  // Return same language if translation is not found
+  if (!translation) return str;
   var out = translation === undefined ? str : translation[lang];
 
   // Decode HTML entities if they exist in the translation
-  if (out.includes('&')) {
+  if (out.includes("&")) {
     out = he__WEBPACK_IMPORTED_MODULE_2___default().decode(out);
   }
 
   // Render HTML if it exists in the translation
-  if (out.includes('<')) {
+  if (out.includes("<")) {
     out = /*#__PURE__*/React.createElement("span", {
       dangerouslySetInnerHTML: {
         __html: out
@@ -12558,12 +12611,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Translate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Translate.js */ "./srcjs/components/Translate.js");
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 
 function About() {
   return /*#__PURE__*/React.createElement("main", null, /*#__PURE__*/React.createElement("div", {
@@ -12573,13 +12620,10 @@ function About() {
   }, /*#__PURE__*/React.createElement("div", {
     className: "main-title__first-part"
   }, /*#__PURE__*/React.createElement(_Translate_js__WEBPACK_IMPORTED_MODULE_0__["default"], {
-    str: 'About&nbsp; Curbcut'
-  }))), _toConsumableArray(Array(5)).map(function (e, i) {
-    return /*#__PURE__*/React.createElement("span", {
-      key: i,
-      className: "dot"
-    });
-  })), /*#__PURE__*/React.createElement("section", {
+    str: "About&nbsp; Curbcut"
+  })))), /*#__PURE__*/React.createElement("div", {
+    className: "section-block"
+  }, /*#__PURE__*/React.createElement("section", {
     className: "section section-about"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
     className: "section__title"
@@ -12611,7 +12655,7 @@ function About() {
     str: "About our name"
   }))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_Translate_js__WEBPACK_IMPORTED_MODULE_0__["default"], {
     str: "A curb cut is the small slope connecting the sidewalk to the road, making it easier for people to move through the city - especially those with wheelchairs or strollers. We\u2019re inspired by this simple design feature that exists in our everyday environment which evokes the importance we place on promoting inclusive mobility planning, accessible urban design, and quality of life."
-  })))));
+  }))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (About);
 
@@ -12637,10 +12681,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SvgIcon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../SvgIcon */ "./srcjs/components/SvgIcon.js");
 /* harmony import */ var _landing__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../landing */ "./srcjs/landing.jsx");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -12666,7 +12706,7 @@ function DiscoverCard(_ref) {
     className: "card",
     onClick: function onClick(e) {
       setValue({
-        event: 'discover_link',
+        event: "discover_link",
         card_id: card.id
       });
     }
@@ -12703,7 +12743,7 @@ function NewsCard(_ref2) {
     className: "cta-text cta-text--underline",
     onClick: function onClick(e) {
       setValue({
-        event: 'read_more',
+        event: "read_more",
         card_id: card.id
       });
     }
@@ -12717,13 +12757,6 @@ function Main(_ref3) {
   var contextValue = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_landing__WEBPACK_IMPORTED_MODULE_6__.LanguageContext);
   var lang = contextValue.lang;
   var configState = contextValue.configState;
-  if (!configState) {
-    return null;
-  }
-  var discover_cards = configState.discover_cards;
-  var news_cards = configState.news_cards;
-  var firstLine = configState.h1_first_line[lang];
-  var secondLine = configState.h1_second_line[lang];
 
   // // Get only 4 discover cards, and minimum 2 stories.
   // // Fisher-Yates (Knuth) Shuffle to shuffle an array
@@ -12756,7 +12789,6 @@ function Main(_ref3) {
   // }, [discover_cards])
 
   // Setup the video sources
-  var placeholder_video_src = configState.placeholder_video_src;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
     videoSrc = _useState2[0],
@@ -12793,17 +12825,17 @@ function Main(_ref3) {
   // Create a function to setup the swiper element with the swiper library
   var setupSlider = function setupSlider(element) {
     if (element) {
-      var slidesCount = element.querySelectorAll('.swiper-slide').length;
+      var slidesCount = element.querySelectorAll(".swiper-slide").length;
       if (slidesCount > 3) {
-        element.classList.add('swiper-is-enabled');
+        element.classList.add("swiper-is-enabled");
       }
       new swiper__WEBPACK_IMPORTED_MODULE_2__["default"](element, {
         modules: [swiper_modules__WEBPACK_IMPORTED_MODULE_3__.Navigation],
         allowSlidePrev: true,
         allowSlideNext: true,
         navigation: {
-          prevEl: '#swipe-cta-prev',
-          nextEl: '#swipe-cta-next'
+          prevEl: "#swipe-cta-prev",
+          nextEl: "#swipe-cta-next"
         },
         slidesPerView: 1.3,
         slidesOffsetBefore: 23,
@@ -12824,13 +12856,20 @@ function Main(_ref3) {
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     setupSlider(sliderRef.current);
   }, []);
+  if (!configState) {
+    return null;
+  }
+  var discover_cards = configState.discover_cards;
+  var firstLine = configState.h1_first_line[lang];
+  var secondLine = configState.h1_second_line[lang];
+  var placeholder_video_src = configState.placeholder_video_src;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((react__WEBPACK_IMPORTED_MODULE_1___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("main", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "hero"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h1", {
     className: "h1 main-title all-langs"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "main-title__first-part"
-  }, lang === 'en' ? 'EXPLORE THE' : 'EXPLORER LA'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
+  }, lang === "en" ? "EXPLORE LAVAL'S" : "EXPLORER L'ENVIRONNEMENT"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "main-title__video",
     onClick: playVideo
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("video", {
@@ -12843,27 +12882,9 @@ function Main(_ref3) {
     type: "video/mp4"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", {
     className: "main-title__second-part"
-  }, firstLine, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("br", null), secondLine)), _toConsumableArray(Array(5)).map(function (e, i) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", {
-      key: i,
-      className: "dot"
-    });
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("section", {
-    className: "section section-about"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", {
-    className: "section__title"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Translate_js__WEBPACK_IMPORTED_MODULE_0__["default"], {
-    str: "About us"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
-    className: "h3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Translate_js__WEBPACK_IMPORTED_MODULE_0__["default"], {
-    str: "Curbcut is a platform for deep, dynamic, and intuitive exploration of urban sustainability."
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
-    to: "/about",
-    className: "cta-text cta-text--underline"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Translate_js__WEBPACK_IMPORTED_MODULE_0__["default"], {
-    str: "More about Curbcut"
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("section", {
+  }, lang === "en" ? "SOCIAL" : "SOCIAL", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("br", null), lang === "en" ? "ENVIRONMENT" : "LAVALLOIS"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
+    className: "section-block"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("section", {
     className: "section section-discover"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", {
     className: "section__title"
@@ -12878,42 +12899,45 @@ function Main(_ref3) {
       lang: lang,
       setValue: setValue
     });
-  }))), news_cards && news_cards.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("section", {
-    className: "section section-news"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("section", {
+    className: "section section-about",
+    style: {
+      position: "relative"
+    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", {
     className: "section__title"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Translate_js__WEBPACK_IMPORTED_MODULE_0__["default"], {
-    str: "Latest news"
+    str: "About us"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
-    id: "swipe-cta-prev",
-    className: "swipe-cta"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", {
-    src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMTUiIHZpZXdCb3g9IjAgMCAyNCAxNSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNC40MDA2IDE0LjQwMDFMMTQuNDAwNiAxMC40ODVDMTQuNDAwNiA5Ljk5NjM4IDE0Ljc5NjkgOS42MDAwNiAxNS4yODU1IDkuNjAwMDZMMTkuMiA5LjYwMDA2TDE5LjIgNS42ODQ5NUMxOS4yIDUuMTk2MzUgMTkuNTk2MyA0LjgwMDAzIDIwLjA4NDkgNC44MDAwM0wyNCA0LjgwMDAzTDI0IDBMMTkuMiAtMi4wOTgxNmUtMDdMMTkuMiAzLjkxNTEyQzE5LjIgNC40MDM3MiAxOC44MDM3IDQuODAwMDMgMTguMzE1MSA0LjgwMDAzTDE1LjI4NDkgNC44MDAwM0MxNC45OTMzIDQuODAwMDMgMTQuNjQwOSA0LjgwMDI3IDE0LjQwNDEgNC44MDA0NkwxNC40MDQxIDYuMjI4MzdMMTQuNDAwNiA2LjIyODM3TDE0LjQwMDYgOC43MTUxNUMxNC40MDA2IDkuMjAzNzUgMTQuMDA0MyA5LjYwMDA2IDEzLjUxNTcgOS42MDAwNkwxMC40ODU1IDkuNjAwMDZDOS45OTY4NiA5LjYwMDA2IDkuNjAwNTQgOS4yMDM3NSA5LjYwMDU0IDguNzE1MTVMOS42MDA1NCA2LjIyODM3TDkuNTk3MTcgNi4yMjgzN0w5LjU5NzE3IDQuODAzOTlMNy44MTY3OCA0LjgwMzk5TDcuODE2NzggNC44MDA2Nkw1LjY4NDc5IDQuODAwNjZDNS4xOTYxOSA0LjgwMDY2IDQuNzk5ODggNC40MDQzNSA0Ljc5OTg4IDMuOTE1NzVMNC43OTk4OCAwLjAwMDYzMDc3TC0wLjAwMDE1NDQ5NSAwLjAwMDYzMDU2TC0wLjAwMDE1NDcwNSA0LjgwMDY2TDMuOTE0OTYgNC44MDA2NkM0LjQwMzU2IDQuODAwNjYgNC43OTk4OCA1LjE5Njk4IDQuNzk5ODggNS42ODU1OEw0Ljc5OTg4IDkuNjAwNjlMOC43MTQ5OSA5LjYwMDY5QzkuMjAzNTkgOS42MDA2OSA5LjU5OTkxIDkuOTk3MDEgOS41OTk5MSAxMC40ODU2TDkuNTk5OTEgMTQuNDAwN0wxNC40MDA2IDE0LjQwMDdMMTQuNDAwNiAxNC40MDAxWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+",
-    alt: "",
-    width: "32",
-    height: "19"
+    className: "h3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Translate_js__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    str: "Curbcut is a platform for deep, dynamic, and intuitive exploration of urban sustainability."
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
-    id: "swipe-cta-next",
-    className: "swipe-cta"
+    style: {
+      height: "10px"
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
+    to: "/about",
+    className: "cta-text cta-text"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Translate_js__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    str: "More about Curbcut"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
+    style: {
+      position: "absolute",
+      bottom: "10px",
+      left: "6px",
+      maxWidth: "35%"
+    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", {
-    src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMTUiIHZpZXdCb3g9IjAgMCAyNCAxNSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNC40MDA2IDE0LjQwMDFMMTQuNDAwNiAxMC40ODVDMTQuNDAwNiA5Ljk5NjM4IDE0Ljc5NjkgOS42MDAwNiAxNS4yODU1IDkuNjAwMDZMMTkuMiA5LjYwMDA2TDE5LjIgNS42ODQ5NUMxOS4yIDUuMTk2MzUgMTkuNTk2MyA0LjgwMDAzIDIwLjA4NDkgNC44MDAwM0wyNCA0LjgwMDAzTDI0IDBMMTkuMiAtMi4wOTgxNmUtMDdMMTkuMiAzLjkxNTEyQzE5LjIgNC40MDM3MiAxOC44MDM3IDQuODAwMDMgMTguMzE1MSA0LjgwMDAzTDE1LjI4NDkgNC44MDAwM0MxNC45OTMzIDQuODAwMDMgMTQuNjQwOSA0LjgwMDI3IDE0LjQwNDEgNC44MDA0NkwxNC40MDQxIDYuMjI4MzdMMTQuNDAwNiA2LjIyODM3TDE0LjQwMDYgOC43MTUxNUMxNC40MDA2IDkuMjAzNzUgMTQuMDA0MyA5LjYwMDA2IDEzLjUxNTcgOS42MDAwNkwxMC40ODU1IDkuNjAwMDZDOS45OTY4NiA5LjYwMDA2IDkuNjAwNTQgOS4yMDM3NSA5LjYwMDU0IDguNzE1MTVMOS42MDA1NCA2LjIyODM3TDkuNTk3MTcgNi4yMjgzN0w5LjU5NzE3IDQuODAzOTlMNy44MTY3OCA0LjgwMzk5TDcuODE2NzggNC44MDA2Nkw1LjY4NDc5IDQuODAwNjZDNS4xOTYxOSA0LjgwMDY2IDQuNzk5ODggNC40MDQzNSA0Ljc5OTg4IDMuOTE1NzVMNC43OTk4OCAwLjAwMDYzMDc3TC0wLjAwMDE1NDQ5NSAwLjAwMDYzMDU2TC0wLjAwMDE1NDcwNSA0LjgwMDY2TDMuOTE0OTYgNC44MDA2NkM0LjQwMzU2IDQuODAwNjYgNC43OTk4OCA1LjE5Njk4IDQuNzk5ODggNS42ODU1OEw0Ljc5OTg4IDkuNjAwNjlMOC43MTQ5OSA5LjYwMDY5QzkuMjAzNTkgOS42MDA2OSA5LjU5OTkxIDkuOTk3MDEgOS41OTk5MSAxMC40ODU2TDkuNTk5OTEgMTQuNDAwN0wxNC40MDA2IDE0LjQwMDdMMTQuNDAwNiAxNC40MDAxWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+",
-    alt: "",
-    width: "32",
-    height: "19"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
-    id: "news-slider",
-    className: "swiper",
-    ref: sliderRef
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
-    className: "swiper-wrapper"
-  }, news_cards.map(function (card) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(NewsCard, {
-      key: card.id,
-      card: card,
-      lang: lang,
-      setValue: setValue
-    });
-  })))))), isModalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("dialog", {
+    id: "curbcut-logo",
+    src: "data:image/jpg;base64,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",
+    alt: "Logo",
+    style: {
+      maxWidth: "100%",
+      display: "block",
+      height: "20px"
+    }
+  }))))), isModalOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("dialog", {
     id: "video-modal",
     open: true,
     onClick: handleDialogClick
@@ -12953,12 +12977,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _landing__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../landing */ "./srcjs/landing.jsx");
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 
 
 
@@ -12984,7 +13002,7 @@ function MemberCard(_ref) {
     className: "card__title bg-".concat(card.theme)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", null, card.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", {
     style: {
-      fontSize: '12px'
+      fontSize: "12px"
     }
   }, card["role_".concat(lang)])));
 }
@@ -12996,7 +13014,6 @@ function Team() {
     return null;
   }
   var team_cards = configState.team_cards;
-  var contributors = configState.contributors;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("main", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "hero"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h1", {
@@ -13004,13 +13021,8 @@ function Team() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "main-title__first-part"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
-    str: 'CURBCUT&nbsp; TEAM'
-  }))), _toConsumableArray(Array(5)).map(function (e, i) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", {
-      key: i,
-      className: "dot"
-    });
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("section", {
+    str: "CURBCUT&nbsp; TEAM"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("section", {
     className: "section section-team"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", {
     className: "section__title"
@@ -13024,27 +13036,6 @@ function Team() {
       card: card,
       lang: lang
     });
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("section", {
-    style: {
-      marginTop: '25px'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", {
-    className: "section__title",
-    style: {
-      marginBottom: '20px'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_Translate__WEBPACK_IMPORTED_MODULE_0__["default"], {
-    str: "Contributors"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
-    className: "contributors-container"
-  }, contributors.map(function (contributor, index, array) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((react__WEBPACK_IMPORTED_MODULE_1___default().Fragment), {
-      key: index
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", {
-      className: "contributor-style"
-    }, contributor), index !== array.length - 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("span", {
-      className: "contributor-dot"
-    }, "\u25AA") : null);
   }))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Team);
@@ -13089,20 +13080,15 @@ var ThemesMenu = function ThemesMenu(_ref) {
     setValue = _ref.setValue;
   var contextValue = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_theme_drop__WEBPACK_IMPORTED_MODULE_3__.LanguageContext);
   var configState = contextValue.configState;
+  var pages = configState.pages;
 
   // Get all unique themes from the pages.json file
   var themes = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
-    var uniqueThemes = _toConsumableArray(new Set(configState.pages.map(function (page) {
+    var uniqueThemes = _toConsumableArray(new Set(pages.map(function (page) {
       return page.theme;
     })));
-    // Sort and place the explorer last
-    uniqueThemes = uniqueThemes.sort(function (a, b) {
-      if (a === 'Explorer') return 1;
-      if (b === 'Explorer') return -1;
-      return a.localeCompare(b);
-    });
     return uniqueThemes;
-  }, [configState.pages]);
+  }, [pages]);
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
     themesMenu = _useState2[0],
@@ -13125,15 +13111,8 @@ var ThemesMenu = function ThemesMenu(_ref) {
   var clearBackgroundColor = function clearBackgroundColor() {
     if (categoriesMenuRef.current.dataset.theme) {
       categoriesMenuRef.current.classList.remove("bg-".concat(categoriesMenuRef.current.dataset.theme));
-      categoriesMenuRef.current.dataset.theme = '';
+      categoriesMenuRef.current.dataset.theme = "";
     }
-  };
-  var handlePageLinkClick = function handlePageLinkClick(pageId) {
-    setValue({
-      event: 'page_link',
-      page: pageId,
-      timestamp: Date.now()
-    });
   };
 
   // Control the home SVG color
@@ -13148,21 +13127,10 @@ var ThemesMenu = function ThemesMenu(_ref) {
         setopenTheme(currentCategory);
       }
     };
-    setThemesMenu(themes.map(function (theme, i) {
-      var theme_pages = configState.pages.filter(function (page) {
-        return page.theme === theme;
-      }).map(function (page, j) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
-          key: j,
-          onClick: function onClick() {
-            return handlePageLinkClick(page.id);
-          },
-          className: "cta-text-lower"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Translate__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          str: page.nav_title
-        }));
-      });
-      var theme_lowercased = theme.toLowerCase().split(' ')[0];
+    setThemesMenu(pages.map(function (themeData, i) {
+      var _themeData$subcategor;
+      var theme = themeData.theme;
+      var theme_lowercased = themeData.color;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("details", {
         key: i,
         className: "nav-item",
@@ -13181,7 +13149,7 @@ var ThemesMenu = function ThemesMenu(_ref) {
         className: "caret_land",
         width: "24",
         height: "15",
-        viewBox: "0 0 24 15",
+        viewBox: "0 0 24 24",
         fill: "none",
         xmlns: "http://www.w3.org/2000/svg"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", {
@@ -13189,12 +13157,36 @@ var ThemesMenu = function ThemesMenu(_ref) {
         clipRule: "evenodd",
         d: "M14.4006 14.4001L14.4006 10.485C14.4006 9.99638 14.7969 9.60006 15.2855 9.60006L19.2 9.60006L19.2 5.68495C19.2 5.19635 19.5963 4.80003 20.0849 4.80003L24 4.80003L24 0L19.2 -2.09816e-07L19.2 3.91512C19.2 4.40372 18.8037 4.80003 18.3151 4.80003L15.2849 4.80003C14.9933 4.80003 14.6409 4.80027 14.4041 4.80046L14.4041 6.22837L14.4006 6.22837L14.4006 8.71515C14.4006 9.20375 14.0043 9.60006 13.5157 9.60006L10.4855 9.60006C9.99686 9.60006 9.60054 9.20375 9.60054 8.71515L9.60054 6.22837L9.59717 6.22837L9.59717 4.80399L7.81678 4.80399L7.81678 4.80066L5.68479 4.80066C5.19619 4.80066 4.79988 4.40435 4.79988 3.91575L4.79988 0.00063077L-0.000154495 0.00063056L-0.000154705 4.80066L3.91496 4.80066C4.40356 4.80066 4.79988 5.19698 4.79988 5.68558L4.79988 9.60069L8.71499 9.60069C9.20359 9.60069 9.59991 9.99701 9.59991 10.4856L9.59991 14.4007L14.4006 14.4007L14.4006 14.4001Z",
         fill: "black"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_SvgIcon__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        theme_lowercased: theme_lowercased,
-        size: '25px'
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, theme_pages));
+      })))), openTheme === theme_lowercased && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        className: "theme-menu"
+      }, (_themeData$subcategor = themeData.subcategories) === null || _themeData$subcategor === void 0 ? void 0 : _themeData$subcategor.map(function (subcategory, subIndex) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+          key: subIndex,
+          className: "subcategory-section"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h3", {
+          className: "subcategory-title"
+        }, subcategory.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
+          className: "pages-list"
+        }, subcategory.pages.map(function (page, pageIndex) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
+            key: pageIndex,
+            className: "page-item"
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+            className: "page-link",
+            onClick: function onClick() {
+              return setValue({
+                event: "page_link",
+                page: page.id,
+                timestamp: Date.now()
+              });
+            }
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Translate__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            str: page.title
+          })));
+        })));
+      })));
     }));
-  }, [openTheme, configState.pages, themes]);
+  }, [openTheme, pages]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("details", {
     key: "999",
     className: "nav-item",
@@ -13210,8 +13202,8 @@ var ThemesMenu = function ThemesMenu(_ref) {
     className: "nav-item__category",
     onClick: function onClick() {
       return setValue({
-        event: 'page_link',
-        page: 'home',
+        event: "page_link",
+        page: "home",
         // timestamp to trigger a reactive update
         timestamp: Date.now()
       });
@@ -13219,7 +13211,7 @@ var ThemesMenu = function ThemesMenu(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
     className: "h4",
     style: {
-      color: homeHovered ? 'white' : 'black'
+      color: homeHovered ? "white" : "black"
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Translate__WEBPACK_IMPORTED_MODULE_1__["default"], {
     str: configState.home_str
@@ -13231,7 +13223,7 @@ var ThemesMenu = function ThemesMenu(_ref) {
     xmlns: "http://www.w3.org/2000/svg"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", {
     d: "M14.677 5.68012V2.87005H12.7026C12.2654 2.87005 11.9114 2.51526 11.9114 2.07707V0.105225H2.83602V2.08132C2.83602 2.5195 2.48203 2.8743 2.04483 2.8743H0.0661621V11.9717H2.04483C2.48203 11.9717 2.83602 12.3265 2.83602 12.7646V14.7478H11.9114V12.7646C11.9114 12.3265 12.2654 11.9717 12.7026 11.9717H14.677V9.1616H11.8733V11.1448C11.8733 11.5829 11.5193 11.9377 11.0821 11.9377H3.66246C3.22527 11.9377 2.87128 11.5829 2.87128 11.1448V3.70827C2.87128 3.27008 3.22527 2.91529 3.66246 2.91529H11.0821C11.5193 2.91529 11.8733 3.27008 11.8733 3.70827V5.68012H14.677Z",
-    fill: homeHovered ? 'white' : 'black'
+    fill: homeHovered ? "white" : "black"
   })))), themesMenu);
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ThemesMenu);
@@ -13272,6 +13264,9 @@ function Translate(_ref) {
   var translation = translation_df.find(function (row) {
     return row.en === str;
   });
+
+  // Return same language if translation is not found
+  if (!translation) return str;
   var out = translation === undefined ? str : translation[lang];
 
   // Decode HTML entities if they exist in the translation
@@ -13366,8 +13361,8 @@ var translation_df = [{
   en: 'GET UPDATES',
   fr: "S'INSCRIRE"
 }, {
-  en: 'Our collaborators',
-  fr: 'Nos partenaires'
+  en: 'Collaborators',
+  fr: 'Partenaires'
 }, {
   en: 'Curbcut cities',
   fr: 'Villes Curbcut'
@@ -13413,6 +13408,9 @@ var translation_df = [{
 }, {
   en: 'Home',
   fr: 'Accueil'
+}, {
+  en: 'POWERED BY',
+  fr: 'PROPULSÉ PAR'
 }];
 
 /***/ }),
@@ -13426,6 +13424,7 @@ var translation_df = [{
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Landing: () => (/* binding */ Landing),
 /* harmony export */   LanguageContext: () => (/* binding */ LanguageContext),
 /* harmony export */   "default": () => (/* binding */ initLanding)
 /* harmony export */ });
@@ -13437,14 +13436,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Nav__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Nav */ "./srcjs/components/Nav.js");
 /* harmony import */ var _components_ThemesMenu__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/ThemesMenu */ "./srcjs/components/ThemesMenu.js");
 /* harmony import */ var _components_Footer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Footer */ "./srcjs/components/Footer.js");
-/* harmony import */ var _components_ChooseMap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/ChooseMap */ "./srcjs/components/ChooseMap.js");
-/* harmony import */ var _studio_freight_lenis__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @studio-freight/lenis */ "./node_modules/@studio-freight/lenis/dist/lenis.modern.mjs");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var _components_pages_Main__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/pages/Main */ "./srcjs/components/pages/Main.js");
-/* harmony import */ var _components_pages_About__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/pages/About */ "./srcjs/components/pages/About.js");
-/* harmony import */ var _components_pages_Team__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/pages/Team */ "./srcjs/components/pages/Team.js");
-/* harmony import */ var _utils_htmlUtils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utils/htmlUtils */ "./srcjs/utils/htmlUtils.js");
-/* harmony import */ var _data_translation_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./data/translation.js */ "./srcjs/data/translation.js");
+/* harmony import */ var _studio_freight_lenis__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @studio-freight/lenis */ "./node_modules/@studio-freight/lenis/dist/lenis.modern.mjs");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _components_pages_Main__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/pages/Main */ "./srcjs/components/pages/Main.js");
+/* harmony import */ var _components_pages_About__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/pages/About */ "./srcjs/components/pages/About.js");
+/* harmony import */ var _components_pages_Team__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/pages/Team */ "./srcjs/components/pages/Team.js");
+/* harmony import */ var _utils_htmlUtils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./utils/htmlUtils */ "./srcjs/utils/htmlUtils.js");
+/* harmony import */ var _data_translation_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./data/translation.js */ "./srcjs/data/translation.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -13471,7 +13469,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
 // Create a Language context to be used with the useContext hook. This will allow us to pass the language
 // to any component without having to pass it through props.
 var LanguageContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_2__.createContext)();
@@ -13480,7 +13477,7 @@ var Landing = function Landing(_ref) {
     value = _ref.value,
     setValue = _ref.setValue;
   // Set language
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(configuration.lang || 'en'),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(configuration.lang || "en"),
     _useState2 = _slicedToArray(_useState, 2),
     lang = _useState2[0],
     setLang = _useState2[1];
@@ -13491,16 +13488,16 @@ var Landing = function Landing(_ref) {
         var _ref3 = _slicedToArray(_ref2, 2),
           key = _ref3[0],
           value = _ref3[1];
-        if (typeof value === 'string') {
+        if (typeof value === "string") {
           try {
-            value = JSON.parse((0,_utils_htmlUtils__WEBPACK_IMPORTED_MODULE_10__["default"])(value));
+            value = JSON.parse((0,_utils_htmlUtils__WEBPACK_IMPORTED_MODULE_9__["default"])(value));
           } catch (e) {}
         }
         return [key, value];
       }));
       // if translation_df is available in the configuration, concatenate it with translation_df from translation.js
       if (state.translation_df) {
-        state.translation_df = state.translation_df.concat(_data_translation_js__WEBPACK_IMPORTED_MODULE_11__.translation_df);
+        state.translation_df = state.translation_df.concat(_data_translation_js__WEBPACK_IMPORTED_MODULE_10__.translation_df);
       }
       return state;
     }),
@@ -13516,16 +13513,16 @@ var Landing = function Landing(_ref) {
       var _ref5 = _slicedToArray(_ref4, 2),
         key = _ref5[0],
         value = _ref5[1];
-      if (typeof value === 'string') {
+      if (typeof value === "string") {
         try {
-          value = JSON.parse((0,_utils_htmlUtils__WEBPACK_IMPORTED_MODULE_10__["default"])(value));
+          value = JSON.parse((0,_utils_htmlUtils__WEBPACK_IMPORTED_MODULE_9__["default"])(value));
         } catch (e) {}
       }
       return [key, value];
     }));
     // if translation_df is available in the configuration, concatenate it with translation_df from translation.js
     if (parsedConfiguration.translation_df) {
-      parsedConfiguration.translation_df = parsedConfiguration.translation_df.concat(_data_translation_js__WEBPACK_IMPORTED_MODULE_11__.translation_df);
+      parsedConfiguration.translation_df = parsedConfiguration.translation_df.concat(_data_translation_js__WEBPACK_IMPORTED_MODULE_10__.translation_df);
     }
     setConfigState(function (prevConfig) {
       return _objectSpread(_objectSpread({}, prevConfig), parsedConfiguration);
@@ -13545,15 +13542,11 @@ var Landing = function Landing(_ref) {
         themes.push(page.theme);
       }
     });
-    return themes.sort(function (a, b) {
-      if (a === 'Explorer') return 1;
-      if (b === 'Explorer') return -1;
-      return a.localeCompare(b);
-    });
+    return themes;
   }, [pages]);
 
   // Smooth scroll
-  var lenis = new _studio_freight_lenis__WEBPACK_IMPORTED_MODULE_12__["default"]();
+  var lenis = new _studio_freight_lenis__WEBPACK_IMPORTED_MODULE_11__["default"]();
 
   // Setup the lenis scroll
   function raf(time) {
@@ -13571,9 +13564,9 @@ var Landing = function Landing(_ref) {
     setIsVisible = _useState6[1];
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
     if (configState.turn === undefined) return;
-    if (configState.turn === 'on') {
+    if (configState.turn === "on") {
       setIsVisible(true);
-    } else if (configState.turn === 'off') {
+    } else if (configState.turn === "off") {
       lenis.destroy();
       setIsVisible(false);
     }
@@ -13586,12 +13579,51 @@ var Landing = function Landing(_ref) {
   }, [configState]);
   return /*#__PURE__*/React.createElement("div", {
     className: "landing"
-  }, isVisible && /*#__PURE__*/React.createElement(LanguageContext.Provider, {
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "background-container"
+  }, /*#__PURE__*/React.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 1000 800",
+    preserveAspectRatio: "xMidYMid meet"
+  }, /*#__PURE__*/React.createElement("ellipse", {
+    cx: "550",
+    cy: "400",
+    rx: 1197 / 2,
+    ry: 1197 / 2,
+    fill: "#FB702E"
+  }), /*#__PURE__*/React.createElement("ellipse", {
+    cx: "570",
+    cy: "420",
+    rx: 1063 / 2,
+    ry: 753 / 2,
+    fill: "#F84437"
+  }), /*#__PURE__*/React.createElement("ellipse", {
+    cx: "550",
+    cy: "400",
+    rx: 651 / 2,
+    ry: 461 / 2,
+    fill: "#F51B47",
+    transform: "rotate(110 500 400)"
+  }), /*#__PURE__*/React.createElement("ellipse", {
+    cx: "500",
+    cy: "400",
+    rx: 411 / 2,
+    ry: 397 / 2,
+    fill: "#DA0A5A",
+    transform: "rotate(160 500 400)"
+  }), /*#__PURE__*/React.createElement("ellipse", {
+    cx: "500",
+    cy: "470",
+    rx: 243 / 2,
+    ry: 173 / 2,
+    fill: "#C70068",
+    transform: "rotate(110 500 400)"
+  }))), isVisible && /*#__PURE__*/React.createElement(LanguageContext.Provider, {
     value: {
       lang: lang,
       configState: configState
     }
-  }, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.MemoryRouter, null, /*#__PURE__*/React.createElement(_components_Nav__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.MemoryRouter, null, /*#__PURE__*/React.createElement(_components_Nav__WEBPACK_IMPORTED_MODULE_3__["default"], {
     lenis: lenis,
     setLang: setLang,
     setValue: setValue
@@ -13602,22 +13634,20 @@ var Landing = function Landing(_ref) {
     pages: pages,
     themes: themes,
     setValue: setValue
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Routes, null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
     path: "/",
-    element: /*#__PURE__*/React.createElement(_components_pages_Main__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    element: /*#__PURE__*/React.createElement(_components_pages_Main__WEBPACK_IMPORTED_MODULE_6__["default"], {
       lenis: lenis,
       lang: lang,
       setValue: setValue
     })
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
     path: "/about",
-    element: /*#__PURE__*/React.createElement(_components_pages_About__WEBPACK_IMPORTED_MODULE_8__["default"], null)
-  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
+    element: /*#__PURE__*/React.createElement(_components_pages_About__WEBPACK_IMPORTED_MODULE_7__["default"], null)
+  }), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.Route, {
     path: "/team",
-    element: /*#__PURE__*/React.createElement(_components_pages_Team__WEBPACK_IMPORTED_MODULE_9__["default"], null)
-  })), /*#__PURE__*/React.createElement(_components_ChooseMap__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    lenis: lenis
-  })), /*#__PURE__*/React.createElement(_components_Footer__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    element: /*#__PURE__*/React.createElement(_components_pages_Team__WEBPACK_IMPORTED_MODULE_8__["default"], null)
+  }))), /*#__PURE__*/React.createElement(_components_Footer__WEBPACK_IMPORTED_MODULE_5__["default"], {
     lang: lang,
     pages: pages,
     themes: themes,
@@ -13675,21 +13705,21 @@ function ThemeDropdown(_ref) {
     value = _ref.value,
     setValue = _ref.setValue;
   var themeColors = {
-    explorer: '#a3b0d1',
-    ecology: '#73ad80',
-    housing: '#e08565',
-    health: '#cd718c',
-    transport: '#c9c3fa',
-    climate: '#f5d574',
-    urban: '#adb033',
-    demographics: '#9e9090',
-    economy: '#beaf62',
-    resources: '#dca656',
-    land: '#7baaaa'
+    explorer: "#a3b0d1",
+    ecology: "#73ad80",
+    housing: "#e08565",
+    health: "#cd718c",
+    transport: "#c9c3fa",
+    climate: "#f5d574",
+    urban: "#adb033",
+    demographics: "#9e9090",
+    economy: "#beaf62",
+    resources: "#dca656",
+    land: "#7baaaa"
   };
 
   // Set language
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('en'),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("en"),
     _useState2 = _slicedToArray(_useState, 2),
     lang = _useState2[0],
     setLang = _useState2[1];
@@ -13700,7 +13730,7 @@ function ThemeDropdown(_ref) {
         var _ref3 = _slicedToArray(_ref2, 2),
           key = _ref3[0],
           value = _ref3[1];
-        if (typeof value === 'string') {
+        if (typeof value === "string") {
           try {
             value = JSON.parse(value);
           } catch (e) {}
@@ -13725,7 +13755,7 @@ function ThemeDropdown(_ref) {
       var _ref5 = _slicedToArray(_ref4, 2),
         key = _ref5[0],
         value = _ref5[1];
-      if (typeof value === 'string') {
+      if (typeof value === "string") {
         try {
           value = JSON.parse(value);
         } catch (e) {}
@@ -13746,10 +13776,9 @@ function ThemeDropdown(_ref) {
     if (configState.lang === undefined) return;
     setLang(configState.lang);
   }, [configState]);
-  var theme_lowercased = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(function () {
+  var theme_color = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(function () {
     return configState.theme.toLowerCase().split(' ')[0];
   }, [configState.theme]);
-
   // Create a reference to the categories menu
   var categoriesMenuRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)();
 
@@ -13775,9 +13804,9 @@ function ThemeDropdown(_ref) {
         setMenuVisible(false);
       }
     }
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return function () {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [categoriesMenuRef, buttonRef]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(LanguageContext.Provider, {
@@ -13788,40 +13817,40 @@ function ThemeDropdown(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     className: "landing",
     style: {
-      backgroundColor: 'transparent'
+      backgroundColor: "transparent"
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", {
     ref: buttonRef,
     style: {
       width: configState.width,
-      height: '35px',
-      borderRadius: menuVisible ? '15px 15px 0 0' : '15px',
-      border: menuVisible ? '1px solid #282828' : '1px solid #282828',
-      borderBottom: menuVisible ? 'none' : '1px solid #282828',
-      background: themeColors[theme_lowercased],
-      display: 'flex',
-      alignItems: 'center',
-      padding: '5px',
-      cursor: 'default' // Change cursor style to default here
+      height: "35px",
+      borderRadius: menuVisible ? "15px 15px 0 0" : "15px",
+      border: menuVisible ? "1px solid #282828" : "1px solid #282828",
+      borderBottom: menuVisible ? "none" : "1px solid #282828",
+      background: themeColors[theme_color],
+      display: "flex",
+      alignItems: "center",
+      padding: "5px",
+      cursor: "default" // Change cursor style to default here
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     style: {
-      display: 'flex',
-      alignItems: 'center',
-      cursor: 'pointer'
+      display: "flex",
+      alignItems: "center",
+      cursor: "pointer"
     },
     onClick: function onClick(e) {
       e.stopPropagation(); // prevent the main button's onClick event from firing
       setValue({
-        event: 'page_link',
-        page: 'home',
+        event: "page_link",
+        page: "home",
         // timestamp to trigger a reactive update
         timestamp: Date.now()
       });
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("svg", {
     style: {
-      margin: '0 10px'
+      margin: "0 10px"
     },
     width: "15px",
     height: "15px",
@@ -13833,36 +13862,36 @@ function ThemeDropdown(_ref) {
     fill: "black"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     style: {
-      height: '70%',
-      borderLeft: '1px solid black',
-      marginLeft: '0px',
-      marginRight: '0px'
+      height: "70%",
+      borderLeft: "1px solid black",
+      marginLeft: "0px",
+      marginRight: "0px"
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     style: {
-      display: 'flex',
-      alignItems: 'center',
-      cursor: 'pointer',
-      width: '100%'
+      display: "flex",
+      alignItems: "center",
+      cursor: "pointer",
+      width: "100%"
     },
     onClick: function onClick() {
       return setMenuVisible(!menuVisible);
     } // onClick event for label and caret
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h2", {
     style: {
-      margin: '0 10px',
-      fontFamily: '_AcidGrotesk',
-      fontSize: '1.6rem'
+      margin: "0 10px",
+      fontFamily: "_AcidGrotesk",
+      fontSize: "1.6rem"
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components_theme_drop_Translate__WEBPACK_IMPORTED_MODULE_2__["default"], {
     str: configState.theme
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("svg", {
     className: "caret_land",
     style: {
-      width: '14px',
-      marginRight: '12px',
-      marginLeft: 'auto',
-      transform: menuVisible ? 'rotateX(180deg)' : 'rotateX(0deg)' // apply rotation based on menuVisible state
+      width: "14px",
+      marginRight: "12px",
+      marginLeft: "auto",
+      transform: menuVisible ? "rotateX(180deg)" : "rotateX(0deg)" // apply rotation based on menuVisible state
     },
 
     width: "24",
@@ -13880,7 +13909,7 @@ function ThemeDropdown(_ref) {
     "data-lenis-prevent": true,
     ref: categoriesMenuRef,
     style: {
-      display: menuVisible ? 'block' : 'none'
+      display: menuVisible ? "block" : "none"
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("nav", {
     className: "categories-nav"
@@ -13888,10 +13917,11 @@ function ThemeDropdown(_ref) {
     openTheme: openTheme,
     setopenTheme: setopenTheme,
     categoriesMenuRef: categoriesMenuRef,
-    theme_lowercased: theme_lowercased,
+    theme_lowercased: theme_color,
     setValue: setValue
   })))));
 }
+;
 function initThemeDropdown() {
   (0,reactR__WEBPACK_IMPORTED_MODULE_0__.reactShinyInput)('.theme_drop', 'cc.landing.theme_drop', ThemeDropdown);
 }
@@ -14105,9 +14135,10 @@ var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require
 var ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(/*! ../fonts/apparat-regular.woff */ "./srcjs/fonts/apparat-regular.woff"), __webpack_require__.b);
 var ___CSS_LOADER_URL_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(/*! ../fonts/acidgrotesk-book.woff2 */ "./srcjs/fonts/acidgrotesk-book.woff2"), __webpack_require__.b);
 var ___CSS_LOADER_URL_IMPORT_3___ = new URL(/* asset import */ __webpack_require__(/*! ../fonts/acidgrotesk-book.woff */ "./srcjs/fonts/acidgrotesk-book.woff"), __webpack_require__.b);
-var ___CSS_LOADER_URL_IMPORT_4___ = new URL(/* asset import */ __webpack_require__(/*! data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAxNyI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTAgMGgyNHYyLjQyOUgwek0wIDcuMjg2aDI0djIuNDI5SDB6TTAgMTQuNTcxaDI0VjE3SDB6Ii8+Cjwvc3ZnPg== */ "data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAxNyI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTAgMGgyNHYyLjQyOUgwek0wIDcuMjg2aDI0djIuNDI5SDB6TTAgMTQuNTcxaDI0VjE3SDB6Ii8+Cjwvc3ZnPg=="), __webpack_require__.b);
-var ___CSS_LOADER_URL_IMPORT_5___ = new URL(/* asset import */ __webpack_require__(/*! data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNCAzNCI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTI2LjMxNSA5LjM0MyA5LjM0NCAyNi4zMTRsLTEuNzE4LTEuNzE4IDE2Ljk3MS0xNi45N3oiLz4KICA8cGF0aCBmaWxsPSIjMDAwIiBkPSJtOS4zNDQgNy42MjcgMTYuOTcgMTYuOTctMS43MTcgMS43MTgtMTYuOTctMTYuOTd6Ii8+Cjwvc3ZnPg== */ "data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNCAzNCI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTI2LjMxNSA5LjM0MyA5LjM0NCAyNi4zMTRsLTEuNzE4LTEuNzE4IDE2Ljk3MS0xNi45N3oiLz4KICA8cGF0aCBmaWxsPSIjMDAwIiBkPSJtOS4zNDQgNy42MjcgMTYuOTcgMTYuOTctMS43MTcgMS43MTgtMTYuOTctMTYuOTd6Ii8+Cjwvc3ZnPg=="), __webpack_require__.b);
-var ___CSS_LOADER_URL_IMPORT_6___ = new URL(/* asset import */ __webpack_require__(/*! data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NiA2NyI+CiAgPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4zMDggNy43ODh2Mi45MDljLjM0Mi4xMTguNjYzLjMxNS45MzUuNTg5TDM0LjU2NiAzMS43MWMuOTYuOTY0Ljk2IDIuNTI2IDAgMy40OUwxNC4yNDMgNTUuNjI1Yy0uMjcyLjI3NC0uNTkzLjQ3LS45MzUuNTg4djIuOTA5Yy4zMzYuMTE4LjY1Mi4zMTMuOTIxLjU4M2w3LjE2OSA3LjIwNkw0NiA0Mi4xODQgMzkuMDUgMzUuMmEyLjQ3NiAyLjQ3NiAwIDAgMSAwLTMuNDlMNDYgMjQuNzI2IDIxLjM5NiAwbC03LjE2OCA3LjIwNmMtLjI2OS4yNy0uNTg0LjQ2NC0uOTIuNTgzWiIgZmlsbD0iI0U5RUNFRiIvPgogIDxwYXRoIGZpbGw9IiNFOUVDRUYiIGQ9Ik0wIDYuNzY3aDEzLjMwOHY1MS4zM0gweiIvPgo8L3N2Zz4= */ "data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NiA2NyI+CiAgPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4zMDggNy43ODh2Mi45MDljLjM0Mi4xMTguNjYzLjMxNS45MzUuNTg5TDM0LjU2NiAzMS43MWMuOTYuOTY0Ljk2IDIuNTI2IDAgMy40OUwxNC4yNDMgNTUuNjI1Yy0uMjcyLjI3NC0uNTkzLjQ3LS45MzUuNTg4djIuOTA5Yy4zMzYuMTE4LjY1Mi4zMTMuOTIxLjU4M2w3LjE2OSA3LjIwNkw0NiA0Mi4xODQgMzkuMDUgMzUuMmEyLjQ3NiAyLjQ3NiAwIDAgMSAwLTMuNDlMNDYgMjQuNzI2IDIxLjM5NiAwbC03LjE2OCA3LjIwNmMtLjI2OS4yNy0uNTg0LjQ2NC0uOTIuNTgzWiIgZmlsbD0iI0U5RUNFRiIvPgogIDxwYXRoIGZpbGw9IiNFOUVDRUYiIGQ9Ik0wIDYuNzY3aDEzLjMwOHY1MS4zM0gweiIvPgo8L3N2Zz4="), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_4___ = new URL(/* asset import */ __webpack_require__(/*! data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 1000 800%27 preserveAspectRatio=%27xMidYMid meet%27%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27350%27 ry=%27250%27 fill=%27%23C2185B%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27300%27 ry=%27220%27 fill=%27%23FF7043%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27250%27 ry=%27190%27 fill=%27%23FF5252%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27200%27 ry=%27160%27 fill=%27%23FF4081%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27150%27 ry=%27130%27 fill=%27%23D81B60%27 /%3E%3C/svg%3E */ "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 1000 800%27 preserveAspectRatio=%27xMidYMid meet%27%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27350%27 ry=%27250%27 fill=%27%23C2185B%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27300%27 ry=%27220%27 fill=%27%23FF7043%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27250%27 ry=%27190%27 fill=%27%23FF5252%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27200%27 ry=%27160%27 fill=%27%23FF4081%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27150%27 ry=%27130%27 fill=%27%23D81B60%27 /%3E%3C/svg%3E"), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_5___ = new URL(/* asset import */ __webpack_require__(/*! data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAxNyI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTAgMGgyNHYyLjQyOUgwek0wIDcuMjg2aDI0djIuNDI5SDB6TTAgMTQuNTcxaDI0VjE3SDB6Ii8+Cjwvc3ZnPg== */ "data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAxNyI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTAgMGgyNHYyLjQyOUgwek0wIDcuMjg2aDI0djIuNDI5SDB6TTAgMTQuNTcxaDI0VjE3SDB6Ii8+Cjwvc3ZnPg=="), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_6___ = new URL(/* asset import */ __webpack_require__(/*! data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNCAzNCI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTI2LjMxNSA5LjM0MyA5LjM0NCAyNi4zMTRsLTEuNzE4LTEuNzE4IDE2Ljk3MS0xNi45N3oiLz4KICA8cGF0aCBmaWxsPSIjMDAwIiBkPSJtOS4zNDQgNy42MjcgMTYuOTcgMTYuOTctMS43MTcgMS43MTgtMTYuOTctMTYuOTd6Ii8+Cjwvc3ZnPg== */ "data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNCAzNCI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTI2LjMxNSA5LjM0MyA5LjM0NCAyNi4zMTRsLTEuNzE4LTEuNzE4IDE2Ljk3MS0xNi45N3oiLz4KICA8cGF0aCBmaWxsPSIjMDAwIiBkPSJtOS4zNDQgNy42MjcgMTYuOTcgMTYuOTctMS43MTcgMS43MTgtMTYuOTctMTYuOTd6Ii8+Cjwvc3ZnPg=="), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_7___ = new URL(/* asset import */ __webpack_require__(/*! data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NiA2NyI+CiAgPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4zMDggNy43ODh2Mi45MDljLjM0Mi4xMTguNjYzLjMxNS45MzUuNTg5TDM0LjU2NiAzMS43MWMuOTYuOTY0Ljk2IDIuNTI2IDAgMy40OUwxNC4yNDMgNTUuNjI1Yy0uMjcyLjI3NC0uNTkzLjQ3LS45MzUuNTg4djIuOTA5Yy4zMzYuMTE4LjY1Mi4zMTMuOTIxLjU4M2w3LjE2OSA3LjIwNkw0NiA0Mi4xODQgMzkuMDUgMzUuMmEyLjQ3NiAyLjQ3NiAwIDAgMSAwLTMuNDlMNDYgMjQuNzI2IDIxLjM5NiAwbC03LjE2OCA3LjIwNmMtLjI2OS4yNy0uNTg0LjQ2NC0uOTIuNTgzWiIgZmlsbD0iI0U5RUNFRiIvPgogIDxwYXRoIGZpbGw9IiNFOUVDRUYiIGQ9Ik0wIDYuNzY3aDEzLjMwOHY1MS4zM0gweiIvPgo8L3N2Zz4= */ "data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NiA2NyI+CiAgPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4zMDggNy43ODh2Mi45MDljLjM0Mi4xMTguNjYzLjMxNS45MzUuNTg5TDM0LjU2NiAzMS43MWMuOTYuOTY0Ljk2IDIuNTI2IDAgMy40OUwxNC4yNDMgNTUuNjI1Yy0uMjcyLjI3NC0uNTkzLjQ3LS45MzUuNTg4djIuOTA5Yy4zMzYuMTE4LjY1Mi4zMTMuOTIxLjU4M2w3LjE2OSA3LjIwNkw0NiA0Mi4xODQgMzkuMDUgMzUuMmEyLjQ3NiAyLjQ3NiAwIDAgMSAwLTMuNDlMNDYgMjQuNzI2IDIxLjM5NiAwbC03LjE2OCA3LjIwNmMtLjI2OS4yNy0uNTg0LjQ2NC0uOTIuNTgzWiIgZmlsbD0iI0U5RUNFRiIvPgogIDxwYXRoIGZpbGw9IiNFOUVDRUYiIGQ9Ik0wIDYuNzY3aDEzLjMwOHY1MS4zM0gweiIvPgo8L3N2Zz4="), __webpack_require__.b);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
@@ -14116,6 +14147,7 @@ var ___CSS_LOADER_URL_REPLACEMENT_3___ = _node_modules_css_loader_dist_runtime_g
 var ___CSS_LOADER_URL_REPLACEMENT_4___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_4___);
 var ___CSS_LOADER_URL_REPLACEMENT_5___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_5___);
 var ___CSS_LOADER_URL_REPLACEMENT_6___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_6___);
+var ___CSS_LOADER_URL_REPLACEMENT_7___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_7___);
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.landing html,
 .landing body,
@@ -14230,8 +14262,34 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.landing html,
   font-weight: 400;
   letter-spacing: 0;
   color: #000000;
-  background-color: #e9ecef;
+  background-color: #ec1650;
   overscroll-behavior: none;
+  /* For data URI method in CSS */
+  /* Media query for smaller screens */
+}
+.landing .background-container {
+  position: fixed;
+  top: 0;
+  left: 20%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.landing .background-container svg {
+  width: 100%;
+  height: 100%;
+}
+.landing .background-with-uri {
+  background-image: url(${___CSS_LOADER_URL_REPLACEMENT_4___});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+@media screen and (max-width: 1439px) {
+  .landing .background-container {
+    left: 0;
+    width: 100%;
+  }
 }
 .landing.is-fixed {
   overflow: hidden;
@@ -14321,7 +14379,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.landing html,
 .landing .h1 {
   font-family: "_Apparat", sans-serif;
   font-weight: 300;
-  font-size: 11.8rem;
+  font-size: 9.5rem;
   line-height: 14.4rem;
   text-transform: uppercase;
   margin-top: 0;
@@ -14360,7 +14418,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.landing html,
 }
 .landing .h3 {
   font-family: "_AcidGrotesk", sans-serif;
-  font-size: 3rem;
+  font-size: 2.6rem;
   line-height: 3.7rem;
   margin-top: 0;
   margin-bottom: 0;
@@ -14489,19 +14547,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.landing html,
   border-radius: 4px;
   cursor: default;
 }
-.landing .dot {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: #000000;
-  user-select: none;
-}
-@media (max-width: 767px) {
-  .landing .dot {
-    width: 5px;
-    height: 5px;
-  }
-}
 
 .landing #mobile-nav {
   display: none;
@@ -14533,46 +14578,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.landing html,
 .landing #mobile-nav .mobile-nav-group:not(:last-of-type) {
   border-bottom: 1px solid #000000;
 }
-.landing #mobile-nav .dot:nth-of-type(1) {
-  top: 80px;
-  left: 0;
-}
-.landing #mobile-nav .dot:nth-of-type(2) {
-  top: 108px;
-  left: 6.1vw;
-}
-.landing #mobile-nav .dot:nth-of-type(3) {
-  top: 113px;
-  left: 24vw;
-}
-.landing #mobile-nav .dot:nth-of-type(4) {
-  top: 97px;
-  left: 40vw;
-}
-.landing #mobile-nav .dot:nth-of-type(5) {
-  top: 91px;
-  left: 54vw;
-}
-.landing #mobile-nav .dot:nth-of-type(6) {
-  top: 132px;
-  left: 60vw;
-}
-.landing #mobile-nav .dot:nth-of-type(7) {
-  top: 111px;
-  left: 67vw;
-}
-.landing #mobile-nav .dot:nth-of-type(8) {
-  top: 170px;
-  left: 74vw;
-}
-.landing #mobile-nav .dot:nth-of-type(9) {
-  top: 116px;
-  left: 92vw;
-}
-.landing #mobile-nav .dot:nth-of-type(10) {
-  top: 189px;
-  left: 94vw;
-}
 .landing #main-header {
   max-width: min(100vw - 88px, 1440px);
   position: fixed;
@@ -14582,7 +14587,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.landing html,
   display: flex;
   width: 100%;
   margin: 0 auto;
-  padding: 46px 0;
+  padding: 12px 0;
   z-index: 15;
   transition: transform 0.25s cubic-bezier(0.65, 0, 0.35, 1);
 }
@@ -14609,8 +14614,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.landing html,
   transform: translateX(-50vw);
   background-color: #ffffff;
   z-index: 0;
-  transition: opacity 0.25s linear;
-  opacity: 0;
 }
 .landing #main-header .curbcut-logo {
   display: none;
@@ -14644,7 +14647,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.landing html,
 .landing #main-header .main-nav > ul li details[open] {
   background-color: #ffffff;
 }
-.landing #main-header .main-nav > ul li details[open] .caret_land {
+.landing #main-header .main-nav > ul li details[open] .caret {
   transform: rotateX(180deg);
 }
 .landing #main-header .main-nav > ul li details summary {
@@ -14686,7 +14689,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.landing html,
   align-items: center;
   width: 24px;
   height: 24px;
-  background: url(${___CSS_LOADER_URL_REPLACEMENT_4___}) no-repeat;
+  background: url(${___CSS_LOADER_URL_REPLACEMENT_5___}) no-repeat;
   background-position: center;
   cursor: pointer;
 }
@@ -14696,7 +14699,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.landing html,
   }
 }
 .landing #main-header.header--opened .main-nav > ul li.menu-btn {
-  background-image: url(${___CSS_LOADER_URL_REPLACEMENT_5___});
+  background-image: url(${___CSS_LOADER_URL_REPLACEMENT_6___});
 }
 .landing #main-header.header--hidden {
   transform: translateY(-130px);
@@ -14713,11 +14716,20 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
   min-height: 100vh;
   width: 100%;
   max-width: 450px;
-  background-color: #ffffff;
+  background-color: #e3e3e3;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   transition: background-color 0.45s cubic-bezier(0.3, 0, 0, 1);
   z-index: 20;
+  overflow-x: hidden; /* Hide overflow for transitions */
+  /* Main menu and submenu containers for transitions */
+  /* Position the main menu */
+  /* Position the submenu off-screen initially */
+  /* Animation states when submenu is active */
+  /* Main menu styles */
+  /* Subcategory menu styles */
+  /* Style for the "En savoir plus" link at the bottom */
 }
 @media (max-width: 1170px) {
   .landing #categories-menu {
@@ -14737,7 +14749,11 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
 }
 .landing #categories-menu .curbcut-logo {
   padding-bottom: 20px;
-  margin: 30px auto auto;
+  margin: 15px 25px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 2; /* Keep above the sliding menus */
 }
 @media (max-width: 1170px) {
   .landing #categories-menu .curbcut-logo {
@@ -14746,6 +14762,8 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
 }
 .landing #categories-menu .close-cta {
   display: none;
+  z-index: 2; /* Keep above the sliding menus */
+  background-color: #e3e3e3;
 }
 @media (max-width: 1170px) {
   .landing #categories-menu .close-cta {
@@ -14762,110 +14780,307 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
 .landing #categories-menu .categories-nav {
   display: flex;
   flex-direction: column;
+  margin-top: 50px;
+  flex-grow: 1;
+  position: relative; /* For positioning the sliding menus */
+  overflow-y: auto; /* Allow scrolling */
+  flex: 1; /* Take up available space */
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
 }
-.landing #categories-menu .categories-nav .nav-item {
-  border-top: 1.3px solid #000000;
-  padding: 12px 24px;
+.landing #categories-menu .main-menu-container,
+.landing #categories-menu .submenu-container {
+  width: 100%;
+  transition: transform 1s ease, opacity 0.5s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  backface-visibility: hidden; /* Prevent flickering */
+}
+.landing #categories-menu .main-menu-container {
+  transform: translateX(0);
+  opacity: 1;
+}
+.landing #categories-menu .submenu-container {
+  transform: translateX(100%);
+  opacity: 0;
+}
+.landing #categories-menu.submenu-active {
+  /* Make sure the fixed header always has the grey background */
+  /* Remove the theme colors from just the title */
+  /* Remove any background color from entire menu container */
+  background-color: #e3e3e3;
+  /* Add this section to color the entire menu area except the logo */
+  /* Add theme colors to the overlay instead */
+  /* Make sure content remains visible above the colored background */
+  /* Keep these background colors only for the theme-title */
+}
+.landing #categories-menu.submenu-active .main-menu-container {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+.landing #categories-menu.submenu-active .fixed-header {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background-color: #e3e3e3 !important; /* Force grey background */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Add border for separation */
+}
+.landing #categories-menu.submenu-active .submenu-container {
+  transform: translateX(0);
+  opacity: 1;
+}
+.landing #categories-menu.submenu-active::after {
+  content: "";
+  position: absolute;
+  top: 185px; /* Keep this the same as before */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: auto;
+  min-height: calc(100% - 185px); /* Make sure it extends at least to the bottom of the container */
+  z-index: 0;
+  transition: background-color 0.45s cubic-bezier(0.3, 0, 0, 1);
+}
+.landing #categories-menu.submenu-active[data-category=climate]::after {
+  background-color: #f5d574;
+}
+.landing #categories-menu.submenu-active[data-category=demographics]::after {
+  background-color: #9e9090;
+}
+.landing #categories-menu.submenu-active[data-category=ecology]::after {
+  background-color: #73ad80;
+}
+.landing #categories-menu.submenu-active[data-category=health]::after {
+  background-color: #cd718c;
+}
+.landing #categories-menu.submenu-active[data-category=housing]::after {
+  background-color: #e08565;
+}
+.landing #categories-menu.submenu-active[data-category=transport]::after {
+  background-color: #c9c3fa;
+}
+.landing #categories-menu.submenu-active[data-category=urban]::after {
+  background-color: #adb033;
+}
+.landing #categories-menu.submenu-active[data-category=explorer]::after {
+  background-color: #a3b0d1;
+}
+.landing #categories-menu.submenu-active[data-category=economy]::after {
+  background-color: #beaf62;
+}
+.landing #categories-menu.submenu-active[data-category=resources]::after {
+  background-color: #dca656;
+}
+.landing #categories-menu.submenu-active[data-category=land]::after {
+  background-color: #7baaaa;
+}
+.landing #categories-menu.submenu-active .categories-nav,
+.landing #categories-menu.submenu-active .back-button,
+.landing #categories-menu.submenu-active .theme-title,
+.landing #categories-menu.submenu-active .subcategory-section {
+  position: relative;
+  z-index: 1;
   background-color: transparent;
+}
+.landing #categories-menu.submenu-active .theme-title[data-category=climate] {
+  background-color: #f5d574;
+}
+.landing #categories-menu.submenu-active .theme-title[data-category=demographics] {
+  background-color: #9e9090;
+}
+.landing #categories-menu.submenu-active .theme-title[data-category=ecology] {
+  background-color: #73ad80;
+}
+.landing #categories-menu.submenu-active .theme-title[data-category=health] {
+  background-color: #cd718c;
+}
+.landing #categories-menu.submenu-active .theme-title[data-category=housing] {
+  background-color: #e08565;
+}
+.landing #categories-menu.submenu-active .theme-title[data-category=transport] {
+  background-color: #c9c3fa;
+}
+.landing #categories-menu.submenu-active .theme-title[data-category=urban] {
+  background-color: #adb033;
+}
+.landing #categories-menu.submenu-active .theme-title[data-category=explorer] {
+  background-color: #a3b0d1;
+}
+.landing #categories-menu.submenu-active .theme-title[data-category=economy] {
+  background-color: #beaf62;
+}
+.landing #categories-menu.submenu-active .theme-title[data-category=resources] {
+  background-color: #dca656;
+}
+.landing #categories-menu.submenu-active .theme-title[data-category=land] {
+  background-color: #7baaaa;
+}
+.landing #categories-menu .nav-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: transparent;
+  padding: 12px 24px;
+  cursor: pointer;
   transition: color 0.25s cubic-bezier(0.3, 0, 0, 1), background-color 0.45s cubic-bezier(0.3, 0, 0, 1);
 }
-.landing #categories-menu .categories-nav .nav-item:hover, .landing #categories-menu .categories-nav .nav-item:focus {
+.landing #categories-menu .nav-item:last-child {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.landing #categories-menu .nav-item:hover, .landing #categories-menu .nav-item:focus {
   background-color: #000000;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=climate], .landing #categories-menu .categories-nav .nav-item:focus[data-category=climate] {
+.landing #categories-menu .nav-item:hover[data-category=climate], .landing #categories-menu .nav-item:focus[data-category=climate] {
   color: #f5d574;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=climate] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=climate] svg path {
+.landing #categories-menu .nav-item:hover[data-category=climate] svg path, .landing #categories-menu .nav-item:focus[data-category=climate] svg path {
   fill: #f5d574;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=demographics], .landing #categories-menu .categories-nav .nav-item:focus[data-category=demographics] {
+.landing #categories-menu .nav-item:hover[data-category=demographics], .landing #categories-menu .nav-item:focus[data-category=demographics] {
   color: #9e9090;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=demographics] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=demographics] svg path {
+.landing #categories-menu .nav-item:hover[data-category=demographics] svg path, .landing #categories-menu .nav-item:focus[data-category=demographics] svg path {
   fill: #9e9090;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=ecology], .landing #categories-menu .categories-nav .nav-item:focus[data-category=ecology] {
+.landing #categories-menu .nav-item:hover[data-category=ecology], .landing #categories-menu .nav-item:focus[data-category=ecology] {
   color: #73ad80;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=ecology] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=ecology] svg path {
+.landing #categories-menu .nav-item:hover[data-category=ecology] svg path, .landing #categories-menu .nav-item:focus[data-category=ecology] svg path {
   fill: #73ad80;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=health], .landing #categories-menu .categories-nav .nav-item:focus[data-category=health] {
+.landing #categories-menu .nav-item:hover[data-category=health], .landing #categories-menu .nav-item:focus[data-category=health] {
   color: #cd718c;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=health] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=health] svg path {
+.landing #categories-menu .nav-item:hover[data-category=health] svg path, .landing #categories-menu .nav-item:focus[data-category=health] svg path {
   fill: #cd718c;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=housing], .landing #categories-menu .categories-nav .nav-item:focus[data-category=housing] {
+.landing #categories-menu .nav-item:hover[data-category=housing], .landing #categories-menu .nav-item:focus[data-category=housing] {
   color: #e08565;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=housing] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=housing] svg path {
+.landing #categories-menu .nav-item:hover[data-category=housing] svg path, .landing #categories-menu .nav-item:focus[data-category=housing] svg path {
   fill: #e08565;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=transport], .landing #categories-menu .categories-nav .nav-item:focus[data-category=transport] {
+.landing #categories-menu .nav-item:hover[data-category=transport], .landing #categories-menu .nav-item:focus[data-category=transport] {
   color: #c9c3fa;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=transport] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=transport] svg path {
+.landing #categories-menu .nav-item:hover[data-category=transport] svg path, .landing #categories-menu .nav-item:focus[data-category=transport] svg path {
   fill: #c9c3fa;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=urban], .landing #categories-menu .categories-nav .nav-item:focus[data-category=urban] {
+.landing #categories-menu .nav-item:hover[data-category=urban], .landing #categories-menu .nav-item:focus[data-category=urban] {
   color: #adb033;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=urban] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=urban] svg path {
+.landing #categories-menu .nav-item:hover[data-category=urban] svg path, .landing #categories-menu .nav-item:focus[data-category=urban] svg path {
   fill: #adb033;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=explorer], .landing #categories-menu .categories-nav .nav-item:focus[data-category=explorer] {
+.landing #categories-menu .nav-item:hover[data-category=explorer], .landing #categories-menu .nav-item:focus[data-category=explorer] {
   color: #a3b0d1;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=explorer] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=explorer] svg path {
+.landing #categories-menu .nav-item:hover[data-category=explorer] svg path, .landing #categories-menu .nav-item:focus[data-category=explorer] svg path {
   fill: #a3b0d1;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=economy], .landing #categories-menu .categories-nav .nav-item:focus[data-category=economy] {
+.landing #categories-menu .nav-item:hover[data-category=economy], .landing #categories-menu .nav-item:focus[data-category=economy] {
   color: #beaf62;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=economy] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=economy] svg path {
+.landing #categories-menu .nav-item:hover[data-category=economy] svg path, .landing #categories-menu .nav-item:focus[data-category=economy] svg path {
   fill: #beaf62;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=resources], .landing #categories-menu .categories-nav .nav-item:focus[data-category=resources] {
+.landing #categories-menu .nav-item:hover[data-category=resources], .landing #categories-menu .nav-item:focus[data-category=resources] {
   color: #dca656;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=resources] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=resources] svg path {
+.landing #categories-menu .nav-item:hover[data-category=resources] svg path, .landing #categories-menu .nav-item:focus[data-category=resources] svg path {
   fill: #dca656;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=land], .landing #categories-menu .categories-nav .nav-item:focus[data-category=land] {
+.landing #categories-menu .nav-item:hover[data-category=land], .landing #categories-menu .nav-item:focus[data-category=land] {
   color: #7baaaa;
 }
-.landing #categories-menu .categories-nav .nav-item:hover[data-category=land] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=land] svg path {
+.landing #categories-menu .nav-item:hover[data-category=land] svg path, .landing #categories-menu .nav-item:focus[data-category=land] svg path {
   fill: #7baaaa;
 }
-.landing #categories-menu .categories-nav .nav-item__category {
+.landing #categories-menu .nav-item__category {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
 }
-.landing #categories-menu .categories-nav .nav-item__category span {
+.landing #categories-menu .nav-item__category span {
   display: flex;
+  flex: 1;
   align-items: center;
   gap: 14px;
 }
-.landing #categories-menu .categories-nav .nav-item ul {
-  padding: 5px 0;
+.landing #categories-menu .nav-item__category svg {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+.landing #categories-menu .back-button {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  padding: 8px 24px;
+  cursor: pointer;
+  background-color: #e3e3e3; /* Keep original background */
 }
-.landing #categories-menu .categories-nav .nav-item ul a {
+.landing #categories-menu .back-button svg {
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+.landing #categories-menu .back-button span {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+.landing #categories-menu .back-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.landing #categories-menu .theme-title {
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  transition: background-color 0.45s cubic-bezier(0.3, 0, 0, 1);
+}
+.landing #categories-menu .theme-title h2 {
+  font-weight: 600;
+  margin: 0;
+}
+.landing #categories-menu .subcategory-section {
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #e3e3e3; /* Keep original background */
+}
+.landing #categories-menu .subcategory-title {
   font-size: 1.6rem;
-  line-height: 3rem;
-  text-transform: none;
-  color: inherit;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
 }
-.landing #categories-menu .categories-nav .nav-item svg path {
-  transition: fill 0.25s cubic-bezier(0.3, 0, 0, 1);
+.landing #categories-menu .pages-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
-.landing #categories-menu .categories-nav .nav-item[open] .caret_land {
-  transform: rotateX(180deg);
+.landing #categories-menu .page-item {
+  margin: 8px 0;
+}
+.landing #categories-menu .page-link {
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+  cursor: pointer;
+  display: block;
+}
+.landing #categories-menu .page-link:hover {
+  text-decoration: underline;
+}
+.landing #categories-menu .en-savoir-plus {
+  margin-top: auto;
+  padding: 24px;
+  z-index: 1;
+}
+.landing #categories-menu .en-savoir-plus a {
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+.landing #categories-menu .en-savoir-plus a:hover {
+  text-decoration: underline;
 }
 .landing #choose-map-mobile-cta {
   display: none;
@@ -14886,145 +15101,209 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
     z-index: 8;
   }
 }
-
-#inapp-categories-menu {
+.landing #inapp-categories-menu {
   position: sticky;
   top: 0;
   min-height: 100%;
-  width: 300px;
-  max-width: 300px;
-  background-color: #ffffff;
+  width: 250px;
+  max-width: 250px;
+  background-color: #e9ecef;
   display: flex;
   flex-direction: column;
   transition: background-color 0.45s cubic-bezier(0.3, 0, 0, 1);
   z-index: 20;
   border: 1px black solid;
   border-width: 0 1px 1px 1px;
-  border-radius: 0 15px 15px 15px;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #808080 transparent; /* Firefox */
 }
-#inapp-categories-menu .categories-nav {
+.landing #inapp-categories-menu h4, .landing #inapp-categories-menu .h4 {
+  font-size: 14px !important;
+}
+.landing #inapp-categories-menu::-webkit-scrollbar {
+  width: 6px;
+}
+.landing #inapp-categories-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+.landing #inapp-categories-menu::-webkit-scrollbar-thumb {
+  background-color: #000000;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+.landing #inapp-categories-menu::-webkit-scrollbar-thumb:hover {
+  background-color: black;
+}
+.landing #inapp-categories-menu .categories-nav {
   display: flex;
   flex-direction: column;
 }
-#inapp-categories-menu .categories-nav .nav-item {
+.landing #inapp-categories-menu .categories-nav .nav-item {
   border-top: 1px solid #000000;
   padding: 3px 12px;
   background-color: transparent;
   transition: color 0.25s cubic-bezier(0.3, 0, 0, 1), background-color 0.45s cubic-bezier(0.3, 0, 0, 1);
 }
-#inapp-categories-menu .categories-nav .nav-item:hover, #inapp-categories-menu .categories-nav .nav-item:focus {
+.landing #inapp-categories-menu .categories-nav .nav-item .theme-menu {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 5px 0;
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.landing #inapp-categories-menu .categories-nav .nav-item .subcategory-section {
+  padding-left: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+.landing #inapp-categories-menu .categories-nav .nav-item .subcategory-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.8rem;
+  color: inherit;
+  padding-left: 2px;
+}
+.landing #inapp-categories-menu .categories-nav .nav-item .pages-list {
+  list-style: none;
+  padding-left: 10px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.landing #inapp-categories-menu .categories-nav .nav-item .pages-list .page-item {
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.landing #inapp-categories-menu .categories-nav .nav-item .pages-list .page-item a {
+  font-size: 1.2rem;
+  line-height: 1rem;
+}
+.landing #inapp-categories-menu .categories-nav .nav-item .pages-list .page-item .page-link {
+  color: inherit;
+  text-decoration: none;
+}
+.landing #inapp-categories-menu .categories-nav .nav-item .pages-list .page-item .page-link:hover {
+  text-decoration: underline;
+}
+.landing #inapp-categories-menu .categories-nav .nav-item:hover, .landing #inapp-categories-menu .categories-nav .nav-item:focus {
   background-color: #000000;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=climate], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=climate] {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=climate], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=climate] {
   color: #f5d574;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=climate] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=climate] svg path {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=climate] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=climate] svg path {
   fill: #f5d574;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=demographics], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=demographics] {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=demographics], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=demographics] {
   color: #9e9090;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=demographics] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=demographics] svg path {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=demographics] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=demographics] svg path {
   fill: #9e9090;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=ecology], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=ecology] {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=ecology], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=ecology] {
   color: #73ad80;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=ecology] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=ecology] svg path {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=ecology] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=ecology] svg path {
   fill: #73ad80;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=health], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=health] {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=health], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=health] {
   color: #cd718c;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=health] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=health] svg path {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=health] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=health] svg path {
   fill: #cd718c;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=housing], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=housing] {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=housing], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=housing] {
   color: #e08565;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=housing] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=housing] svg path {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=housing] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=housing] svg path {
   fill: #e08565;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=transport], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=transport] {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=transport], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=transport] {
   color: #c9c3fa;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=transport] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=transport] svg path {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=transport] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=transport] svg path {
   fill: #c9c3fa;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=urban], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=urban] {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=urban], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=urban] {
   color: #adb033;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=urban] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=urban] svg path {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=urban] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=urban] svg path {
   fill: #adb033;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=explorer], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=explorer] {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=explorer], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=explorer] {
   color: #a3b0d1;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=explorer] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=explorer] svg path {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=explorer] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=explorer] svg path {
   fill: #a3b0d1;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=economy], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=economy] {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=economy], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=economy] {
   color: #beaf62;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=economy] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=economy] svg path {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=economy] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=economy] svg path {
   fill: #beaf62;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=resources], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=resources] {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=resources], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=resources] {
   color: #dca656;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=resources] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=resources] svg path {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=resources] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=resources] svg path {
   fill: #dca656;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=land], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=land] {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=land], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=land] {
   color: #7baaaa;
 }
-#inapp-categories-menu .categories-nav .nav-item:hover[data-category=land] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=land] svg path {
+.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=land] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=land] svg path {
   fill: #7baaaa;
 }
-#inapp-categories-menu .categories-nav .nav-item__category {
+.landing #inapp-categories-menu .categories-nav .nav-item__category {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   cursor: pointer;
+  padding-right: 6px;
 }
-#inapp-categories-menu .categories-nav .nav-item__category span {
+.landing #inapp-categories-menu .categories-nav .nav-item__category span {
   display: flex;
   align-items: center;
   gap: 14px;
+  flex: 1;
+  overflow: hidden;
 }
-#inapp-categories-menu .categories-nav .nav-item__category .h4 {
-  font-size: 2rem;
+.landing #inapp-categories-menu .categories-nav .nav-item__category svg {
+  flex-shrink: 0;
+  margin-left: auto;
 }
-#inapp-categories-menu .categories-nav .nav-item ul {
+.landing #inapp-categories-menu .categories-nav .nav-item ul {
   padding: 5px 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-#inapp-categories-menu .categories-nav .nav-item ul a {
-  font-size: 1.6rem;
-  line-height: 3rem;
-  text-transform: none;
-  color: inherit;
-}
-#inapp-categories-menu .categories-nav .nav-item ul li {
+.landing #inapp-categories-menu .categories-nav .nav-item ul li {
   font-size: 1.2rem;
 }
-#inapp-categories-menu .categories-nav .nav-item svg path {
+.landing #inapp-categories-menu .categories-nav .nav-item svg path {
   transition: fill 0.25s cubic-bezier(0.3, 0, 0, 1);
 }
-#inapp-categories-menu .categories-nav .nav-item[open] .caret_land {
+.landing #inapp-categories-menu .categories-nav .nav-item[open] .caret {
   transform: rotateX(180deg);
 }
-#inapp-categories-menu .categories-nav .nav-item:last-of-type {
-  border-bottom-right-radius: 15px;
-  border-bottom-left-radius: 15px;
-}
-#inapp-categories-menu .categories-nav .nav-item:first-of-type {
-  border-top-right-radius: 15px;
-}
-#inapp-categories-menu .caret_land {
+.landing #inapp-categories-menu .caret {
   width: 12px;
+}
+.landing .menu-invisible {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 3s ease-out;
+}
+.landing .menu-visible {
+  max-height: 800px;
+  transition: max-height 3s ease-in;
 }
 
 .menu-invisible {
@@ -15061,6 +15340,7 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
   grid-row-gap: 0px;
   align-items: center;
   line-height: 1.05;
+  color: white;
 }
 @media (max-width: 1439px) {
   .landing .hero .main-title {
@@ -15103,7 +15383,7 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
   margin: auto;
   width: 46px;
   height: 67px;
-  background: url(${___CSS_LOADER_URL_REPLACEMENT_6___}) no-repeat;
+  background: url(${___CSS_LOADER_URL_REPLACEMENT_7___}) no-repeat;
 }
 @media (max-width: 767px) {
   .landing .hero .main-title__video::after {
@@ -15169,70 +15449,6 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
   grid-area: 2/1/3/2;
   text-align: right;
 }
-.landing .hero .dot:nth-of-type(1) {
-  top: 50px;
-}
-@media (max-width: 1535px) {
-  .landing .hero .dot:nth-of-type(1) {
-    top: 0;
-    left: 50px;
-  }
-}
-.landing .hero .dot:nth-of-type(2) {
-  top: 170px;
-  left: 40px;
-}
-@media (max-width: 1535px) {
-  .landing .hero .dot:nth-of-type(2) {
-    top: 50px;
-    left: -5px;
-  }
-}
-@media (max-width: 1250px) {
-  .landing .hero .dot:nth-of-type(2) {
-    top: 40px;
-    left: 5px;
-  }
-}
-.landing .hero .dot:nth-of-type(3) {
-  top: 200px;
-  left: 20px;
-}
-@media (max-width: 1535px) {
-  .landing .hero .dot:nth-of-type(3) {
-    top: 150px;
-    left: -15px;
-  }
-}
-@media (max-width: 767px) {
-  .landing .hero .dot:nth-of-type(3) {
-    left: 0;
-  }
-}
-.landing .hero .dot:nth-of-type(4) {
-  top: 280px;
-  left: -40px;
-}
-@media (max-width: 1250px) {
-  .user-lang-fr .landing .hero .dot:nth-of-type(4) {
-    top: 180px;
-  }
-}
-@media (max-width: 767px) {
-  .user-lang-fr .landing .hero .dot:nth-of-type(4) {
-    left: -5px;
-    top: 50px;
-  }
-}
-.landing .hero .dot:nth-of-type(5) {
-  bottom: -15px;
-  left: 90px;
-}
-@media (max-width: 1250px) {
-  .user-lang-fr .landing .hero .dot:nth-of-type(5) {
-    bottom: 45px;
-  }
-}
 
 .landing .section-about {
   margin-top: 66px;
@@ -15249,6 +15465,11 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
     gap: 12px;
   }
 }
+@media (max-width: 767px) {
+  .landing .section-about #curbcut-logo {
+    display: none !important;
+  }
+}
 .landing .section-about > div:last-of-type {
   display: flex;
   flex-direction: column;
@@ -15257,39 +15478,47 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
 .landing .section-about > div:last-of-type .cta-text {
   margin-top: 13px;
 }
+.landing .section-about:first-of-type {
+  margin-top: 0;
+}
 
-.section-discover {
+.landing .section-block {
   margin-top: 84px;
+  background-color: white;
+  border-radius: 24px;
+  padding: 30px;
+}
+.landing .section-discover {
   display: flex;
   flex-direction: column;
 }
 @media (max-width: 767px) {
-  .section-discover {
+  .landing .section-discover {
     margin-top: 78px;
   }
 }
-.section-discover > div:first-child {
+.landing .section-discover > div:first-child {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.section-discover__cards-wrapper {
+.landing .section-discover__cards-wrapper {
   margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(4, minmax(10px, 1fr));
   gap: 18px;
 }
 @media (max-width: 767px) {
-  .section-discover__cards-wrapper {
+  .landing .section-discover__cards-wrapper {
     margin-top: 11px;
     grid-template-columns: repeat(2, minmax(10px, 1fr));
     gap: 13px;
   }
 }
-.section-discover__cards-wrapper .card {
+.landing .section-discover__cards-wrapper .card {
   position: relative;
 }
-.section-discover__cards-wrapper .card__img {
+.landing .section-discover__cards-wrapper .card__img {
   width: 100%;
   height: 332px;
   overflow: hidden;
@@ -15298,18 +15527,18 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
   transition: border-radius 0.25s cubic-bezier(0.65, 0, 0.35, 1);
 }
 @media (max-width: 1170px) {
-  .section-discover__cards-wrapper .card__img {
+  .landing .section-discover__cards-wrapper .card__img {
     height: 168px;
   }
 }
-.section-discover__cards-wrapper .card__img img {
+.landing .section-discover__cards-wrapper .card__img img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
 }
-.section-discover__cards-wrapper .card__title {
+.landing .section-discover__cards-wrapper .card__title {
   padding: 14px;
   height: 67px;
   display: flex;
@@ -15321,24 +15550,24 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
   width: 100%;
   overflow: hidden;
 }
-.section-discover__cards-wrapper .card__title .card__text,
-.section-discover__cards-wrapper .card__title .card__preview {
+.landing .section-discover__cards-wrapper .card__title .card__text,
+.landing .section-discover__cards-wrapper .card__title .card__preview {
   width: 100%;
 }
-.section-discover__cards-wrapper .card__title .card__preview {
+.landing .section-discover__cards-wrapper .card__title .card__preview {
   display: none;
   font-size: 0.7em;
   line-height: 1.6;
   margin-top: 5px;
 }
-.section-discover__cards-wrapper .card:hover .card__img {
+.landing .section-discover__cards-wrapper .card:hover .card__img {
   border-top-right-radius: 74px;
 }
-.section-discover__cards-wrapper .card:hover .card__title {
+.landing .section-discover__cards-wrapper .card:hover .card__title {
   bottom: 0px;
   height: fit-content;
 }
-.section-discover__cards-wrapper .card:hover .card__title .card__preview {
+.landing .section-discover__cards-wrapper .card:hover .card__title .card__preview {
   display: block;
 }
 
@@ -15442,13 +15671,13 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
 .landing footer {
   position: relative;
   background-color: #ffffff;
+  /* Mobile styles */
 }
 .landing footer .footer__banner {
   text-align: center;
   margin: 0 auto;
   overflow: hidden;
   display: inline-block;
-  white-space: nowrap;
   width: 100%;
 }
 .landing footer .footer__banner img {
@@ -15556,12 +15785,10 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
 .landing footer .footer__content > div:not(.footer__content-copyright) .grid .column__title {
   display: inline-flex;
   align-items: center;
-  height: 22px;
   margin-bottom: 2px;
-  padding: 0 7px;
+  padding: 2px 7px;
   font-size: 1.4rem;
   line-height: 1.7rem;
-  white-space: nowrap;
   border: 1px solid #101010;
   border-radius: 6.4px;
 }
@@ -15596,7 +15823,6 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
 @media (max-width: 1170px) {
   .landing footer .footer__content-second-half .grid > .column--cities {
     display: block !important;
-    max-height: 170px;
   }
   .landing footer .footer__content-second-half .grid > .column--cities .column__title {
     display: block !important;
@@ -15655,6 +15881,43 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
   .landing footer .submit-btn {
     min-width: 188px;
   }
+}
+.landing footer .column {
+  display: flex;
+  flex-direction: column;
+}
+.landing footer .column__title {
+  margin-bottom: 16px;
+}
+.landing footer .subcategory-group {
+  margin-bottom: 16px;
+}
+.landing footer .subcategory-title {
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-size: 0.9em;
+  opacity: 0.45;
+}
+.landing footer .cta-text-lower {
+  display: block;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+.landing footer .nav-item__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.landing footer .subcategories-container {
+  padding-left: 16px;
+  margin-top: 12px;
+}
+.landing footer .pages-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
 .landing .section-team {
@@ -15745,52 +16008,6 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
   margin-right: 10px;
   margin-left: 10px;
 }
-.landing .contributor-dot {
-  display: inline;
-  width: 10px;
-  height: 10px;
-  user-select: none;
-  padding: 0 5px;
-}
-@media (max-width: 767px) {
-  .landing .contributor-dot {
-    width: 5px;
-    height: 5px;
-  }
-}
-.landing .contributor-dot:nth-child(11n+1) {
-  color: #a3b0d1;
-}
-.landing .contributor-dot:nth-child(11n+2) {
-  color: #73ad80;
-}
-.landing .contributor-dot:nth-child(11n+3) {
-  color: #e08565;
-}
-.landing .contributor-dot:nth-child(11n+4) {
-  color: #cd718c;
-}
-.landing .contributor-dot:nth-child(11n+5) {
-  color: #c9c3fa;
-}
-.landing .contributor-dot:nth-child(11n+6) {
-  color: #f5d574;
-}
-.landing .contributor-dot:nth-child(11n+7) {
-  color: #adb033;
-}
-.landing .contributor-dot:nth-child(11n+8) {
-  color: #9e9090;
-}
-.landing .contributor-dot:nth-child(11n+9) {
-  color: #beaf62;
-}
-.landing .contributor-dot:nth-child(11n+10) {
-  color: #dca656;
-}
-.landing .contributor-dot:nth-child(11n+11) {
-  color: #7baaaa;
-}
 
 .title-text-box {
   border-radius: 15px;
@@ -15835,7 +16052,7 @@ body.bg-background .landing #main-header.header--background:not(.header--opened)
   cursor: pointer;
   color: white;
   padding-top: 10px;
-}`, "",{"version":3,"sources":["webpack://./srcjs/styles/_reset.scss","webpack://./srcjs/styles/style.scss","webpack://./srcjs/styles/_fonts.scss","webpack://./srcjs/styles/_global.scss","webpack://./srcjs/styles/_variables.scss","webpack://./srcjs/styles/_mixins.scss","webpack://./srcjs/styles/components/_nav.scss","webpack://./srcjs/styles/components/_hero.scss","webpack://./srcjs/styles/components/_section-about.scss","webpack://./srcjs/styles/components/_section-discover.scss","webpack://./srcjs/styles/components/_section-news.scss","webpack://./srcjs/styles/components/_footer.scss","webpack://./srcjs/styles/components/_team.scss","webpack://./srcjs/styles/components/_title-text-box.scss"],"names":[],"mappings":"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","sourcesContent":[".landing {\n\t// Blocks\n\thtml,\n\tbody,\n\tp,\n\tol,\n\tul,\n\tli,\n\tdl,\n\tdt,\n\tdd,\n\tblockquote,\n\tfigure,\n\tfieldset,\n\tlegend,\n\ttextarea,\n\tpre,\n\tiframe,\n\thr,\n\th1,\n\th2,\n\th3,\n\th4,\n\th5,\n\th6 {\n\t\tmargin: 0;\n\t\tpadding: 0;\n\t}\n\n\t// Headings\n\th1,\n\th2,\n\th3,\n\th4,\n\th5,\n\th6 {\n\t\tfont-size: 100%;\n\t\tfont-weight: 300;\n\t}\n\n\t// List\n\tul {\n\t\tlist-style: none;\n\t}\n\n\t// Form\n\tbutton,\n\tinput,\n\tselect,\n\ttextarea {\n\t\tmargin: 0;\n\t\tborder: 0;\n\t\tbackground-image: none;\n\t\tbackground-color: transparent;\n\t\tbox-shadow: none;\n\n\t\t&:focus,\n\t\t&:active {\n\t\t\toutline: none;\n\t\t}\n\t}\n\n\t// Box sizing\n\thtml {\n\t\tbox-sizing: border-box;\n\t}\n\n\t* {\n\t\tbox-sizing: inherit;\n\n\t\t&,\n\t\t&::before,\n\t\t&::after {\n\t\t\tbox-sizing: inherit;\n\t\t}\n\t}\n\n\t// Media\n\timg,\n\tvideo {\n\t\theight: auto;\n\t\tmax-width: 100%;\n\t}\n\n\t// Iframe\n\tiframe {\n\t\tborder: 0;\n\t}\n\n\t// Table\n\ttable {\n\t\tborder-collapse: collapse;\n\t\tborder-spacing: 0;\n\t}\n\n\ttd,\n\tth {\n\t\tpadding: 0;\n\n\t\t&:not([align]) {\n\t\t\ttext-align: inherit;\n\t\t}\n\t}\n\n\taddress {\n\t\tfont-style: initial;\n\t}\n}\n",".landing html,\n.landing body,\n.landing p,\n.landing ol,\n.landing ul,\n.landing li,\n.landing dl,\n.landing dt,\n.landing dd,\n.landing blockquote,\n.landing figure,\n.landing fieldset,\n.landing legend,\n.landing textarea,\n.landing pre,\n.landing iframe,\n.landing hr,\n.landing h1,\n.landing h2,\n.landing h3,\n.landing h4,\n.landing h5,\n.landing h6 {\n  margin: 0;\n  padding: 0;\n}\n.landing h1,\n.landing h2,\n.landing h3,\n.landing h4,\n.landing h5,\n.landing h6 {\n  font-size: 100%;\n  font-weight: 300;\n}\n.landing ul {\n  list-style: none;\n}\n.landing button,\n.landing input,\n.landing select,\n.landing textarea {\n  margin: 0;\n  border: 0;\n  background-image: none;\n  background-color: transparent;\n  box-shadow: none;\n}\n.landing button:focus, .landing button:active,\n.landing input:focus,\n.landing input:active,\n.landing select:focus,\n.landing select:active,\n.landing textarea:focus,\n.landing textarea:active {\n  outline: none;\n}\n.landing html {\n  box-sizing: border-box;\n}\n.landing * {\n  box-sizing: inherit;\n}\n.landing *, .landing *::before, .landing *::after {\n  box-sizing: inherit;\n}\n.landing img,\n.landing video {\n  height: auto;\n  max-width: 100%;\n}\n.landing iframe {\n  border: 0;\n}\n.landing table {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n.landing td,\n.landing th {\n  padding: 0;\n}\n.landing td:not([align]),\n.landing th:not([align]) {\n  text-align: inherit;\n}\n.landing address {\n  font-style: initial;\n}\n\n@font-face {\n  font-family: \"_Apparat\";\n  src: url(\"../fonts/apparat-regular.woff2\") format(\"woff2\"), url(\"../fonts/apparat-regular.woff\") format(\"woff\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: swap;\n}\n@font-face {\n  font-family: \"_AcidGrotesk\";\n  src: url(\"../fonts/acidgrotesk-book.woff2\") format(\"woff2\"), url(\"../fonts/acidgrotesk-book.woff\") format(\"woff\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: swap;\n}\n.landing {\n  position: relative;\n  height: 100%;\n  font-family: \"_AcidGrotesk\", sans-serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  font-weight: 400;\n  letter-spacing: 0;\n  color: #000000;\n  background-color: #e9ecef;\n  overscroll-behavior: none;\n}\n.landing.is-fixed {\n  overflow: hidden;\n}\n.landing::after {\n  display: none;\n  content: \"\";\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: #b3b3b3;\n  z-index: 9;\n}\n.landing.bg-background::after {\n  display: block;\n}\n.landing * {\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.landing a {\n  font-family: \"_AcidGrotesk\", sans-serif;\n  color: #000000;\n  text-decoration: none;\n  cursor: pointer;\n}\n.landing a:hover, .landing a:visited, .landing a:focus {\n  color: inherit; /* This will keep the color the same */\n  text-decoration: none; /* This will remove the underline */\n}\n.landing .cta-text, .landing .section__title {\n  font-size: 1.4rem;\n  line-height: 1.7rem;\n  text-transform: uppercase;\n  cursor: pointer;\n}\n@media (max-width: 767px) {\n  .landing .cta-text, .landing .section__title {\n    font-size: 1.6rem;\n    line-height: 2rem;\n  }\n}\n.landing .cta-text--underline {\n  position: relative;\n}\n.landing .cta-text--underline::after {\n  content: \"\";\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 1px;\n  background-color: #000000;\n  transform-origin: left;\n  transform: scaleX(0);\n  transition: transform 0.25s cubic-bezier(0.3, 0, 0, 1);\n}\n@media (max-width: 1170px) {\n  .landing .cta-text--underline::after {\n    transform: scaleX(1);\n  }\n}\n.landing .cta-text--underline:hover::after {\n  transform: scaleX(1);\n}\n.landing .cta-text-lower {\n  cursor: pointer;\n}\n@media (max-width: 767px) {\n  .landing .cta-text-lower {\n    font-size: 1.6rem;\n    line-height: 2rem;\n  }\n}\n.landing p {\n  font-size: 1.6rem;\n  line-height: 2rem;\n  font-family: \"_AcidGrotesk\", sans-serif;\n  font-weight: 400;\n  letter-spacing: 0;\n}\n.landing p ~ p {\n  margin-top: 25px;\n}\n.landing .h1 {\n  font-family: \"_Apparat\", sans-serif;\n  font-weight: 300;\n  font-size: 11.8rem;\n  line-height: 14.4rem;\n  text-transform: uppercase;\n  margin-top: 0;\n  margin-bottom: 0;\n}\n@media (max-width: 1439px) {\n  .landing .h1 {\n    font-size: clamp(4.4rem, 6vw, 11.8rem);\n    line-height: clamp(5.4rem, 6vw, 14.4rem);\n  }\n}\n@media (max-width: 767px) {\n  .landing .h1 {\n    font-size: 4.4rem;\n    line-height: 5.4rem;\n  }\n}\n.landing .h2 {\n  font-family: \"_AcidGrotesk\", sans-serif;\n  font-size: 4rem;\n  line-height: 5rem;\n  margin-top: 0;\n  margin-bottom: 0;\n}\n@media (max-width: 1439px) {\n  .landing .h2 {\n    font-size: clamp(2.5rem, 4vw, 4rem);\n    line-height: clamp(3.1rem, 4vw, 5rem);\n  }\n}\n@media (max-width: 767px) {\n  .landing .h2 {\n    font-size: 2.5rem;\n    line-height: 3.1rem;\n  }\n}\n.landing .h3 {\n  font-family: \"_AcidGrotesk\", sans-serif;\n  font-size: 3rem;\n  line-height: 3.7rem;\n  margin-top: 0;\n  margin-bottom: 0;\n}\n@media (max-width: 1439px) {\n  .landing .h3 {\n    font-size: clamp(2.2rem, 2vw, 3rem);\n    line-height: clamp(2.7rem, 2vw, 3.7rem);\n  }\n}\n@media (max-width: 767px) {\n  .landing .h3 {\n    font-size: 2.2rem;\n    line-height: 2.7rem;\n  }\n}\n.landing summary {\n  list-style-type: none !important;\n  text-align: left;\n}\n.landing summary::-webkit-details-marker {\n  display: none;\n}\n.landing dialog {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  margin: 0;\n  padding: 0;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: rgba(0, 0, 0, 0.8);\n  z-index: 999;\n}\n.landing dialog #video-modal-close-btn {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  cursor: pointer;\n  z-index: 9999;\n}\n.landing dialog #video-modal-close-btn img {\n  filter: brightness(1) invert(1);\n}\n.landing dialog video {\n  max-height: 90vh;\n  width: 90vw;\n  margin-top: 25px;\n  outline: none;\n}\n.landing dialog::backdrop {\n  background-color: rgba(0, 0, 0, 0.8);\n}\n.landing .bg-explorer {\n  background-color: #a3b0d1 !important;\n}\n.landing .bg-ecology {\n  background-color: #73ad80 !important;\n}\n.landing .bg-housing {\n  background-color: #e08565 !important;\n}\n.landing .bg-health {\n  background-color: #cd718c !important;\n}\n.landing .bg-transport {\n  background-color: #c9c3fa !important;\n}\n.landing .bg-climate {\n  background-color: #f5d574 !important;\n}\n.landing .bg-urban {\n  background-color: #adb033 !important;\n}\n.landing .bg-demographics {\n  background-color: #9e9090 !important;\n}\n.landing .bg-economy {\n  background-color: #beaf62 !important;\n}\n.landing .bg-resources {\n  background-color: #dca656 !important;\n}\n.landing .bg-land {\n  background-color: #7baaaa !important;\n}\n.landing #main-content {\n  position: relative;\n  display: grid;\n  grid-template-columns: minmax(0, 1fr) 450px;\n  align-items: flex-start;\n  justify-content: flex-end;\n  justify-items: center;\n  gap: 48px;\n  padding-left: 44px;\n  margin: 0 auto;\n}\n@media (max-width: 1170px) {\n  .landing #main-content {\n    display: block;\n    padding-left: 23px;\n    padding-right: 23px;\n  }\n}\n.landing #main-content main {\n  max-width: 990px;\n  width: 100%;\n  order: -1;\n  margin-bottom: 100px;\n}\n@media (max-width: 1170px) {\n  .landing #main-content main {\n    max-width: none;\n  }\n}\n.landing .section__title {\n  display: inline-flex;\n  align-items: center;\n  min-height: 21px;\n  padding: 0 6px;\n  margin-right: 30px;\n  background-color: #ffffff;\n  border-radius: 4px;\n  cursor: default;\n}\n.landing .dot {\n  position: absolute;\n  width: 10px;\n  height: 10px;\n  background-color: #000000;\n  user-select: none;\n}\n@media (max-width: 767px) {\n  .landing .dot {\n    width: 5px;\n    height: 5px;\n  }\n}\n\n.landing #mobile-nav {\n  display: none;\n  position: fixed;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  background-color: #e9ecef;\n  padding: 150px 23px;\n  overflow: auto;\n  z-index: 10;\n}\n@media (max-width: 767px) {\n  .landing #mobile-nav.mobile-nav--visible {\n    display: block;\n  }\n}\n.landing #mobile-nav .mobile-nav-group {\n  padding-bottom: 24px;\n  margin-bottom: 24px;\n}\n.landing #mobile-nav .mobile-nav-group ul {\n  margin-top: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 15px;\n}\n.landing #mobile-nav .mobile-nav-group:not(:last-of-type) {\n  border-bottom: 1px solid #000000;\n}\n.landing #mobile-nav .dot:nth-of-type(1) {\n  top: 80px;\n  left: 0;\n}\n.landing #mobile-nav .dot:nth-of-type(2) {\n  top: 108px;\n  left: 6.1vw;\n}\n.landing #mobile-nav .dot:nth-of-type(3) {\n  top: 113px;\n  left: 24vw;\n}\n.landing #mobile-nav .dot:nth-of-type(4) {\n  top: 97px;\n  left: 40vw;\n}\n.landing #mobile-nav .dot:nth-of-type(5) {\n  top: 91px;\n  left: 54vw;\n}\n.landing #mobile-nav .dot:nth-of-type(6) {\n  top: 132px;\n  left: 60vw;\n}\n.landing #mobile-nav .dot:nth-of-type(7) {\n  top: 111px;\n  left: 67vw;\n}\n.landing #mobile-nav .dot:nth-of-type(8) {\n  top: 170px;\n  left: 74vw;\n}\n.landing #mobile-nav .dot:nth-of-type(9) {\n  top: 116px;\n  left: 92vw;\n}\n.landing #mobile-nav .dot:nth-of-type(10) {\n  top: 189px;\n  left: 94vw;\n}\n.landing #main-header {\n  max-width: min(100vw - 88px, 1440px);\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  width: 100%;\n  margin: 0 auto;\n  padding: 46px 0;\n  z-index: 15;\n  transition: transform 0.25s cubic-bezier(0.65, 0, 0.35, 1);\n}\n@media (max-width: 1170px) {\n  .landing #main-header {\n    max-width: min(100vw - 44px, 1440px);\n  }\n}\n@media (max-width: 767px) {\n  .landing #main-header {\n    max-width: none;\n    justify-content: space-between;\n    align-items: center;\n    padding: 28px 24px;\n  }\n}\n.landing #main-header::before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 150vw;\n  height: 100%;\n  transform: translateX(-50vw);\n  background-color: #ffffff;\n  z-index: 0;\n  transition: opacity 0.25s linear;\n  opacity: 0;\n}\n.landing #main-header .curbcut-logo {\n  display: none;\n  z-index: 1;\n}\n@media (max-width: 767px) {\n  .landing #main-header .curbcut-logo {\n    display: block;\n  }\n}\n.landing #main-header .main-nav > ul {\n  display: flex;\n  gap: 24px;\n}\n.landing #main-header .main-nav > ul li {\n  display: flex;\n  align-items: center;\n  z-index: 1;\n}\n@media (max-width: 767px) {\n  .landing #main-header .main-nav > ul li:not(.language-switcher, .menu-btn) {\n    display: none;\n  }\n}\n.landing #main-header .main-nav > ul li details {\n  position: relative;\n  display: flex;\n  flex-direction: column;\n  padding: 7px 14px;\n}\n.landing #main-header .main-nav > ul li details[open] {\n  background-color: #ffffff;\n}\n.landing #main-header .main-nav > ul li details[open] .caret_land {\n  transform: rotateX(180deg);\n}\n.landing #main-header .main-nav > ul li details summary {\n  display: flex;\n  gap: 8px;\n}\n.landing #main-header .main-nav > ul li details ul {\n  position: absolute;\n  top: 30px;\n  left: 0;\n  background-color: #ffffff;\n  z-index: 12;\n}\n.landing #main-header .main-nav > ul li details ul li {\n  white-space: nowrap;\n  padding: 2px 0;\n  margin: 0 8px;\n}\n.landing #main-header .main-nav > ul li details ul li:not(:last-of-type) {\n  border-bottom: 1px solid #000000;\n}\n.landing #main-header .main-nav > ul li details ul li a {\n  font-size: 1.4rem;\n  line-height: 3rem;\n}\n.landing #main-header .main-nav > ul li.language-switcher {\n  padding: 7px 14px;\n}\n@media (max-width: 767px) {\n  .landing #main-header .main-nav > ul li.language-switcher {\n    padding: 0;\n  }\n  .landing #main-header .main-nav > ul li.language-switcher .cta-text--underline::after {\n    transform: scaleX(0);\n  }\n}\n.landing #main-header .main-nav > ul li.menu-btn {\n  display: none;\n  align-items: center;\n  width: 24px;\n  height: 24px;\n  background: url(\"data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAxNyI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTAgMGgyNHYyLjQyOUgwek0wIDcuMjg2aDI0djIuNDI5SDB6TTAgMTQuNTcxaDI0VjE3SDB6Ii8+Cjwvc3ZnPg==\") no-repeat;\n  background-position: center;\n  cursor: pointer;\n}\n@media (max-width: 767px) {\n  .landing #main-header .main-nav > ul li.menu-btn {\n    display: flex;\n  }\n}\n.landing #main-header.header--opened .main-nav > ul li.menu-btn {\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNCAzNCI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTI2LjMxNSA5LjM0MyA5LjM0NCAyNi4zMTRsLTEuNzE4LTEuNzE4IDE2Ljk3MS0xNi45N3oiLz4KICA8cGF0aCBmaWxsPSIjMDAwIiBkPSJtOS4zNDQgNy42MjcgMTYuOTcgMTYuOTctMS43MTcgMS43MTgtMTYuOTctMTYuOTd6Ii8+Cjwvc3ZnPg==\");\n}\n.landing #main-header.header--hidden {\n  transform: translateY(-130px);\n}\n.landing #main-header.header--background:not(.header--opened)::before {\n  opacity: 1;\n}\nbody.bg-background .landing #main-header.header--background:not(.header--opened)::before {\n  opacity: 0;\n}\n.landing #categories-menu {\n  position: sticky;\n  top: 0;\n  min-height: 100vh;\n  width: 100%;\n  max-width: 450px;\n  background-color: #ffffff;\n  display: flex;\n  flex-direction: column;\n  transition: background-color 0.45s cubic-bezier(0.3, 0, 0, 1);\n  z-index: 20;\n}\n@media (max-width: 1170px) {\n  .landing #categories-menu {\n    display: none;\n  }\n  .landing #categories-menu.is-visible {\n    min-height: auto;\n    max-width: none;\n    width: calc(100% - 46px);\n    max-height: 80vh;\n    display: flex;\n    position: fixed;\n    top: auto;\n    bottom: 14px;\n    overflow: auto;\n  }\n}\n.landing #categories-menu .curbcut-logo {\n  padding-bottom: 20px;\n  margin: 30px auto auto;\n}\n@media (max-width: 1170px) {\n  .landing #categories-menu .curbcut-logo {\n    display: none;\n  }\n}\n.landing #categories-menu .close-cta {\n  display: none;\n}\n@media (max-width: 1170px) {\n  .landing #categories-menu .close-cta {\n    display: flex;\n    justify-content: flex-end;\n    align-items: center;\n    gap: 12px;\n    min-height: 60px;\n    height: 60px;\n    padding-right: 16px;\n    cursor: pointer;\n  }\n}\n.landing #categories-menu .categories-nav {\n  display: flex;\n  flex-direction: column;\n}\n.landing #categories-menu .categories-nav .nav-item {\n  border-top: 1.3px solid #000000;\n  padding: 12px 24px;\n  background-color: transparent;\n  transition: color 0.25s cubic-bezier(0.3, 0, 0, 1), background-color 0.45s cubic-bezier(0.3, 0, 0, 1);\n}\n.landing #categories-menu .categories-nav .nav-item:hover, .landing #categories-menu .categories-nav .nav-item:focus {\n  background-color: #000000;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=climate], .landing #categories-menu .categories-nav .nav-item:focus[data-category=climate] {\n  color: #f5d574;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=climate] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=climate] svg path {\n  fill: #f5d574;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=demographics], .landing #categories-menu .categories-nav .nav-item:focus[data-category=demographics] {\n  color: #9e9090;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=demographics] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=demographics] svg path {\n  fill: #9e9090;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=ecology], .landing #categories-menu .categories-nav .nav-item:focus[data-category=ecology] {\n  color: #73ad80;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=ecology] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=ecology] svg path {\n  fill: #73ad80;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=health], .landing #categories-menu .categories-nav .nav-item:focus[data-category=health] {\n  color: #cd718c;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=health] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=health] svg path {\n  fill: #cd718c;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=housing], .landing #categories-menu .categories-nav .nav-item:focus[data-category=housing] {\n  color: #e08565;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=housing] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=housing] svg path {\n  fill: #e08565;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=transport], .landing #categories-menu .categories-nav .nav-item:focus[data-category=transport] {\n  color: #c9c3fa;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=transport] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=transport] svg path {\n  fill: #c9c3fa;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=urban], .landing #categories-menu .categories-nav .nav-item:focus[data-category=urban] {\n  color: #adb033;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=urban] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=urban] svg path {\n  fill: #adb033;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=explorer], .landing #categories-menu .categories-nav .nav-item:focus[data-category=explorer] {\n  color: #a3b0d1;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=explorer] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=explorer] svg path {\n  fill: #a3b0d1;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=economy], .landing #categories-menu .categories-nav .nav-item:focus[data-category=economy] {\n  color: #beaf62;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=economy] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=economy] svg path {\n  fill: #beaf62;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=resources], .landing #categories-menu .categories-nav .nav-item:focus[data-category=resources] {\n  color: #dca656;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=resources] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=resources] svg path {\n  fill: #dca656;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=land], .landing #categories-menu .categories-nav .nav-item:focus[data-category=land] {\n  color: #7baaaa;\n}\n.landing #categories-menu .categories-nav .nav-item:hover[data-category=land] svg path, .landing #categories-menu .categories-nav .nav-item:focus[data-category=land] svg path {\n  fill: #7baaaa;\n}\n.landing #categories-menu .categories-nav .nav-item__category {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  cursor: pointer;\n}\n.landing #categories-menu .categories-nav .nav-item__category span {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n}\n.landing #categories-menu .categories-nav .nav-item ul {\n  padding: 5px 0;\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n.landing #categories-menu .categories-nav .nav-item ul a {\n  font-size: 1.6rem;\n  line-height: 3rem;\n  text-transform: none;\n  color: inherit;\n}\n.landing #categories-menu .categories-nav .nav-item svg path {\n  transition: fill 0.25s cubic-bezier(0.3, 0, 0, 1);\n}\n.landing #categories-menu .categories-nav .nav-item[open] .caret_land {\n  transform: rotateX(180deg);\n}\n.landing #choose-map-mobile-cta {\n  display: none;\n}\n@media (max-width: 1170px) {\n  .landing #choose-map-mobile-cta {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    position: sticky;\n    bottom: 0;\n    margin-bottom: 30px;\n    width: 100vw;\n    height: 50px;\n    background-color: #000000;\n    color: #ffffff;\n    transform: translateX(-23px);\n    z-index: 8;\n  }\n}\n\n#inapp-categories-menu {\n  position: sticky;\n  top: 0;\n  min-height: 100%;\n  width: 300px;\n  max-width: 300px;\n  background-color: #ffffff;\n  display: flex;\n  flex-direction: column;\n  transition: background-color 0.45s cubic-bezier(0.3, 0, 0, 1);\n  z-index: 20;\n  border: 1px black solid;\n  border-width: 0 1px 1px 1px;\n  border-radius: 0 15px 15px 15px;\n}\n#inapp-categories-menu .categories-nav {\n  display: flex;\n  flex-direction: column;\n}\n#inapp-categories-menu .categories-nav .nav-item {\n  border-top: 1px solid #000000;\n  padding: 3px 12px;\n  background-color: transparent;\n  transition: color 0.25s cubic-bezier(0.3, 0, 0, 1), background-color 0.45s cubic-bezier(0.3, 0, 0, 1);\n}\n#inapp-categories-menu .categories-nav .nav-item:hover, #inapp-categories-menu .categories-nav .nav-item:focus {\n  background-color: #000000;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=climate], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=climate] {\n  color: #f5d574;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=climate] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=climate] svg path {\n  fill: #f5d574;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=demographics], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=demographics] {\n  color: #9e9090;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=demographics] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=demographics] svg path {\n  fill: #9e9090;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=ecology], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=ecology] {\n  color: #73ad80;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=ecology] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=ecology] svg path {\n  fill: #73ad80;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=health], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=health] {\n  color: #cd718c;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=health] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=health] svg path {\n  fill: #cd718c;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=housing], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=housing] {\n  color: #e08565;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=housing] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=housing] svg path {\n  fill: #e08565;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=transport], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=transport] {\n  color: #c9c3fa;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=transport] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=transport] svg path {\n  fill: #c9c3fa;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=urban], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=urban] {\n  color: #adb033;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=urban] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=urban] svg path {\n  fill: #adb033;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=explorer], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=explorer] {\n  color: #a3b0d1;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=explorer] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=explorer] svg path {\n  fill: #a3b0d1;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=economy], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=economy] {\n  color: #beaf62;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=economy] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=economy] svg path {\n  fill: #beaf62;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=resources], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=resources] {\n  color: #dca656;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=resources] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=resources] svg path {\n  fill: #dca656;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=land], #inapp-categories-menu .categories-nav .nav-item:focus[data-category=land] {\n  color: #7baaaa;\n}\n#inapp-categories-menu .categories-nav .nav-item:hover[data-category=land] svg path, #inapp-categories-menu .categories-nav .nav-item:focus[data-category=land] svg path {\n  fill: #7baaaa;\n}\n#inapp-categories-menu .categories-nav .nav-item__category {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  cursor: pointer;\n}\n#inapp-categories-menu .categories-nav .nav-item__category span {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n}\n#inapp-categories-menu .categories-nav .nav-item__category .h4 {\n  font-size: 2rem;\n}\n#inapp-categories-menu .categories-nav .nav-item ul {\n  padding: 5px 0;\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n#inapp-categories-menu .categories-nav .nav-item ul a {\n  font-size: 1.6rem;\n  line-height: 3rem;\n  text-transform: none;\n  color: inherit;\n}\n#inapp-categories-menu .categories-nav .nav-item ul li {\n  font-size: 1.2rem;\n}\n#inapp-categories-menu .categories-nav .nav-item svg path {\n  transition: fill 0.25s cubic-bezier(0.3, 0, 0, 1);\n}\n#inapp-categories-menu .categories-nav .nav-item[open] .caret_land {\n  transform: rotateX(180deg);\n}\n#inapp-categories-menu .categories-nav .nav-item:last-of-type {\n  border-bottom-right-radius: 15px;\n  border-bottom-left-radius: 15px;\n}\n#inapp-categories-menu .categories-nav .nav-item:first-of-type {\n  border-top-right-radius: 15px;\n}\n#inapp-categories-menu .caret_land {\n  width: 12px;\n}\n\n.menu-invisible {\n  max-height: 0;\n  overflow: hidden;\n  transition: max-height 3s ease-out;\n}\n\n.menu-visible {\n  max-height: 800px;\n  transition: max-height 3s ease-in;\n}\n\n.landing .hero {\n  margin-top: 116px;\n  position: relative;\n}\n@media (max-width: 1170px) {\n  .landing .hero {\n    margin-left: 15%;\n    margin-right: 15%;\n  }\n}\n@media (max-width: 767px) {\n  .landing .hero {\n    margin-left: 0;\n    margin-right: 0;\n  }\n}\n.landing .hero .main-title {\n  display: grid;\n  grid-template-columns: minmax(40%, 1fr) 320px;\n  grid-column-gap: 42px;\n  grid-row-gap: 0px;\n  align-items: center;\n  line-height: 1.05;\n}\n@media (max-width: 1439px) {\n  .landing .hero .main-title {\n    align-items: flex-end;\n  }\n}\n@media (max-width: 767px) {\n  .landing .hero .main-title {\n    grid-template-columns: minmax(40%, 1fr) 128px;\n  }\n}\n.landing .hero .main-title__first-part {\n  grid-area: 1/1/2/2;\n  text-align: right;\n}\n.landing .hero .main-title__video {\n  position: relative;\n  width: 320px;\n  height: 205px;\n  grid-area: 1/2/2/3;\n  border-radius: 6.4px;\n  border-top-right-radius: 74px;\n  overflow: hidden;\n  cursor: pointer;\n}\n@media (max-width: 767px) {\n  .landing .hero .main-title__video {\n    width: 128px;\n    height: 81px;\n    border-top-right-radius: 37px;\n  }\n}\n.landing .hero .main-title__video::after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  margin: auto;\n  width: 46px;\n  height: 67px;\n  background: url(\"data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NiA2NyI+CiAgPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4zMDggNy43ODh2Mi45MDljLjM0Mi4xMTguNjYzLjMxNS45MzUuNTg5TDM0LjU2NiAzMS43MWMuOTYuOTY0Ljk2IDIuNTI2IDAgMy40OUwxNC4yNDMgNTUuNjI1Yy0uMjcyLjI3NC0uNTkzLjQ3LS45MzUuNTg4djIuOTA5Yy4zMzYuMTE4LjY1Mi4zMTMuOTIxLjU4M2w3LjE2OSA3LjIwNkw0NiA0Mi4xODQgMzkuMDUgMzUuMmEyLjQ3NiAyLjQ3NiAwIDAgMSAwLTMuNDlMNDYgMjQuNzI2IDIxLjM5NiAwbC03LjE2OCA3LjIwNmMtLjI2OS4yNy0uNTg0LjQ2NC0uOTIuNTgzWiIgZmlsbD0iI0U5RUNFRiIvPgogIDxwYXRoIGZpbGw9IiNFOUVDRUYiIGQ9Ik0wIDYuNzY3aDEzLjMwOHY1MS4zM0gweiIvPgo8L3N2Zz4=\") no-repeat;\n}\n@media (max-width: 767px) {\n  .landing .hero .main-title__video::after {\n    width: 24px;\n    height: 35px;\n  }\n}\n.landing .hero .main-title__video video {\n  display: block;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n}\n.landing .hero .main-title__second-part {\n  grid-area: 2/1/3/3;\n  text-align: center;\n}\n.landing .hero .main-title.all-langs {\n  grid-template-columns: minmax(50%, 1fr) 250px;\n  grid-column-gap: 28px;\n}\n@media (max-width: 1439px) {\n  .landing .hero .main-title.all-langs {\n    align-items: flex-start;\n  }\n}\n@media (max-width: 490px) {\n  .landing .hero .main-title.all-langs {\n    grid-template-columns: minmax(50%, 1fr) 130px;\n  }\n}\n@media (max-width: 420px) {\n  .landing .hero .main-title.all-langs {\n    grid-template-columns: minmax(50%, 1fr) 80px;\n  }\n}\n.landing .hero .main-title.all-langs .main-title__first-part {\n  grid-area: 1/1/2/3;\n}\n@media (max-width: 1439px) {\n  .landing .hero .main-title.all-langs .main-title__first-part {\n    text-align: center;\n  }\n}\n.landing .hero .main-title.all-langs .main-title__video {\n  grid-area: 2/2/3/3;\n  width: 250px;\n  height: 100%;\n  max-height: 215px;\n}\n@media (max-width: 767px) {\n  .landing .hero .main-title.all-langs .main-title__video {\n    width: 170px;\n    height: 92px;\n  }\n}\n@media (max-width: 490px) {\n  .landing .hero .main-title.all-langs .main-title__video {\n    width: 100%;\n  }\n}\n.landing .hero .main-title.all-langs .main-title__second-part {\n  grid-area: 2/1/3/2;\n  text-align: right;\n}\n.landing .hero .dot:nth-of-type(1) {\n  top: 50px;\n}\n@media (max-width: 1535px) {\n  .landing .hero .dot:nth-of-type(1) {\n    top: 0;\n    left: 50px;\n  }\n}\n.landing .hero .dot:nth-of-type(2) {\n  top: 170px;\n  left: 40px;\n}\n@media (max-width: 1535px) {\n  .landing .hero .dot:nth-of-type(2) {\n    top: 50px;\n    left: -5px;\n  }\n}\n@media (max-width: 1250px) {\n  .landing .hero .dot:nth-of-type(2) {\n    top: 40px;\n    left: 5px;\n  }\n}\n.landing .hero .dot:nth-of-type(3) {\n  top: 200px;\n  left: 20px;\n}\n@media (max-width: 1535px) {\n  .landing .hero .dot:nth-of-type(3) {\n    top: 150px;\n    left: -15px;\n  }\n}\n@media (max-width: 767px) {\n  .landing .hero .dot:nth-of-type(3) {\n    left: 0;\n  }\n}\n.landing .hero .dot:nth-of-type(4) {\n  top: 280px;\n  left: -40px;\n}\n@media (max-width: 1250px) {\n  .user-lang-fr .landing .hero .dot:nth-of-type(4) {\n    top: 180px;\n  }\n}\n@media (max-width: 767px) {\n  .user-lang-fr .landing .hero .dot:nth-of-type(4) {\n    left: -5px;\n    top: 50px;\n  }\n}\n.landing .hero .dot:nth-of-type(5) {\n  bottom: -15px;\n  left: 90px;\n}\n@media (max-width: 1250px) {\n  .user-lang-fr .landing .hero .dot:nth-of-type(5) {\n    bottom: 45px;\n  }\n}\n\n.landing .section-about {\n  margin-top: 66px;\n  display: grid;\n  grid-template-columns: min(35%, 300px) 1fr;\n  justify-content: flex-start;\n  align-items: flex-start;\n}\n@media (max-width: 767px) {\n  .landing .section-about {\n    margin-top: 58px;\n    display: flex;\n    flex-direction: column;\n    gap: 12px;\n  }\n}\n.landing .section-about > div:last-of-type {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n}\n.landing .section-about > div:last-of-type .cta-text {\n  margin-top: 13px;\n}\n\n.section-discover {\n  margin-top: 84px;\n  display: flex;\n  flex-direction: column;\n}\n@media (max-width: 767px) {\n  .section-discover {\n    margin-top: 78px;\n  }\n}\n.section-discover > div:first-child {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.section-discover__cards-wrapper {\n  margin-top: 20px;\n  display: grid;\n  grid-template-columns: repeat(4, minmax(10px, 1fr));\n  gap: 18px;\n}\n@media (max-width: 767px) {\n  .section-discover__cards-wrapper {\n    margin-top: 11px;\n    grid-template-columns: repeat(2, minmax(10px, 1fr));\n    gap: 13px;\n  }\n}\n.section-discover__cards-wrapper .card {\n  position: relative;\n}\n.section-discover__cards-wrapper .card__img {\n  width: 100%;\n  height: 332px;\n  overflow: hidden;\n  border-top-left-radius: 6.4px;\n  border-top-right-radius: 6.4px;\n  transition: border-radius 0.25s cubic-bezier(0.65, 0, 0.35, 1);\n}\n@media (max-width: 1170px) {\n  .section-discover__cards-wrapper .card__img {\n    height: 168px;\n  }\n}\n.section-discover__cards-wrapper .card__img img {\n  display: block;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  object-position: center;\n}\n.section-discover__cards-wrapper .card__title {\n  padding: 14px;\n  height: 67px;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: flex-start;\n  position: absolute;\n  bottom: 0;\n  width: 100%;\n  overflow: hidden;\n}\n.section-discover__cards-wrapper .card__title .card__text,\n.section-discover__cards-wrapper .card__title .card__preview {\n  width: 100%;\n}\n.section-discover__cards-wrapper .card__title .card__preview {\n  display: none;\n  font-size: 0.7em;\n  line-height: 1.6;\n  margin-top: 5px;\n}\n.section-discover__cards-wrapper .card:hover .card__img {\n  border-top-right-radius: 74px;\n}\n.section-discover__cards-wrapper .card:hover .card__title {\n  bottom: 0px;\n  height: fit-content;\n}\n.section-discover__cards-wrapper .card:hover .card__title .card__preview {\n  display: block;\n}\n\n.landing .section-news {\n  position: relative;\n  margin-top: 112px;\n  margin-bottom: 100px;\n  display: flex;\n  flex-direction: column;\n}\n@media (max-width: 767px) {\n  .landing .section-news {\n    margin-left: -23px;\n    width: calc(100% + 46px);\n  }\n}\n.landing .section-news > div:first-child {\n  margin-bottom: 20px;\n}\n@media (max-width: 767px) {\n  .landing .section-news > div:first-child {\n    margin-left: 23px;\n  }\n}\n.landing .section-news .swiper-is-enabled {\n  cursor: grab;\n}\n.landing .section-news .swipe-cta {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  margin: auto 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 62px;\n  height: 62px;\n  background-color: #ffffff;\n  border-radius: 50%;\n  cursor: pointer;\n  z-index: 5;\n  transition: opacity 0.25s linear;\n}\n@media (max-width: 1170px) {\n  .landing .section-news .swipe-cta {\n    display: none;\n  }\n}\n.landing .section-news .swipe-cta img {\n  display: block;\n  transform: rotate(-90deg) translateY(3px);\n}\n.landing .section-news .swipe-cta.swiper-button-disabled {\n  opacity: 0;\n}\n.landing .section-news #swipe-cta-prev {\n  left: -20px;\n}\n.landing .section-news #swipe-cta-prev img {\n  transform: rotate(90deg) translateY(3px);\n}\n.landing .section-news #swipe-cta-next {\n  right: -20px;\n}\n.landing .section-news .news {\n  display: block;\n  max-width: 253px;\n}\n@media (max-width: 767px) {\n  .landing .section-news .news {\n    max-width: max(253px, 80%);\n  }\n}\n.landing .section-news .news__title {\n  margin-top: 15px;\n  margin-bottom: 5px;\n}\n.landing .section-news .news__description {\n  color: #282828;\n  opacity: 0.5;\n  margin-bottom: 12px;\n}\n.landing .section-news .news__description span {\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: 9;\n  line-clamp: 9;\n  overflow: hidden;\n}\n.landing .section-news .news:not(:last-child)::after {\n  content: \"\";\n  position: absolute;\n  bottom: 0;\n  right: -34px;\n  width: 1px;\n  height: 253px;\n  background-color: #000000;\n  top: 40px;\n}\n\n.landing footer {\n  position: relative;\n  background-color: #ffffff;\n}\n.landing footer .footer__banner {\n  text-align: center;\n  margin: 0 auto;\n  overflow: hidden;\n  display: inline-block;\n  white-space: nowrap;\n  width: 100%;\n}\n.landing footer .footer__banner img {\n  display: block;\n}\n.landing footer .footer__content {\n  padding: 45px 51px 20px;\n  max-width: 1440px;\n  margin: 0 auto;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content {\n    padding: 43px 23px 20px;\n  }\n  .landing footer .footer__content .curbcut-logo-footer {\n    width: 141px;\n    height: 141px;\n  }\n}\n.landing footer .footer__content .footer-mobile-nav {\n  display: none;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content .footer-mobile-nav {\n    display: block;\n  }\n}\n.landing footer .footer__content .footer-mobile-nav .nav-item {\n  padding: 16px 0;\n  border-bottom: 1px solid #000000;\n}\n.landing footer .footer__content .footer-mobile-nav .nav-item__title {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.landing footer .footer__content .footer-mobile-nav .nav-item__title .plus-sign {\n  position: relative;\n  width: 14px;\n  height: 14px;\n}\n.landing footer .footer__content .footer-mobile-nav .nav-item__title .plus-sign::before, .landing footer .footer__content .footer-mobile-nav .nav-item__title .plus-sign::after {\n  display: block;\n  position: relative;\n  content: \"\";\n  background-color: #000000;\n}\n.landing footer .footer__content .footer-mobile-nav .nav-item__title .plus-sign::before {\n  top: 8px;\n  width: 100%;\n  height: 2px;\n}\n.landing footer .footer__content .footer-mobile-nav .nav-item__title .plus-sign::after {\n  left: 6px;\n  width: 2px;\n  height: 100%;\n  transform-origin: center;\n  transition: transform 0.25s cubic-bezier(0.65, 0, 0.35, 1);\n}\n.landing footer .footer__content .footer-mobile-nav .nav-item > div {\n  padding-top: 15px;\n  display: flex;\n  flex-direction: column;\n  gap: 15px;\n}\n.landing footer .footer__content .footer-mobile-nav .nav-item[open] .plus-sign::after {\n  transform: scaleY(0);\n}\n.landing footer .footer__content > div:not(.footer__content-copyright) {\n  display: grid;\n  grid-template-columns: 230px 1fr;\n  gap: 50px;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content > div:not(.footer__content-copyright) {\n    display: flex;\n    flex-direction: column;\n    gap: 44px;\n  }\n}\n.landing footer .footer__content > div:not(.footer__content-copyright) .grid {\n  display: grid;\n  grid-template-columns: repeat(4, minmax(10px, 1fr));\n  column-gap: 50px;\n  row-gap: 30px;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content > div:not(.footer__content-copyright) .grid {\n    display: flex;\n    flex-direction: column;\n  }\n}\n.landing footer .footer__content > div:not(.footer__content-copyright) .grid .column {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  gap: 8px;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content > div:not(.footer__content-copyright) .grid .column:not(:last-of-type) {\n    padding-bottom: 50px;\n    border-bottom: 1px solid #000000;\n  }\n}\n.landing footer .footer__content > div:not(.footer__content-copyright) .grid .column__title {\n  display: inline-flex;\n  align-items: center;\n  height: 22px;\n  margin-bottom: 2px;\n  padding: 0 7px;\n  font-size: 1.4rem;\n  line-height: 1.7rem;\n  white-space: nowrap;\n  border: 1px solid #101010;\n  border-radius: 6.4px;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content > div:not(.footer__content-copyright) .grid .column__title {\n    padding: 0;\n    font-size: 2.5rem;\n    line-height: 3.1rem;\n    height: auto;\n    border: none;\n  }\n}\n.landing footer .footer__content > div:not(.footer__content-copyright) .grid .column img:first-of-type {\n  margin-top: 15px;\n}\n.landing footer .footer__content > div:not(.footer__content-copyright) .grid .column img:not(:last-child) {\n  margin-bottom: 24px;\n}\n.landing footer .footer__content-first-half {\n  padding-bottom: 60px;\n  border-bottom: 1px solid #000000;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content-first-half {\n    padding-bottom: 10px;\n    border-bottom: none;\n  }\n}\n.landing footer .footer__content-second-half {\n  padding-top: 42px;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content-second-half .grid > .column--cities {\n    display: block !important;\n    max-height: 170px;\n  }\n  .landing footer .footer__content-second-half .grid > .column--cities .column__title {\n    display: block !important;\n  }\n  .landing footer .footer__content-second-half .grid > .column--cities img {\n    margin-bottom: 0 !important;\n    display: inline-flex;\n    align-items: center;\n  }\n  .landing footer .footer__content-second-half .grid > .column--cities img:not(:last-child) {\n    margin-right: 40px;\n  }\n}\n.landing footer .footer__content-copyright {\n  display: block;\n  text-align: center;\n  margin-top: 42px;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content .hidden-mobile {\n    display: none !important;\n  }\n}\n.landing footer form {\n  width: 100%;\n}\n.landing footer input {\n  height: 46px;\n  border: 1px solid #000000;\n  border-radius: 6.4px;\n  padding: 0 16px;\n  width: min(208px, 100%);\n}\n@media (max-width: 1170px) {\n  .landing footer input {\n    width: 100%;\n  }\n}\n.landing footer input, .landing footer input::placeholder {\n  font-family: \"_AcidGrotesk\", sans-serif;\n  font-size: 1.4rem;\n}\n.landing footer .submit-btn {\n  margin-top: 11px;\n  color: #ffffff;\n  background-color: #000000;\n  height: 46px;\n  min-width: 124px;\n  padding: 0 16px;\n  border-radius: 8px;\n  font-size: 1.6rem;\n  line-height: 2.2rem;\n  cursor: pointer;\n}\n@media (max-width: 1170px) {\n  .landing footer .submit-btn {\n    min-width: 188px;\n  }\n}\n\n.landing .section-team {\n  margin-top: 84px;\n  display: flex;\n  flex-direction: column;\n}\n@media (max-width: 767px) {\n  .landing .section-team {\n    margin-top: 78px;\n  }\n}\n.landing .section-team > div:first-child {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.landing .section-team__cards-wrapper {\n  margin-top: 20px;\n  display: grid;\n  grid-template-columns: repeat(4, minmax(10px, 1fr));\n  gap: 18px;\n}\n@media (max-width: 767px) {\n  .landing .section-team__cards-wrapper {\n    margin-top: 11px;\n    grid-template-columns: repeat(2, minmax(10px, 1fr));\n    gap: 13px;\n  }\n}\n.landing .section-team__cards-wrapper .card {\n  position: relative;\n  overflow: hidden;\n}\n.landing .section-team__cards-wrapper .card__img {\n  width: 100%;\n  height: 265px;\n  overflow: hidden;\n  border-top-left-radius: 6.4px;\n  border-top-right-radius: 6.4px;\n  transition: border-radius 0.25s cubic-bezier(0.65, 0, 0.35, 1);\n}\n@media (max-width: 1170px) {\n  .landing .section-team__cards-wrapper .card__img {\n    height: 168px;\n  }\n}\n.landing .section-team__cards-wrapper .card__img img {\n  display: block;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  object-position: center;\n}\n.landing .section-team__cards-wrapper .card__title {\n  padding: 14px;\n  min-height: 67px;\n  max-height: auto;\n  align-items: center;\n}\n@media (max-width: 767px) {\n  .landing .section-team__cards-wrapper .card__title {\n    height: 78px;\n    padding: 9px 11px;\n  }\n}\n.landing .section-team__cards-wrapper .card__title span {\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: 2;\n  line-clamp: 2;\n  overflow: hidden;\n}\n@media (max-width: 767px) {\n  .landing .section-team__cards-wrapper .card__title span {\n    -webkit-line-clamp: 3;\n    line-clamp: 3;\n  }\n}\n.landing .section-team__cards-wrapper .card:hover .card__img {\n  border-top-right-radius: 74px;\n}\n.landing .contributors-container {\n  text-align: center;\n}\n.landing .contributor-style {\n  display: inline;\n  margin-right: 10px;\n  margin-left: 10px;\n}\n.landing .contributor-dot {\n  display: inline;\n  width: 10px;\n  height: 10px;\n  user-select: none;\n  padding: 0 5px;\n}\n@media (max-width: 767px) {\n  .landing .contributor-dot {\n    width: 5px;\n    height: 5px;\n  }\n}\n.landing .contributor-dot:nth-child(11n+1) {\n  color: #a3b0d1;\n}\n.landing .contributor-dot:nth-child(11n+2) {\n  color: #73ad80;\n}\n.landing .contributor-dot:nth-child(11n+3) {\n  color: #e08565;\n}\n.landing .contributor-dot:nth-child(11n+4) {\n  color: #cd718c;\n}\n.landing .contributor-dot:nth-child(11n+5) {\n  color: #c9c3fa;\n}\n.landing .contributor-dot:nth-child(11n+6) {\n  color: #f5d574;\n}\n.landing .contributor-dot:nth-child(11n+7) {\n  color: #adb033;\n}\n.landing .contributor-dot:nth-child(11n+8) {\n  color: #9e9090;\n}\n.landing .contributor-dot:nth-child(11n+9) {\n  color: #beaf62;\n}\n.landing .contributor-dot:nth-child(11n+10) {\n  color: #dca656;\n}\n.landing .contributor-dot:nth-child(11n+11) {\n  color: #7baaaa;\n}\n\n.title-text-box {\n  border-radius: 15px;\n  border: 1px solid #000000;\n  position: relative;\n  transition: width 0.3s ease;\n  padding: 15px;\n  max-height: 100%;\n  box-sizing: border-box;\n}\n@media (max-width: 1170px) {\n  .title-text-box {\n    display: none;\n  }\n}\n.title-text-box__top {\n  display: flex;\n  align-items: center;\n  color: white;\n  padding-bottom: 10px;\n}\n.title-text-box__top h3 {\n  margin-left: 10px;\n}\n.title-text-box__close {\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding: 10px;\n  cursor: pointer;\n}\n.title-text-box .content {\n  overflow-y: auto;\n  overflow-x: \"hidden\";\n  padding: 1px 0px 1px 0px;\n}\n.title-text-box .button-container {\n  text-align: right;\n}\n.title-text-box .button-container button {\n  text-decoration: underline;\n  cursor: pointer;\n  color: white;\n  padding-top: 10px;\n}","@font-face {\n    font-family: '_Apparat';\n    src: url('../fonts/apparat-regular.woff2') format('woff2'),\n        url('../fonts/apparat-regular.woff') format('woff');\n    font-weight: normal;\n    font-style: normal;\n    font-display: swap;\n}\n\n@font-face {\n    font-family: '_AcidGrotesk';\n    src: url('../fonts/acidgrotesk-book.woff2') format('woff2'),\n        url('../fonts/acidgrotesk-book.woff') format('woff');\n    font-weight: normal;\n    font-style: normal;\n    font-display: swap;\n}\n","@use 'variables';\n@use 'mixins';\n\n.landing {\n\tposition: relative;\n\theight: 100%;\n\tfont-family: variables.$font-main;\n\tfont-size: 1.6rem;\n\tline-height: 2rem;\n\tfont-weight: 400;\n\tletter-spacing: 0;\n\tcolor: variables.$black;\n\tbackground-color: variables.$grey;\n\toverscroll-behavior: none;\n\n\t&.is-fixed {\n\t\toverflow: hidden;\n\t}\n\n\t&::after {\n\t\tdisplay: none;\n\t\tcontent: '';\n\t\tposition: fixed;\n\t\ttop: 0;\n\t\tleft: 0;\n\t\twidth: 100%;\n\t\theight: 100%;\n\t\tbackground-color: #b3b3b3;\n\t\tz-index: 9;\n\t}\n\n\t&.bg-background::after {\n\t\tdisplay: block;\n\t}\n\n\t* {\n\t\t-webkit-font-smoothing: antialiased;\n\t\t-moz-osx-font-smoothing: grayscale;\n\t}\n\n\t// html {\n\t// \tfont-size: 10px;\n\t// \toverscroll-behavior: none;\n\t// }\n\n\t// // Lenis\n\t// html.lenis {\n\t// \theight: auto;\n\t// }\n\n\t// .lenis.lenis-smooth {\n\t// \tscroll-behavior: auto;\n\t// }\n\n\t// .lenis.lenis-smooth [data-lenis-prevent] {\n\t// \toverscroll-behavior: contain;\n\t// }\n\n\t// .lenis.lenis-stopped {\n\t// \toverflow: hidden;\n\t// }\n\n\t// .lenis.lenis-scrolling iframe {\n\t// \tpointer-events: none;\n\t// }\n\n\ta {\n\t\tfont-family: variables.$font-main;\n\t\tcolor: variables.$black;\n\t\ttext-decoration: none;\n\t\tcursor: pointer;\n\n\t\t&:hover,\n\t\t&:visited,\n\t\t&:focus {\n\t\t\tcolor: inherit; /* This will keep the color the same */\n\t\t\ttext-decoration: none; /* This will remove the underline */\n\t\t}\n\t}\n\n\t.cta-text {\n\t\tfont-size: 1.4rem;\n\t\tline-height: 1.7rem;\n\t\ttext-transform: uppercase;\n\t\tcursor: pointer;\n\n\t\t@include mixins.mobile {\n\t\t\tfont-size: 1.6rem;\n\t\t\tline-height: 2rem;\n\t\t}\n\n\t\t&--underline {\n\t\t\tposition: relative;\n\n\t\t\t&::after {\n\t\t\t\tcontent: '';\n\t\t\t\tposition: absolute;\n\t\t\t\tbottom: 0;\n\t\t\t\tleft: 0;\n\t\t\t\twidth: 100%;\n\t\t\t\theight: 1px;\n\t\t\t\tbackground-color: variables.$black;\n\t\t\t\ttransform-origin: left;\n\t\t\t\ttransform: scaleX(0);\n\t\t\t\ttransition: transform variables.$t1\n\t\t\t\t\tvariables.$ease-in-out-airbag;\n\n\t\t\t\t@include mixins.tablet {\n\t\t\t\t\ttransform: scaleX(1);\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t&:hover::after {\n\t\t\t\ttransform: scaleX(1);\n\t\t\t}\n\t\t}\n\t}\n\n\t.cta-text-lower {\n\t\tcursor: pointer;\n\n\t\t@include mixins.mobile {\n\t\t\tfont-size: 1.6rem;\n\t\t\tline-height: 2rem;\n\t\t}\n\t}\n\n\tp {\n\t\tfont-size: 1.6rem;\n\t\tline-height: 2rem;\n\t\tfont-family: variables.$font-main;\n\t\tfont-weight: 400;\n\t\tletter-spacing: 0;\n\n\t\t& ~ p {\n\t\t\tmargin-top: 25px;\n\t\t}\n\t}\n\n\t.h1 {\n\t\tfont-family: variables.$font-title;\n\t\tfont-weight: 300;\n\t\tfont-size: 11.8rem;\n\t\tline-height: 14.4rem;\n\t\ttext-transform: uppercase;\n\t\tmargin-top: 0;\n\t\tmargin-bottom: 0;\n\n\t\t@include mixins.laptop {\n\t\t\tfont-size: clamp(4.4rem, 6vw, 11.8rem);\n\t\t\tline-height: clamp(5.4rem, 6vw, 14.4rem);\n\t\t}\n\n\t\t@include mixins.mobile {\n\t\t\tfont-size: 4.4rem;\n\t\t\tline-height: 5.4rem;\n\t\t}\n\t}\n\n\t.h2 {\n\t\tfont-family: variables.$font-main;\n\t\tfont-size: 4rem;\n\t\tline-height: 5rem;\n\t\tmargin-top: 0;\n\t\tmargin-bottom: 0;\n\n\t\t@include mixins.laptop {\n\t\t\tfont-size: clamp(2.5rem, 4vw, 4rem);\n\t\t\tline-height: clamp(3.1rem, 4vw, 5rem);\n\t\t}\n\n\t\t@include mixins.mobile {\n\t\t\tfont-size: 2.5rem;\n\t\t\tline-height: 3.1rem;\n\t\t}\n\t}\n\n\t.h3 {\n\t\tfont-family: variables.$font-main;\n\t\tfont-size: 3rem;\n\t\tline-height: 3.7rem;\n\t\tmargin-top: 0;\n\t\tmargin-bottom: 0;\n\n\t\t@include mixins.laptop {\n\t\t\tfont-size: clamp(2.2rem, 2vw, 3rem);\n\t\t\tline-height: clamp(2.7rem, 2vw, 3.7rem);\n\t\t}\n\n\t\t@include mixins.mobile {\n\t\t\tfont-size: 2.2rem;\n\t\t\tline-height: 2.7rem;\n\t\t}\n\t}\n\n\tsummary {\n\t\tlist-style-type: none !important;\n\t\ttext-align: left;\n\n\t\t&::-webkit-details-marker {\n\t\t\tdisplay: none;\n\t\t}\n\t}\n\n\tdialog {\n\t\tposition: fixed;\n\t\ttop: 0;\n\t\tleft: 0;\n\t\twidth: 100vw;\n\t\theight: 100vh;\n\t\tmargin: 0;\n\t\tpadding: 0;\n\t\tdisplay: flex;\n\t\tjustify-content: center;\n\t\talign-items: center;\n\t\tbackground-color: rgba(0, 0, 0, 0.8);\n\t\tz-index: 999;\n\n\t\t#video-modal-close-btn {\n\t\t\tposition: absolute;\n\t\t\ttop: 10px;\n\t\t\tright: 10px;\n\t\t\tcursor: pointer;\n\t\t\tz-index: 9999;\n\n\t\t\timg {\n\t\t\t\tfilter: brightness(1) invert(1);\n\t\t\t}\n\t\t}\n\n\t\tvideo {\n\t\t\tmax-height: 90vh;\n\t\t\twidth: 90vw;\n\t\t\tmargin-top: 25px;\n\t\t\toutline: none;\n\t\t}\n\n\t\t&::backdrop {\n\t\t\tbackground-color: rgba(0, 0, 0, 0.8);\n\t\t}\n\t}\n\n\t// Categories colors\n\t.bg-explorer {\n\t\tbackground-color: variables.$color-explorer !important;\n\t}\n\t.bg-ecology {\n\t\tbackground-color: variables.$color-ecology !important;\n\t}\n\t.bg-housing {\n\t\tbackground-color: variables.$color-housing !important;\n\t}\n\t.bg-health {\n\t\tbackground-color: variables.$color-health !important;\n\t}\n\t.bg-transport {\n\t\tbackground-color: variables.$color-transport !important;\n\t}\n\t.bg-climate {\n\t\tbackground-color: variables.$color-climate !important;\n\t}\n\t.bg-urban {\n\t\tbackground-color: variables.$color-urban !important;\n\t}\n\t.bg-demographics {\n\t\tbackground-color: variables.$color-demographics !important;\n\t}\n\t.bg-economy {\n\t\tbackground-color: variables.$color-economy !important;\n\t}\n\t.bg-resources {\n\t\tbackground-color: variables.$color-resources !important;\n\t}\n\t.bg-land {\n\t\tbackground-color: variables.$color-land !important;\n\t}\n\n\t#main-content {\n\t\tposition: relative;\n\t\tdisplay: grid;\n\t\tgrid-template-columns: minmax(0, 1fr) 450px;\n\t\talign-items: flex-start;\n\t\tjustify-content: flex-end;\n\t\tjustify-items: center;\n\t\tgap: 48px;\n\t\tpadding-left: 44px;\n\t\tmargin: 0 auto;\n\n\t\t@include mixins.tablet {\n\t\t\tdisplay: block;\n\t\t\tpadding-left: 23px;\n\t\t\tpadding-right: 23px;\n\t\t}\n\n\t\tmain {\n\t\t\tmax-width: calc(1440px - 450px);\n\t\t\twidth: 100%;\n\t\t\torder: -1;\n\t\t\tmargin-bottom: 100px;\n\n\t\t\t@include mixins.tablet {\n\t\t\t\tmax-width: none;\n\t\t\t}\n\t\t}\n\t}\n\n\t.section__title {\n\t\t@extend .cta-text;\n\t\tdisplay: inline-flex;\n\t\talign-items: center;\n\t\tmin-height: 21px;\n\t\tpadding: 0 6px;\n\t\tmargin-right: 30px;\n\t\tbackground-color: variables.$white;\n\t\tborder-radius: variables.$b-radius;\n\t\tcursor: default;\n\t}\n\n\t.dot {\n\t\tposition: absolute;\n\t\twidth: 10px;\n\t\theight: 10px;\n\t\tbackground-color: variables.$black;\n\t\tuser-select: none;\n\n\t\t@include mixins.mobile {\n\t\t\twidth: 5px;\n\t\t\theight: 5px;\n\t\t}\n\t}\n}\n","// Fonts\n$font-main: '_AcidGrotesk', sans-serif;\n$font-title: '_Apparat', sans-serif;\n\n// Colors\n$black: #000000;\n$white: #ffffff;\n$grey: #e9ecef;\n\n$color-explorer: #a3b0d1;\n$color-ecology: #73ad80;\n$color-housing: #e08565;\n$color-health: #cd718c;\n$color-transport: #c9c3fa;\n$color-climate: #f5d574;\n$color-urban: #adb033;\n$color-demographics: #9e9090;\n$color-economy: #beaf62;\n$color-resources: #dca656;\n$color-land: #7baaaa;\n\n$t1: 0.25s;\n$t2: 0.45s;\n\n$b-radius: 4px;\n$b-radius-mid: 6.4px;\n$b-radius-large: 74px;\n\n// Easings\n$ease-in-out-cubic: cubic-bezier(\n\t0.65,\n\t0,\n\t0.35,\n\t1\n); // https://cubic-bezier.com/#.65,0,.35,1\n$ease-in-out-airbag: cubic-bezier(\n\t0.3,\n\t0,\n\t0,\n\t1\n); // https://cubic-bezier.com/#.3,0,0,1\n","$small: 490px;\n$mobile: 767px;\n$tablet: 1170px;\n$laptop: 1439px;\n$hd: 1920px;\n$two-k: 2200px;\n$four-k: 3400px;\n\n@mixin four-k {\n    @media (max-width: $four-k) {\n        @content;\n    }\n}\n\n@mixin two-k {\n    @media (max-width: $two-k) {\n        @content;\n    }\n}\n\n@mixin hd {\n    @media (max-width: $hd) {\n        @content;\n    }\n}\n\n@mixin laptop {\n    @media (max-width: $laptop) {\n        @content;\n    }\n}\n\n@mixin desktop-screen {\n    @media (min-width: calc($tablet + 1)) {\n        @content;\n    }\n}\n\n@mixin tablet {\n    @media (max-width: $tablet) {\n        @content;\n    }\n}\n\n@mixin mobile {\n    @media (max-width: $mobile) {\n        @content;\n    }\n}\n\n@mixin small {\n    @media (max-width: $small) {\n        @content;\n    }\n}\n","@use '../variables';\n@use '../mixins';\n\n.landing {\n\t#mobile-nav {\n\t\tdisplay: none;\n\t\tposition: fixed;\n\t\ttop: 0;\n\t\tleft: 0;\n\t\theight: 100%;\n\t\twidth: 100%;\n\t\tbackground-color: variables.$grey;\n\t\tpadding: 150px 23px;\n\t\toverflow: auto;\n\t\tz-index: 10;\n\n\t\t@include mixins.mobile {\n\t\t\t&.mobile-nav--visible {\n\t\t\t\tdisplay: block;\n\t\t\t}\n\t\t}\n\n\t\t.mobile-nav-group {\n\t\t\tpadding-bottom: 24px;\n\t\t\tmargin-bottom: 24px;\n\n\t\t\tul {\n\t\t\t\tmargin-top: 20px;\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column;\n\t\t\t\tgap: 15px;\n\t\t\t}\n\n\t\t\t&:not(:last-of-type) {\n\t\t\t\tborder-bottom: 1px solid variables.$black;\n\t\t\t}\n\t\t}\n\n\t\t.dot:nth-of-type(1) {\n\t\t\ttop: 80px;\n\t\t\tleft: 0;\n\t\t}\n\t\t.dot:nth-of-type(2) {\n\t\t\ttop: 108px;\n\t\t\tleft: 6.1vw;\n\t\t}\n\t\t.dot:nth-of-type(3) {\n\t\t\ttop: 113px;\n\t\t\tleft: 24vw;\n\t\t}\n\t\t.dot:nth-of-type(4) {\n\t\t\ttop: 97px;\n\t\t\tleft: 40vw;\n\t\t}\n\t\t.dot:nth-of-type(5) {\n\t\t\ttop: 91px;\n\t\t\tleft: 54vw;\n\t\t}\n\t\t.dot:nth-of-type(6) {\n\t\t\ttop: 132px;\n\t\t\tleft: 60vw;\n\t\t}\n\t\t.dot:nth-of-type(7) {\n\t\t\ttop: 111px;\n\t\t\tleft: 67vw;\n\t\t}\n\t\t.dot:nth-of-type(8) {\n\t\t\ttop: 170px;\n\t\t\tleft: 74vw;\n\t\t}\n\t\t.dot:nth-of-type(9) {\n\t\t\ttop: 116px;\n\t\t\tleft: 92vw;\n\t\t}\n\t\t.dot:nth-of-type(10) {\n\t\t\ttop: 189px;\n\t\t\tleft: 94vw;\n\t\t}\n\t}\n\n\t#main-header {\n\t\tmax-width: min(calc(100vw - 44px * 2), 1440px);\n\t\tposition: fixed;\n\t\ttop: 0;\n\t\tleft: 0;\n\t\tright: 0;\n\t\tdisplay: flex;\n\t\twidth: 100%;\n\t\tmargin: 0 auto;\n\t\tpadding: 46px 0;\n\t\tz-index: 15;\n\t\ttransition: transform variables.$t1 variables.$ease-in-out-cubic;\n\n\t\t@include mixins.tablet {\n\t\t\tmax-width: min(calc(100vw - 44px), 1440px);\n\t\t}\n\n\t\t@include mixins.mobile {\n\t\t\tmax-width: none;\n\t\t\tjustify-content: space-between;\n\t\t\talign-items: center;\n\t\t\tpadding: 28px 24px;\n\t\t}\n\n\t\t&::before {\n\t\t\tcontent: '';\n\t\t\tposition: absolute;\n\t\t\ttop: 0;\n\t\t\tleft: 0;\n\t\t\twidth: 150vw;\n\t\t\theight: 100%;\n\t\t\ttransform: translateX(-50vw);\n\t\t\tbackground-color: variables.$white;\n\t\t\tz-index: 0;\n\t\t\ttransition: opacity variables.$t1 linear;\n\t\t\topacity: 0;\n\t\t}\n\n\t\t.curbcut-logo {\n\t\t\tdisplay: none;\n\t\t\tz-index: 1;\n\n\t\t\t@include mixins.mobile {\n\t\t\t\tdisplay: block;\n\t\t\t}\n\t\t}\n\n\t\t.main-nav > ul {\n\t\t\tdisplay: flex;\n\t\t\tgap: 24px;\n\n\t\t\tli {\n\t\t\t\tdisplay: flex;\n\t\t\t\talign-items: center;\n\t\t\t\tz-index: 1;\n\n\t\t\t\t@include mixins.mobile {\n\t\t\t\t\t&:not(.language-switcher, .menu-btn) {\n\t\t\t\t\t\tdisplay: none;\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\tdetails {\n\t\t\t\t\tposition: relative;\n\t\t\t\t\tdisplay: flex;\n\t\t\t\t\tflex-direction: column;\n\t\t\t\t\tpadding: 7px 14px;\n\n\t\t\t\t\t&[open] {\n\t\t\t\t\t\tbackground-color: variables.$white;\n\n\t\t\t\t\t\t.caret_land {\n\t\t\t\t\t\t\ttransform: rotateX(180deg);\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\n\t\t\t\t\tsummary {\n\t\t\t\t\t\tdisplay: flex;\n\t\t\t\t\t\tgap: 8px;\n\t\t\t\t\t}\n\n\t\t\t\t\tul {\n\t\t\t\t\t\tposition: absolute;\n\t\t\t\t\t\ttop: 30px;\n\t\t\t\t\t\tleft: 0;\n\t\t\t\t\t\tbackground-color: variables.$white;\n\t\t\t\t\t\tz-index: 12;\n\n\t\t\t\t\t\tli {\n\t\t\t\t\t\t\twhite-space: nowrap;\n\t\t\t\t\t\t\tpadding: 2px 0;\n\t\t\t\t\t\t\tmargin: 0 8px;\n\n\t\t\t\t\t\t\t&:not(:last-of-type) {\n\t\t\t\t\t\t\t\tborder-bottom: 1px solid variables.$black;\n\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\ta {\n\t\t\t\t\t\t\t\tfont-size: 1.4rem;\n\t\t\t\t\t\t\t\tline-height: 3rem;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\t&.language-switcher {\n\t\t\t\t\tpadding: 7px 14px;\n\n\t\t\t\t\t@include mixins.mobile {\n\t\t\t\t\t\tpadding: 0;\n\n\t\t\t\t\t\t.cta-text--underline::after {\n\t\t\t\t\t\t\ttransform: scaleX(0);\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\t&.menu-btn {\n\t\t\t\t\tdisplay: none;\n\t\t\t\t\talign-items: center;\n\t\t\t\t\twidth: 24px;\n\t\t\t\t\theight: 24px;\n\t\t\t\t\tbackground: url('data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAxNyI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTAgMGgyNHYyLjQyOUgwek0wIDcuMjg2aDI0djIuNDI5SDB6TTAgMTQuNTcxaDI0VjE3SDB6Ii8+Cjwvc3ZnPg==')\n\t\t\t\t\t\tno-repeat;\n\t\t\t\t\tbackground-position: center;\n\t\t\t\t\tcursor: pointer;\n\n\t\t\t\t\t@include mixins.mobile {\n\t\t\t\t\t\tdisplay: flex;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\t&.header--opened {\n\t\t\t.main-nav > ul li.menu-btn {\n\t\t\t\tbackground-image: url('data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNCAzNCI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTI2LjMxNSA5LjM0MyA5LjM0NCAyNi4zMTRsLTEuNzE4LTEuNzE4IDE2Ljk3MS0xNi45N3oiLz4KICA8cGF0aCBmaWxsPSIjMDAwIiBkPSJtOS4zNDQgNy42MjcgMTYuOTcgMTYuOTctMS43MTcgMS43MTgtMTYuOTctMTYuOTd6Ii8+Cjwvc3ZnPg==');\n\t\t\t}\n\t\t}\n\n\t\t&.header--hidden {\n\t\t\ttransform: translateY(-130px);\n\t\t}\n\n\t\t&.header--background:not(.header--opened)::before {\n\t\t\topacity: 1;\n\t\t}\n\n\t\tbody.bg-background &.header--background:not(.header--opened)::before {\n\t\t\topacity: 0;\n\t\t}\n\t}\n\n\t#categories-menu {\n\t\tposition: sticky;\n\t\ttop: 0;\n\t\tmin-height: 100vh;\n\t\twidth: 100%;\n\t\tmax-width: 450px;\n\t\tbackground-color: variables.$white;\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\t\ttransition: background-color variables.$t2 variables.$ease-in-out-airbag;\n\t\tz-index: 20;\n\n\t\t@include mixins.tablet {\n\t\t\tdisplay: none;\n\n\t\t\t&.is-visible {\n\t\t\t\tmin-height: auto;\n\t\t\t\tmax-width: none;\n\t\t\t\twidth: calc(100% - 23px * 2);\n\t\t\t\tmax-height: 80vh;\n\t\t\t\tdisplay: flex;\n\t\t\t\tposition: fixed;\n\t\t\t\ttop: auto;\n\t\t\t\tbottom: 14px;\n\t\t\t\toverflow: auto;\n\t\t\t}\n\t\t}\n\n\t\t.curbcut-logo {\n\t\t\tpadding-bottom: 20px;\n\t\t\tmargin: 30px auto auto;\n\n\t\t\t@include mixins.tablet {\n\t\t\t\tdisplay: none;\n\t\t\t}\n\t\t}\n\n\t\t.close-cta {\n\t\t\tdisplay: none;\n\n\t\t\t@include mixins.tablet {\n\t\t\t\tdisplay: flex;\n\t\t\t\tjustify-content: flex-end;\n\t\t\t\talign-items: center;\n\t\t\t\tgap: 12px;\n\t\t\t\tmin-height: 60px;\n\t\t\t\theight: 60px;\n\t\t\t\tpadding-right: 16px;\n\t\t\t\tcursor: pointer;\n\t\t\t}\n\t\t}\n\n\t\t.categories-nav {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\n\t\t\t.nav-item {\n\t\t\t\tborder-top: 1.3px solid variables.$black;\n\t\t\t\tpadding: 12px 24px;\n\t\t\t\tbackground-color: transparent;\n\t\t\t\ttransition: color variables.$t1 variables.$ease-in-out-airbag,\n\t\t\t\t\tbackground-color variables.$t2 variables.$ease-in-out-airbag;\n\n\t\t\t\t&:hover,\n\t\t\t\t&:focus {\n\t\t\t\t\tbackground-color: variables.$black;\n\n\t\t\t\t\t&[data-category='climate'] {\n\t\t\t\t\t\tcolor: variables.$color-climate;\n\t\t\t\t\t\tsvg path {\n\t\t\t\t\t\t\tfill: variables.$color-climate;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\t&[data-category='demographics'] {\n\t\t\t\t\t\tcolor: variables.$color-demographics;\n\t\t\t\t\t\tsvg path {\n\t\t\t\t\t\t\tfill: variables.$color-demographics;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\t&[data-category='ecology'] {\n\t\t\t\t\t\tcolor: variables.$color-ecology;\n\t\t\t\t\t\tsvg path {\n\t\t\t\t\t\t\tfill: variables.$color-ecology;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\t&[data-category='health'] {\n\t\t\t\t\t\tcolor: variables.$color-health;\n\t\t\t\t\t\tsvg path {\n\t\t\t\t\t\t\tfill: variables.$color-health;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\t&[data-category='housing'] {\n\t\t\t\t\t\tcolor: variables.$color-housing;\n\t\t\t\t\t\tsvg path {\n\t\t\t\t\t\t\tfill: variables.$color-housing;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\t&[data-category='transport'] {\n\t\t\t\t\t\tcolor: variables.$color-transport;\n\t\t\t\t\t\tsvg path {\n\t\t\t\t\t\t\tfill: variables.$color-transport;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\t&[data-category='urban'] {\n\t\t\t\t\t\tcolor: variables.$color-urban;\n\t\t\t\t\t\tsvg path {\n\t\t\t\t\t\t\tfill: variables.$color-urban;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\t&[data-category='explorer'] {\n\t\t\t\t\t\tcolor: variables.$color-explorer;\n\t\t\t\t\t\tsvg path {\n\t\t\t\t\t\t\tfill: variables.$color-explorer;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\t&[data-category='economy'] {\n\t\t\t\t\t\tcolor: variables.$color-economy;\n\t\t\t\t\t\tsvg path {\n\t\t\t\t\t\t\tfill: variables.$color-economy;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\t&[data-category='resources'] {\n\t\t\t\t\t\tcolor: variables.$color-resources;\n\t\t\t\t\t\tsvg path {\n\t\t\t\t\t\t\tfill: variables.$color-resources;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\t&[data-category='land'] {\n\t\t\t\t\t\tcolor: variables.$color-land;\n\t\t\t\t\t\tsvg path {\n\t\t\t\t\t\t\tfill: variables.$color-land;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\t&__category {\n\t\t\t\t\tdisplay: flex;\n\t\t\t\t\talign-items: center;\n\t\t\t\t\tjustify-content: space-between;\n\t\t\t\t\tcursor: pointer;\n\n\t\t\t\t\tspan {\n\t\t\t\t\t\tdisplay: flex;\n\t\t\t\t\t\talign-items: center;\n\t\t\t\t\t\tgap: 14px;\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\tul {\n\t\t\t\t\tpadding: 5px 0;\n\t\t\t\t\tdisplay: flex;\n\t\t\t\t\tflex-direction: column;\n\t\t\t\t\tgap: 10px;\n\n\t\t\t\t\ta {\n\t\t\t\t\t\tfont-size: 1.6rem;\n\t\t\t\t\t\tline-height: 3rem;\n\t\t\t\t\t\ttext-transform: none;\n\t\t\t\t\t\tcolor: inherit;\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\tsvg path {\n\t\t\t\t\ttransition: fill variables.$t1 variables.$ease-in-out-airbag;\n\t\t\t\t}\n\n\t\t\t\t&[open] {\n\t\t\t\t\t.caret_land {\n\t\t\t\t\t\ttransform: rotateX(180deg);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n\n\t#choose-map-mobile-cta {\n\t\tdisplay: none;\n\n\t\t@include mixins.tablet {\n\t\t\tdisplay: flex;\n\t\t\tjustify-content: center;\n\t\t\talign-items: center;\n\t\t\tposition: sticky;\n\t\t\tbottom: 0;\n\t\t\tmargin-bottom: 30px;\n\t\t\twidth: 100vw;\n\t\t\theight: 50px;\n\t\t\tbackground-color: variables.$black;\n\t\t\tcolor: variables.$white;\n\t\t\ttransform: translateX(-23px);\n\t\t\tz-index: 8;\n\t\t}\n\t}\n}\n\n#inapp-categories-menu {\n\tposition: sticky;\n\ttop: 0;\n\tmin-height: 100%;\n\twidth: 300px;\n\tmax-width: 300px;\n\tbackground-color: variables.$white;\n\tdisplay: flex;\n\tflex-direction: column;\n\ttransition: background-color variables.$t2 variables.$ease-in-out-airbag;\n\tz-index: 20;\n\tborder: 1px black solid;\n\tborder-width: 0 1px 1px 1px;\n\tborder-radius: 0 15px 15px 15px;\n\n\t.categories-nav {\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\n\t\t.nav-item {\n\t\t\tborder-top: 1px solid variables.$black;\n\t\t\tpadding: 3px 12px;\n\t\t\tbackground-color: transparent;\n\t\t\ttransition: color variables.$t1 variables.$ease-in-out-airbag,\n\t\t\t\tbackground-color variables.$t2 variables.$ease-in-out-airbag;\n\n\t\t\t&:hover,\n\t\t\t&:focus {\n\t\t\t\tbackground-color: variables.$black;\n\n\t\t\t\t&[data-category='climate'] {\n\t\t\t\t\tcolor: variables.$color-climate;\n\t\t\t\t\tsvg path {\n\t\t\t\t\t\tfill: variables.$color-climate;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t&[data-category='demographics'] {\n\t\t\t\t\tcolor: variables.$color-demographics;\n\t\t\t\t\tsvg path {\n\t\t\t\t\t\tfill: variables.$color-demographics;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t&[data-category='ecology'] {\n\t\t\t\t\tcolor: variables.$color-ecology;\n\t\t\t\t\tsvg path {\n\t\t\t\t\t\tfill: variables.$color-ecology;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t&[data-category='health'] {\n\t\t\t\t\tcolor: variables.$color-health;\n\t\t\t\t\tsvg path {\n\t\t\t\t\t\tfill: variables.$color-health;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t&[data-category='housing'] {\n\t\t\t\t\tcolor: variables.$color-housing;\n\t\t\t\t\tsvg path {\n\t\t\t\t\t\tfill: variables.$color-housing;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t&[data-category='transport'] {\n\t\t\t\t\tcolor: variables.$color-transport;\n\t\t\t\t\tsvg path {\n\t\t\t\t\t\tfill: variables.$color-transport;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t&[data-category='urban'] {\n\t\t\t\t\tcolor: variables.$color-urban;\n\t\t\t\t\tsvg path {\n\t\t\t\t\t\tfill: variables.$color-urban;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t&[data-category='explorer'] {\n\t\t\t\t\tcolor: variables.$color-explorer;\n\t\t\t\t\tsvg path {\n\t\t\t\t\t\tfill: variables.$color-explorer;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t&[data-category='economy'] {\n\t\t\t\t\tcolor: variables.$color-economy;\n\t\t\t\t\tsvg path {\n\t\t\t\t\t\tfill: variables.$color-economy;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t&[data-category='resources'] {\n\t\t\t\t\tcolor: variables.$color-resources;\n\t\t\t\t\tsvg path {\n\t\t\t\t\t\tfill: variables.$color-resources;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t&[data-category='land'] {\n\t\t\t\t\tcolor: variables.$color-land;\n\t\t\t\t\tsvg path {\n\t\t\t\t\t\tfill: variables.$color-land;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t&__category {\n\t\t\t\tdisplay: flex;\n\t\t\t\talign-items: center;\n\t\t\t\tjustify-content: space-between;\n\t\t\t\tcursor: pointer;\n\n\t\t\t\tspan {\n\t\t\t\t\tdisplay: flex;\n\t\t\t\t\talign-items: center;\n\t\t\t\t\tgap: 14px;\n\t\t\t\t}\n\n\t\t\t\t.h4 {\n\t\t\t\t\tfont-size: 2rem;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tul {\n\t\t\t\tpadding: 5px 0;\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column;\n\t\t\t\tgap: 10px;\n\n\t\t\t\ta {\n\t\t\t\t\tfont-size: 1.6rem;\n\t\t\t\t\tline-height: 3rem;\n\t\t\t\t\ttext-transform: none;\n\t\t\t\t\tcolor: inherit;\n\t\t\t\t}\n\n\t\t\t\tli {\n\t\t\t\t\tfont-size: 1.2rem;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tsvg path {\n\t\t\t\ttransition: fill variables.$t1 variables.$ease-in-out-airbag;\n\t\t\t}\n\n\t\t\t&[open] {\n\t\t\t\t.caret_land {\n\t\t\t\t\ttransform: rotateX(180deg);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\t.nav-item:last-of-type {\n\t\t\tborder-bottom-right-radius: 15px;\n\t\t\tborder-bottom-left-radius: 15px;\n\t\t}\n\n\t\t.nav-item:first-of-type {\n\t\t\tborder-top-right-radius: 15px;\n\t\t}\n\t}\n\n\t.caret_land {\n\t\twidth: 12px;\n\t}\n}\n\n.menu-invisible {\n\tmax-height: 0;\n\toverflow: hidden;\n\ttransition: max-height 3s ease-out;\n}\n\n.menu-visible {\n\tmax-height: 800px;\n\ttransition: max-height 3s ease-in;\n}\n","@use '../variables';\n@use '../mixins';\n\n.landing {\n\t.hero {\n\t\tmargin-top: 116px;\n\t\tposition: relative;\n\n\t\t@include mixins.tablet {\n\t\t\tmargin-left: 15%;\n\t\t\tmargin-right: 15%;\n\t\t}\n\n\t\t@include mixins.mobile {\n\t\t\tmargin-left: 0;\n\t\t\tmargin-right: 0;\n\t\t}\n\n\t\t.main-title {\n\t\t\tdisplay: grid;\n\t\t\tgrid-template-columns: minmax(40%, 1fr) 320px;\n\t\t\tgrid-column-gap: 42px;\n\t\t\tgrid-row-gap: 0px;\n\t\t\talign-items: center;\n\t\t\tline-height: 1.05;\n\n\t\t\t@include mixins.laptop {\n\t\t\t\talign-items: flex-end;\n\t\t\t}\n\n\t\t\t@include mixins.mobile {\n\t\t\t\tgrid-template-columns: minmax(40%, 1fr) 128px;\n\t\t\t}\n\n\t\t\t&__first-part {\n\t\t\t\tgrid-area: 1 / 1 / 2 / 2;\n\t\t\t\ttext-align: right;\n\t\t\t}\n\n\t\t\t&__video {\n\t\t\t\tposition: relative;\n\t\t\t\twidth: 320px;\n\t\t\t\theight: 205px;\n\t\t\t\tgrid-area: 1 / 2 / 2 / 3;\n\t\t\t\tborder-radius: variables.$b-radius-mid;\n\t\t\t\tborder-top-right-radius: variables.$b-radius-large;\n\t\t\t\toverflow: hidden;\n\t\t\t\tcursor: pointer;\n\n\t\t\t\t@include mixins.mobile {\n\t\t\t\t\twidth: 128px;\n\t\t\t\t\theight: 81px;\n\t\t\t\t\tborder-top-right-radius: calc(\n\t\t\t\t\t\tvariables.$b-radius-large / 2\n\t\t\t\t\t);\n\t\t\t\t}\n\n\t\t\t\t&::after {\n\t\t\t\t\tcontent: '';\n\t\t\t\t\tposition: absolute;\n\t\t\t\t\ttop: 0;\n\t\t\t\t\tbottom: 0;\n\t\t\t\t\tleft: 0;\n\t\t\t\t\tright: 0;\n\t\t\t\t\tmargin: auto;\n\t\t\t\t\twidth: 46px;\n\t\t\t\t\theight: 67px;\n\t\t\t\t\tbackground: url('data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NiA2NyI+CiAgPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4zMDggNy43ODh2Mi45MDljLjM0Mi4xMTguNjYzLjMxNS45MzUuNTg5TDM0LjU2NiAzMS43MWMuOTYuOTY0Ljk2IDIuNTI2IDAgMy40OUwxNC4yNDMgNTUuNjI1Yy0uMjcyLjI3NC0uNTkzLjQ3LS45MzUuNTg4djIuOTA5Yy4zMzYuMTE4LjY1Mi4zMTMuOTIxLjU4M2w3LjE2OSA3LjIwNkw0NiA0Mi4xODQgMzkuMDUgMzUuMmEyLjQ3NiAyLjQ3NiAwIDAgMSAwLTMuNDlMNDYgMjQuNzI2IDIxLjM5NiAwbC03LjE2OCA3LjIwNmMtLjI2OS4yNy0uNTg0LjQ2NC0uOTIuNTgzWiIgZmlsbD0iI0U5RUNFRiIvPgogIDxwYXRoIGZpbGw9IiNFOUVDRUYiIGQ9Ik0wIDYuNzY3aDEzLjMwOHY1MS4zM0gweiIvPgo8L3N2Zz4=')\n\t\t\t\t\t\tno-repeat;\n\n\t\t\t\t\t@include mixins.mobile {\n\t\t\t\t\t\twidth: 24px;\n\t\t\t\t\t\theight: 35px;\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\tvideo {\n\t\t\t\t\tdisplay: block;\n\t\t\t\t\twidth: 100%;\n\t\t\t\t\theight: 100%;\n\t\t\t\t\tobject-fit: cover;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t&__second-part {\n\t\t\t\tgrid-area: 2 / 1 / 3 / 3;\n\t\t\t\ttext-align: center;\n\t\t\t}\n\n\t\t\t// This was previously lang-fr, but now added to ALL situations\n\t\t\t&.all-langs {\n\t\t\t\tgrid-template-columns: minmax(50%, 1fr) 250px;\n\t\t\t\tgrid-column-gap: 28px;\n\n\t\t\t\t@include mixins.laptop {\n\t\t\t\t\talign-items: flex-start;\n\t\t\t\t}\n\n\t\t\t\t@include mixins.small {\n\t\t\t\t\tgrid-template-columns: minmax(50%, 1fr) 130px;\n\t\t\t\t}\n\n\t\t\t\t@media (max-width: 420px) {\n\t\t\t\t\tgrid-template-columns: minmax(50%, 1fr) 80px;\n\t\t\t\t}\n\n\t\t\t\t.main-title__first-part {\n\t\t\t\t\tgrid-area: 1 / 1 / 2 / 3;\n\n\t\t\t\t\t@include mixins.laptop {\n\t\t\t\t\t\ttext-align: center;\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\t.main-title__video {\n\t\t\t\t\tgrid-area: 2 / 2 / 3 / 3;\n\t\t\t\t\twidth: 250px;\n\t\t\t\t\theight: 100%;\n\t\t\t\t\tmax-height: 215px;\n\n\t\t\t\t\t@include mixins.mobile {\n\t\t\t\t\t\twidth: 170px;\n\t\t\t\t\t\theight: 92px;\n\t\t\t\t\t}\n\n\t\t\t\t\t@include mixins.small {\n\t\t\t\t\t\twidth: 100%;\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\t.main-title__second-part {\n\t\t\t\t\tgrid-area: 2 / 1 / 3 / 2;\n\t\t\t\t\ttext-align: right;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\t.dot:nth-of-type(1) {\n\t\t\ttop: 50px;\n\n\t\t\t@media (max-width: 1535px) {\n\t\t\t\ttop: 0;\n\t\t\t\tleft: 50px;\n\t\t\t}\n\t\t}\n\t\t.dot:nth-of-type(2) {\n\t\t\ttop: 170px;\n\t\t\tleft: 40px;\n\n\t\t\t@media (max-width: 1535px) {\n\t\t\t\ttop: 50px;\n\t\t\t\tleft: -5px;\n\t\t\t}\n\n\t\t\t@media (max-width: 1250px) {\n\t\t\t\ttop: 40px;\n\t\t\t\tleft: 5px;\n\t\t\t}\n\t\t}\n\t\t.dot:nth-of-type(3) {\n\t\t\ttop: 200px;\n\t\t\tleft: 20px;\n\n\t\t\t@media (max-width: 1535px) {\n\t\t\t\ttop: 150px;\n\t\t\t\tleft: -15px;\n\t\t\t}\n\n\t\t\t@include mixins.mobile {\n\t\t\t\tleft: -0;\n\t\t\t}\n\t\t}\n\t\t.dot:nth-of-type(4) {\n\t\t\ttop: 280px;\n\t\t\tleft: -40px;\n\n\t\t\t.user-lang-fr & {\n\t\t\t\t@media (max-width: 1250px) {\n\t\t\t\t\ttop: 180px;\n\t\t\t\t}\n\n\t\t\t\t@include mixins.mobile {\n\t\t\t\t\tleft: -5px;\n\t\t\t\t\ttop: 50px;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\t.dot:nth-of-type(5) {\n\t\t\tbottom: -15px;\n\t\t\tleft: 90px;\n\n\t\t\t.user-lang-fr & {\n\t\t\t\t@media (max-width: 1250px) {\n\t\t\t\t\tbottom: 45px;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n","@use '../variables';\n@use '../mixins';\n\n.landing {\n\t.section-about {\n\t\tmargin-top: 66px;\n\t\tdisplay: grid;\n\t\tgrid-template-columns: min(35%, 300px) 1fr;\n\t\tjustify-content: flex-start;\n\t\talign-items: flex-start;\n\n\t\t@include mixins.mobile {\n\t\t\tmargin-top: 58px;\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\tgap: 12px;\n\t\t}\n\n\t\t& > div:last-of-type {\n\t\t\tdisplay: flex;\n\t\t\tflex-direction: column;\n\t\t\talign-items: flex-start;\n\n\t\t\t.cta-text {\n\t\t\t\tmargin-top: 13px;\n\t\t\t}\n\t\t}\n\t}\n}\n","@use '../variables';\n@use '../mixins';\n\n.section-discover {\n\tmargin-top: 84px;\n\tdisplay: flex;\n\tflex-direction: column;\n\n\t@include mixins.mobile {\n\t\tmargin-top: 78px;\n\t}\n\n\t& > div:first-child {\n\t\tdisplay: flex;\n\t\tjustify-content: space-between;\n\t\talign-items: center;\n\t}\n\n\t&__cards-wrapper {\n\t\tmargin-top: 20px;\n\t\tdisplay: grid;\n\t\tgrid-template-columns: repeat(4, minmax(10px, 1fr));\n\t\tgap: 18px;\n\n\t\t@include mixins.mobile {\n\t\t\tmargin-top: 11px;\n\t\t\tgrid-template-columns: repeat(2, minmax(10px, 1fr));\n\t\t\tgap: 13px;\n\t\t}\n\n\t\t.card {\n\t\t\tposition: relative; // Added this to keep everything in one block\n\n\t\t\t&__img {\n\t\t\t\twidth: 100%;\n\t\t\t\theight: 332px;\n\t\t\t\toverflow: hidden;\n\t\t\t\tborder-top-left-radius: variables.$b-radius-mid;\n\t\t\t\tborder-top-right-radius: variables.$b-radius-mid;\n\t\t\t\ttransition: border-radius variables.$t1\n\t\t\t\t\tvariables.$ease-in-out-cubic;\n\n\t\t\t\t@include mixins.tablet {\n\t\t\t\t\theight: 168px;\n\t\t\t\t}\n\n\t\t\t\timg {\n\t\t\t\t\tdisplay: block;\n\t\t\t\t\twidth: 100%;\n\t\t\t\t\theight: 100%;\n\t\t\t\t\tobject-fit: cover;\n\t\t\t\t\tobject-position: center;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t&__title {\n\t\t\t\tpadding: 14px;\n\t\t\t\theight: 67px;\n\t\t\t\tdisplay: flex;\n\t\t\t\tflex-direction: column; // Changed to column to align text in rows\n\t\t\t\tjustify-content: center; // Added to vertically center text\n\t\t\t\talign-items: flex-start; // Text aligns to the left\n\t\t\t\tposition: absolute;\n\t\t\t\tbottom: 0;\n\t\t\t\twidth: 100%;\n\t\t\t\toverflow: hidden;\n\n\t\t\t\t.card__text,\n\t\t\t\t.card__preview {\n\t\t\t\t\twidth: 100%; // Ensures text containers take up full width\n\t\t\t\t}\n\n\t\t\t\t.card__preview {\n\t\t\t\t\tdisplay: none;\n\t\t\t\t\tfont-size: 0.7em;\n\t\t\t\t\tline-height: 1.6;\n\t\t\t\t\tmargin-top: 5px;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t&:hover {\n\t\t\t\t.card__img {\n\t\t\t\t\tborder-top-right-radius: variables.$b-radius-large;\n\t\t\t\t}\n\t\t\t\t.card__title {\n\t\t\t\t\tbottom: 0px;\n\t\t\t\t\theight: fit-content;\n\t\t\t\t\t.card__preview {\n\t\t\t\t\t\tdisplay: block;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n","@use '../variables';\n@use '../mixins';\n.landing {\n\t.section-news {\n\t\tposition: relative;\n\t\tmargin-top: 112px;\n\t\tmargin-bottom: 100px;\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\n\t\t@include mixins.mobile {\n\t\t\t// Remove padding for slider\n\t\t\tmargin-left: -23px;\n\t\t\twidth: calc(100% + 23px * 2);\n\t\t}\n\n\t\t& > div:first-child {\n\t\t\tmargin-bottom: 20px;\n\n\t\t\t@include mixins.mobile {\n\t\t\t\tmargin-left: 23px;\n\t\t\t}\n\t\t}\n\n\t\t.swiper-is-enabled {\n\t\t\tcursor: grab;\n\t\t}\n\n\t\t.swipe-cta {\n\t\t\tposition: absolute;\n\t\t\ttop: 0;\n\t\t\tbottom: 0;\n\t\t\tmargin: auto 0;\n\t\t\tdisplay: flex;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\twidth: 62px;\n\t\t\theight: 62px;\n\t\t\tbackground-color: variables.$white;\n\t\t\tborder-radius: 50%;\n\t\t\tcursor: pointer;\n\t\t\tz-index: 5;\n\t\t\ttransition: opacity variables.$t1 linear;\n\n\t\t\t@include mixins.tablet {\n\t\t\t\tdisplay: none;\n\t\t\t}\n\n\t\t\timg {\n\t\t\t\tdisplay: block;\n\t\t\t\ttransform: rotate(-90deg) translateY(3px);\n\t\t\t}\n\n\t\t\t&.swiper-button-disabled {\n\t\t\t\topacity: 0;\n\t\t\t}\n\t\t}\n\n\t\t#swipe-cta-prev {\n\t\t\tleft: -20px;\n\n\t\t\timg {\n\t\t\t\ttransform: rotate(90deg) translateY(3px);\n\t\t\t}\n\t\t}\n\n\t\t#swipe-cta-next {\n\t\t\tright: -20px;\n\t\t}\n\n\t\t.news {\n\t\t\tdisplay: block;\n\t\t\tmax-width: 253px;\n\n\t\t\t@include mixins.mobile {\n\t\t\t\tmax-width: max(253px, 80%);\n\t\t\t}\n\n\t\t\t&__title {\n\t\t\t\tmargin-top: 15px;\n\t\t\t\tmargin-bottom: 5px;\n\t\t\t}\n\n\t\t\t&__description {\n\t\t\t\tcolor: #282828;\n\t\t\t\topacity: 0.5;\n\t\t\t\tmargin-bottom: 12px;\n\n\t\t\t\tspan {\n\t\t\t\t\tdisplay: -webkit-box;\n\t\t\t\t\t-webkit-box-orient: vertical;\n\t\t\t\t\t-webkit-line-clamp: 9;\n\t\t\t\t\tline-clamp: 9;\n\t\t\t\t\toverflow: hidden;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t&:not(:last-child)::after {\n\t\t\t\tcontent: '';\n\t\t\t\tposition: absolute;\n\t\t\t\tbottom: 0;\n\t\t\t\tright: -34px;\n\t\t\t\twidth: 1px;\n\t\t\t\theight: 253px;\n\t\t\t\tbackground-color: variables.$black;\n\t\t\t\ttop: 40px;\n\t\t\t}\n\t\t}\n\t}\n}\n","@use '../variables';\n@use '../mixins';\n\n.landing {\n\tfooter {\n\t\tposition: relative;\n\t\tbackground-color: variables.$white;\n\n\t\t.footer__banner {\n\t\t\ttext-align: center;\n\t\t\tmargin: 0 auto;\n\t\t\toverflow: hidden;\n\t\t\tdisplay: inline-block;\n\t\t\twhite-space: nowrap;\n\t\t\twidth: 100%;\n\n\t\t\timg {\n\t\t\t\tdisplay: block;\n\t\t\t}\n\t\t}\n\n\t\t.footer__content {\n\t\t\tpadding: 45px 51px 20px;\n\t\t\tmax-width: 1440px;\n\t\t\tmargin: 0 auto;\n\n\t\t\t@include mixins.tablet {\n\t\t\t\tpadding: 43px 23px 20px;\n\n\t\t\t\t.curbcut-logo-footer {\n\t\t\t\t\twidth: 141px;\n\t\t\t\t\theight: 141px;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t.footer-mobile-nav {\n\t\t\t\tdisplay: none;\n\n\t\t\t\t@include mixins.tablet {\n\t\t\t\t\tdisplay: block;\n\t\t\t\t}\n\n\t\t\t\t.nav-item {\n\t\t\t\t\tpadding: 16px 0;\n\t\t\t\t\tborder-bottom: 1px solid variables.$black;\n\n\t\t\t\t\t&__title {\n\t\t\t\t\t\tdisplay: flex;\n\t\t\t\t\t\talign-items: center;\n\t\t\t\t\t\tjustify-content: space-between;\n\n\t\t\t\t\t\t.plus-sign {\n\t\t\t\t\t\t\tposition: relative;\n\t\t\t\t\t\t\twidth: 14px;\n\t\t\t\t\t\t\theight: 14px;\n\n\t\t\t\t\t\t\t&::before,\n\t\t\t\t\t\t\t&::after {\n\t\t\t\t\t\t\t\tdisplay: block;\n\t\t\t\t\t\t\t\tposition: relative;\n\t\t\t\t\t\t\t\tcontent: '';\n\t\t\t\t\t\t\t\tbackground-color: variables.$black;\n\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\t&::before {\n\t\t\t\t\t\t\t\ttop: 8px;\n\t\t\t\t\t\t\t\twidth: 100%;\n\t\t\t\t\t\t\t\theight: 2px;\n\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\t&::after {\n\t\t\t\t\t\t\t\tleft: 6px;\n\t\t\t\t\t\t\t\twidth: 2px;\n\t\t\t\t\t\t\t\theight: 100%;\n\t\t\t\t\t\t\t\ttransform-origin: center;\n\t\t\t\t\t\t\t\ttransition: transform variables.$t1\n\t\t\t\t\t\t\t\t\tvariables.$ease-in-out-cubic;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\n\t\t\t\t\t& > div {\n\t\t\t\t\t\tpadding-top: 15px;\n\t\t\t\t\t\tdisplay: flex;\n\t\t\t\t\t\tflex-direction: column;\n\t\t\t\t\t\tgap: 15px;\n\t\t\t\t\t}\n\n\t\t\t\t\t&[open] .plus-sign::after {\n\t\t\t\t\t\ttransform: scaleY(0);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t& > div:not(.footer__content-copyright) {\n\t\t\t\tdisplay: grid;\n\t\t\t\tgrid-template-columns: 230px 1fr;\n\t\t\t\tgap: 50px;\n\n\t\t\t\t@include mixins.tablet {\n\t\t\t\t\tdisplay: flex;\n\t\t\t\t\tflex-direction: column;\n\t\t\t\t\tgap: 44px;\n\t\t\t\t}\n\n\t\t\t\t.grid {\n\t\t\t\t\tdisplay: grid;\n\t\t\t\t\tgrid-template-columns: repeat(4, minmax(10px, 1fr));\n\t\t\t\t\tcolumn-gap: 50px;\n\t\t\t\t\trow-gap: 30px;\n\n\t\t\t\t\t@include mixins.tablet {\n\t\t\t\t\t\tdisplay: flex;\n\t\t\t\t\t\tflex-direction: column;\n\t\t\t\t\t}\n\n\t\t\t\t\t.column {\n\t\t\t\t\t\tdisplay: flex;\n\t\t\t\t\t\tflex-direction: column;\n\t\t\t\t\t\talign-items: flex-start;\n\t\t\t\t\t\tgap: 8px;\n\n\t\t\t\t\t\t@include mixins.tablet {\n\t\t\t\t\t\t\t&:not(:last-of-type) {\n\t\t\t\t\t\t\t\tpadding-bottom: 50px;\n\t\t\t\t\t\t\t\tborder-bottom: 1px solid variables.$black;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\t&__title {\n\t\t\t\t\t\t\tdisplay: inline-flex;\n\t\t\t\t\t\t\talign-items: center;\n\t\t\t\t\t\t\theight: 22px;\n\t\t\t\t\t\t\tmargin-bottom: 2px;\n\t\t\t\t\t\t\tpadding: 0 7px;\n\t\t\t\t\t\t\tfont-size: 1.4rem;\n\t\t\t\t\t\t\tline-height: 1.7rem;\n\t\t\t\t\t\t\twhite-space: nowrap;\n\t\t\t\t\t\t\tborder: 1px solid #101010;\n\t\t\t\t\t\t\tborder-radius: variables.$b-radius-mid;\n\n\t\t\t\t\t\t\t@include mixins.tablet {\n\t\t\t\t\t\t\t\tpadding: 0;\n\t\t\t\t\t\t\t\tfont-size: 2.5rem;\n\t\t\t\t\t\t\t\tline-height: 3.1rem;\n\t\t\t\t\t\t\t\theight: auto;\n\t\t\t\t\t\t\t\tborder: none;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\timg:first-of-type {\n\t\t\t\t\t\t\tmargin-top: 15px;\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\timg:not(:last-child) {\n\t\t\t\t\t\t\tmargin-bottom: 24px;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t&-first-half {\n\t\t\t\tpadding-bottom: 60px;\n\t\t\t\tborder-bottom: 1px solid variables.$black;\n\n\t\t\t\t@include mixins.tablet {\n\t\t\t\t\tpadding-bottom: 10px;\n\t\t\t\t\tborder-bottom: none;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t&-second-half {\n\t\t\t\tpadding-top: 42px;\n\n\t\t\t\t@include mixins.tablet {\n\t\t\t\t\t.grid > .column--cities {\n\t\t\t\t\t\tdisplay: block !important;\n\t\t\t\t\t\tmax-height: 170px;\n\n\t\t\t\t\t\t.column__title {\n\t\t\t\t\t\t\tdisplay: block !important;\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\timg {\n\t\t\t\t\t\t\tmargin-bottom: 0 !important;\n\t\t\t\t\t\t\tdisplay: inline-flex;\n\t\t\t\t\t\t\talign-items: center;\n\n\t\t\t\t\t\t\t&:not(:last-child) {\n\t\t\t\t\t\t\t\tmargin-right: 40px;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t&-copyright {\n\t\t\t\tdisplay: block;\n\t\t\t\ttext-align: center;\n\t\t\t\tmargin-top: 42px;\n\t\t\t}\n\n\t\t\t.hidden-mobile {\n\t\t\t\t@include mixins.tablet {\n\t\t\t\t\tdisplay: none !important;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\tform {\n\t\t\twidth: 100%;\n\t\t}\n\n\t\tinput {\n\t\t\theight: 46px;\n\t\t\tborder: 1px solid variables.$black;\n\t\t\tborder-radius: variables.$b-radius-mid;\n\t\t\tpadding: 0 16px;\n\t\t\twidth: min(208px, 100%);\n\n\t\t\t@include mixins.tablet {\n\t\t\t\twidth: 100%;\n\t\t\t}\n\n\t\t\t&,\n\t\t\t&::placeholder {\n\t\t\t\tfont-family: variables.$font-main;\n\t\t\t\tfont-size: 1.4rem;\n\t\t\t}\n\t\t}\n\n\t\t.submit-btn {\n\t\t\tmargin-top: 11px;\n\t\t\tcolor: variables.$white;\n\t\t\tbackground-color: variables.$black;\n\t\t\theight: 46px;\n\t\t\tmin-width: 124px;\n\t\t\tpadding: 0 16px;\n\t\t\tborder-radius: 8px;\n\t\t\tfont-size: 1.6rem;\n\t\t\tline-height: 2.2rem;\n\t\t\tcursor: pointer;\n\n\t\t\t@include mixins.tablet {\n\t\t\t\tmin-width: 188px;\n\t\t\t}\n\t\t}\n\t}\n}\n","@use '../variables';\r\n@use '../mixins';\r\n\r\n.landing {\r\n\t.section-team {\r\n\t\tmargin-top: 84px;\r\n\t\tdisplay: flex;\r\n\t\tflex-direction: column;\r\n\r\n\t\t@include mixins.mobile {\r\n\t\t\tmargin-top: 78px;\r\n\t\t}\r\n\r\n\t\t& > div:first-child {\r\n\t\t\tdisplay: flex;\r\n\t\t\tjustify-content: space-between;\r\n\t\t\talign-items: center;\r\n\t\t}\r\n\r\n\t\t&__cards-wrapper {\r\n\t\t\tmargin-top: 20px;\r\n\t\t\tdisplay: grid;\r\n\t\t\tgrid-template-columns: repeat(4, minmax(10px, 1fr));\r\n\t\t\tgap: 18px;\r\n\r\n\t\t\t@include mixins.mobile {\r\n\t\t\t\tmargin-top: 11px;\r\n\t\t\t\tgrid-template-columns: repeat(2, minmax(10px, 1fr));\r\n\t\t\t\tgap: 13px;\r\n\t\t\t}\r\n\r\n\t\t\t.card {\r\n\t\t\t\tposition: relative;\r\n\t\t\t\toverflow: hidden;\r\n\r\n\t\t\t\t&__img {\r\n\t\t\t\t\twidth: 100%;\r\n\t\t\t\t\theight: 265px;\r\n\t\t\t\t\toverflow: hidden;\r\n\t\t\t\t\tborder-top-left-radius: variables.$b-radius-mid;\r\n\t\t\t\t\tborder-top-right-radius: variables.$b-radius-mid;\r\n\t\t\t\t\ttransition: border-radius variables.$t1\r\n\t\t\t\t\t\tvariables.$ease-in-out-cubic;\r\n\r\n\t\t\t\t\t@include mixins.tablet {\r\n\t\t\t\t\t\theight: 168px;\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t\timg {\r\n\t\t\t\t\t\tdisplay: block;\r\n\t\t\t\t\t\twidth: 100%;\r\n\t\t\t\t\t\theight: 100%;\r\n\t\t\t\t\t\tobject-fit: cover;\r\n\t\t\t\t\t\tobject-position: center;\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\r\n\t\t\t\t&__title {\r\n\t\t\t\t\tpadding: 14px;\r\n\t\t\t\t\tmin-height: 67px;\r\n\t\t\t\t\tmax-height: auto;\r\n\t\t\t\t\talign-items: center;\r\n\r\n\t\t\t\t\t@include mixins.mobile {\r\n\t\t\t\t\t\theight: 78px;\r\n\t\t\t\t\t\tpadding: 9px 11px;\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t\tspan {\r\n\t\t\t\t\t\tdisplay: -webkit-box;\r\n\t\t\t\t\t\t-webkit-box-orient: vertical;\r\n\t\t\t\t\t\t-webkit-line-clamp: 2;\r\n\t\t\t\t\t\tline-clamp: 2;\r\n\t\t\t\t\t\toverflow: hidden;\r\n\r\n\t\t\t\t\t\t@include mixins.mobile {\r\n\t\t\t\t\t\t\t-webkit-line-clamp: 3;\r\n\t\t\t\t\t\t\tline-clamp: 3;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\r\n\t\t\t\t// &__hover {\r\n\t\t\t\t// \tposition: absolute;\r\n\t\t\t\t// \tborder-top-right-radius: variables.$b-radius-large - 10;\r\n\t\t\t\t// \ttop: 0;\r\n\t\t\t\t// \tdisplay: flex;\r\n\t\t\t\t// \talign-items: center;\r\n\t\t\t\t// \tjustify-content: center;\r\n\t\t\t\t// \topacity: 0;\r\n\t\t\t\t// \ttransition: opacity 0.3s ease;\r\n\t\t\t\t// \tz-index: 2;\r\n\t\t\t\t// \tpadding: 14px;\r\n\t\t\t\t// \tmin-height: 100%;\r\n\r\n\t\t\t\t// \tspan {\r\n\t\t\t\t// \t\tpadding: 10px;\r\n\t\t\t\t// \t\tcolor: --black;\r\n\t\t\t\t// \t\tfont-size: 13px;\r\n\t\t\t\t// \t}\r\n\r\n\t\t\t\t// \t@include mixins.mobile {\r\n\t\t\t\t// \t\tpadding: 9px 11px;\r\n\t\t\t\t// \t\tpointer-events: none;\r\n\t\t\t\t// \t\topacity: 0 !important;\r\n\t\t\t\t// \t}\r\n\t\t\t\t// }\r\n\r\n\t\t\t\t&:hover {\r\n\t\t\t\t\t.card__img {\r\n\t\t\t\t\t\tborder-top-right-radius: variables.$b-radius-large;\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t\t// .card__hover {\r\n\t\t\t\t\t// \topacity: 1; /* show on hover */\r\n\r\n\t\t\t\t\t// \tspan {\r\n\t\t\t\t\t// \t\twhite-space: normal; /* Reset the white-space to normal */\r\n\t\t\t\t\t// \t\toverflow: visible; /* Display overflowed text */\r\n\t\t\t\t\t// \t}\r\n\r\n\t\t\t\t\t// \t@include mixins.mobile {\r\n\t\t\t\t\t// \t\topacity: 0 !important; // prevent hover effect\r\n\t\t\t\t\t// \t\tmax-height: auto; // reset to original height\r\n\t\t\t\t\t// \t\tspan {\r\n\t\t\t\t\t// \t\t\twhite-space: nowrap; // reset to original white-space\r\n\t\t\t\t\t// \t\t\toverflow: hidden; // reset to original overflow\r\n\t\t\t\t\t// \t\t}\r\n\t\t\t\t\t// \t}\r\n\t\t\t\t\t// }\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n\r\n\t.contributors-container {\r\n\t\ttext-align: center;\r\n\t}\r\n\r\n\t.contributor-style {\r\n\t\tdisplay: inline;\r\n\t\tmargin-right: 10px;\r\n\t\tmargin-left: 10px;\r\n\t}\r\n\r\n\t.contributor-dot {\r\n\t\tdisplay: inline;\r\n\t\twidth: 10px;\r\n\t\theight: 10px;\r\n\t\tuser-select: none;\r\n\t\tpadding: 0 5px;\r\n\r\n\t\t@include mixins.mobile {\r\n\t\t\twidth: 5px;\r\n\t\t\theight: 5px;\r\n\t\t}\r\n\t}\r\n\r\n\t// Add some noise in the color used\r\n\t.contributor-dot:nth-child(11n + 1) {\r\n\t\tcolor: variables.$color-explorer;\r\n\t}\r\n\t.contributor-dot:nth-child(11n + 2) {\r\n\t\tcolor: variables.$color-ecology;\r\n\t}\r\n\t.contributor-dot:nth-child(11n + 3) {\r\n\t\tcolor: variables.$color-housing;\r\n\t}\r\n\t.contributor-dot:nth-child(11n + 4) {\r\n\t\tcolor: variables.$color-health;\r\n\t}\r\n\t.contributor-dot:nth-child(11n + 5) {\r\n\t\tcolor: variables.$color-transport;\r\n\t}\r\n\t.contributor-dot:nth-child(11n + 6) {\r\n\t\tcolor: variables.$color-climate;\r\n\t}\r\n\t.contributor-dot:nth-child(11n + 7) {\r\n\t\tcolor: variables.$color-urban;\r\n\t}\r\n\t.contributor-dot:nth-child(11n + 8) {\r\n\t\tcolor: variables.$color-demographics;\r\n\t}\r\n\t.contributor-dot:nth-child(11n + 9) {\r\n\t\tcolor: variables.$color-economy;\r\n\t}\r\n\t.contributor-dot:nth-child(11n + 10) {\r\n\t\tcolor: variables.$color-resources;\r\n\t}\r\n\t.contributor-dot:nth-child(11n + 11) {\r\n\t\tcolor: variables.$color-land;\r\n\t}\r\n}\r\n","@use '../mixins';\r\n\r\n.title-text-box {\r\n\tborder-radius: 15px;\r\n\tborder: 1px solid #000000;\r\n\tposition: relative;\r\n\ttransition: width 0.3s ease;\r\n\tpadding: 15px;\r\n\tmax-height: 100%;\r\n\tbox-sizing: border-box;\r\n\r\n\t@include mixins.tablet {\r\n\t\tdisplay: none;\r\n\t}\r\n\r\n\t&__top {\r\n\t\tdisplay: flex;\r\n\t\talign-items: center;\r\n\t\tcolor: white;\r\n\t\tpadding-bottom: 10px;\r\n\r\n\t\th3 {\r\n\t\t\tmargin-left: 10px;\r\n\t\t}\r\n\t}\r\n\r\n\t&__close {\r\n\t\tposition: absolute;\r\n\t\ttop: 0;\r\n\t\tright: 0;\r\n\t\tpadding: 10px;\r\n\t\tcursor: pointer;\r\n\t}\r\n\r\n\t.content {\r\n\t\toverflow-y: auto;\r\n\t\toverflow-x: 'hidden';\r\n\t\tpadding: 1px 0px 1px 0px;\r\n\t}\r\n\r\n\t.button-container {\r\n\t\ttext-align: right;\r\n\r\n\t\tbutton {\r\n\t\t\ttext-decoration: underline;\r\n\t\t\tcursor: pointer;\r\n\t\t\tcolor: white;\r\n\t\t\tpadding-top: 10px;\r\n\t\t}\r\n\t}\r\n}\r\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./srcjs/styles/_reset.scss","webpack://./srcjs/styles/style.scss","webpack://./srcjs/styles/_fonts.scss","webpack://./srcjs/styles/_global.scss","webpack://./srcjs/styles/_variables.scss","webpack://./srcjs/styles/_mixins.scss","webpack://./srcjs/styles/components/_nav.scss","webpack://./srcjs/styles/components/_hero.scss","webpack://./srcjs/styles/components/_section-about.scss","webpack://./srcjs/styles/components/_section-discover.scss","webpack://./srcjs/styles/components/_section-news.scss","webpack://./srcjs/styles/components/_footer.scss","webpack://./srcjs/styles/components/_team.scss","webpack://./srcjs/styles/components/_title-text-box.scss"],"names":[],"mappings":"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E,yBF7UM;AH8rBd;AK/WM;EACE,yBFtVS;AHusBjB;AK/WM;EACE,yBFjVQ;AHksBhB;AK/WM;EACE,yBFnVU;AHosBlB;AK/WM;EACE,yBFrVK;AHssBb;AK7WM;;;;EAIE,kBAAA;EACA,UAAA;EACA,6BAAA;AL+WR;AK1WQ;EACE,yBF1WM;AHstBhB;AK1WQ;EACE,yBF3WW;AHutBrB;AK1WQ;EACE,yBFpXM;AHguBhB;AK1WQ;EACE,yBFrXK;AHiuBf;AK1WQ;EACE,yBFzXM;AHquBhB;AK1WQ;EACE,yBF1XQ;AHsuBlB;AK1WQ;EACE,yBF3XI;AHuuBd;AK1WQ;EACE,yBFpYO;AHgvBjB;AK1WQ;EACE,yBF/XM;AH2uBhB;AK1WQ;EACE,yBFjYQ;AH6uBlB;AK1WQ;EACE,yBFnYG;AH+uBb;AKtWI;EACE,2CAAA;EACA,6BAAA;EACA,kBAAA;EACA,eAAA;EACA,qGAAA;ALwWN;AKtWM;EACE,2CAAA;ALwWR;AKrWM;EAEE,yBFpaA;AH0wBR;AKpWQ;EACE,cF9ZM;AHowBhB;AKrWU;EACE,aFhaI;AHuwBhB;AKpWQ;EACE,cFlaW;AHwwBrB;AKrWU;EACE,aFpaS;AH2wBrB;AKpWQ;EACE,cF9aM;AHoxBhB;AKrWU;EACE,aFhbI;AHuxBhB;AKpWQ;EACE,cFlbK;AHwxBf;AKrWU;EACE,aFpbG;AH2xBf;AKpWQ;EACE,cFzbM;AH+xBhB;AKrWU;EACE,aF3bI;AHkyBhB;AKpWQ;EACE,cF7bQ;AHmyBlB;AKrWU;EACE,aF/bM;AHsyBlB;AKpWQ;EACE,cFjcI;AHuyBd;AKrWU;EACE,aFncE;AH0yBd;AKpWQ;EACE,cF7cO;AHmzBjB;AKrWU;EACE,aF/cK;AHszBjB;AKpWQ;EACE,cF3cM;AHizBhB;AKrWU;EACE,aF7cI;AHozBhB;AKpWQ;EACE,cFhdQ;AHszBlB;AKrWU;EACE,aFldM;AHyzBlB;AKpWQ;EACE,cFrdG;AH2zBb;AKrWU;EACE,aFvdC;AH8zBb;AKlWM;EACE,aAAA;EACA,mBAAA;EACA,8BAAA;ALoWR;AKlWQ;EACE,aAAA;EACA,OAAA;EACA,mBAAA;EACA,SAAA;ALoWV;AKjWQ;EACE,cAAA;EACA,WAAA;EACA,YAAA;ALmWV;AK7VI;EACE,aAAA;EACA,mBAAA;EACA,iBAAA;EACA,eAAA;EACA,yBAAA,EAAA,6BAAA;AL+VN;AK7VM;EACE,kBAAA;EACA,cAAA;AL+VR;AK5VM;EACE,iBAAA;EACA,gBAAA;AL8VR;AK3VM;EACE,qCAAA;AL6VR;AKzVI;EACE,kBAAA;EACA,2CAAA;EACA,6DAAA;AL2VN;AKzVM;EACE,gBAAA;EACA,SAAA;AL2VR;AKvVI;EACE,kBAAA;EACA,2CAAA;EACA,yBAAA,EAAA,6BAAA;ALyVN;AKtVI;EACE,iBAAA;EACA,gBAAA;EACA,mBAAA;EACA,WAAA;ALwVN;AKrVI;EACE,UAAA;EACA,SAAA;EACA,gBAAA;ALuVN;AKpVI;EACE,aAAA;ALsVN;AKnVI;EACE,iBAAA;EACA,mBAAA;EACA,eAAA;EACA,cAAA;ALqVN;AKnVM;EACE,0BAAA;ALqVR;AKhVI;EACE,gBAAA;EACA,aAAA;EACA,UAAA;ALkVN;AKhVM;EACE,iBAAA;EACA,eAAA;ALkVR;AKhVQ;EACE,0BAAA;ALkVV;AK5UE;EACE,aAAA;AL8UJ;AIh4BI;ECijBF;IAII,aAAA;IACA,uBAAA;IACA,mBAAA;IACA,gBAAA;IACA,SAAA;IACA,mBAAA;IACA,YAAA;IACA,YAAA;IACA,yBF/lBE;IEgmBF,cF/lBE;IEgmBF,4BAAA;IACA,UAAA;EL+UJ;AACF;AK5UE;EACE,gBAAA;EACA,MAAA;EACA,gBAAA;EACA,YAAA;EACA,gBAAA;EACA,yBF1mBG;EE2mBH,aAAA;EACA,sBAAA;EACA,6DAAA;EACA,WAAA;EACA,uBAAA;EACA,2BAAA;EAEA,qBAAA,EAAA,YAAA;EACA,oCAAA,EAAA,YAAA;AL6UJ;AK3UI;EACE,0BAAA;AL6UN;AK1UI;EACE,UAAA;AL4UN;AKzUI;EACE,uBAAA;AL2UN;AKxUI;EACE,yBFpoBE;EEqoBF,mBAAA;EACA,6BAAA;EACA,4BAAA;AL0UN;AKvUI;EACE,uBAAA;ALyUN;AKtUI;EACE,aAAA;EACA,sBAAA;ALwUN;AKtUM;EACE,6BAAA;EACA,iBAAA;EACA,6BAAA;EACA,qGAAA;ALwUR;AKpUQ;EACE,iBAAA;EACA,gBAAA;EACA,cAAA;EACA,eAAA;EACA,aAAA;EACA,sBAAA;EACA,SAAA;ALsUV;AKnUQ;EACE,iBAAA;EACA,aAAA;EACA,sBAAA;EACA,QAAA;ALqUV;AKlUQ;EACE,iBAAA;EACA,gBAAA;EACA,mBAAA;EACA,cAAA;EACA,iBAAA;ALoUV;AKjUQ;EACE,gBAAA;EACA,kBAAA;EACA,SAAA;EACA,aAAA;EACA,sBAAA;EACA,QAAA;ALmUV;AKjUU;EACE,iBAAA;EACA,eAAA;ALmUZ;AKjUY;EACE,iBAAA;EACA,iBAAA;ALmUd;AKhUY;EACE,cAAA;EACA,qBAAA;ALkUd;AKhUc;EACE,0BAAA;ALkUhB;AK5TQ;EAEE,yBFjtBF;AH8gCR;AK3TU;EACE,cF3sBI;AHwgChB;AK5TY;EACE,aF7sBE;AH2gChB;AK3TU;EACE,cF/sBS;AH4gCrB;AK5TY;EACE,aFjtBO;AH+gCrB;AK3TU;EACE,cF3tBI;AHwhChB;AK5TY;EACE,aF7tBE;AH2hChB;AK3TU;EACE,cF/tBG;AH4hCf;AK5TY;EACE,aFjuBC;AH+hCf;AK3TU;EACE,cFtuBI;AHmiChB;AK5TY;EACE,aFxuBE;AHsiChB;AK3TU;EACE,cF1uBM;AHuiClB;AK5TY;EACE,aF5uBI;AH0iClB;AK3TU;EACE,cF9uBE;AH2iCd;AK5TY;EACE,aFhvBA;AH8iCd;AK3TU;EACE,cF1vBK;AHujCjB;AK5TY;EACE,aF5vBG;AH0jCjB;AK3TU;EACE,cFxvBI;AHqjChB;AK5TY;EACE,aF1vBE;AHwjChB;AK3TU;EACE,cF7vBM;AH0jClB;AK5TY;EACE,aF/vBI;AH6jClB;AK3TU;EACE,cFlwBC;AH+jCb;AK5TY;EACE,aFpwBD;AHkkCb;AKzTQ;EACE,aAAA;EACA,mBAAA;EACA,8BAAA;EACA,WAAA;EACA,eAAA;EACA,kBAAA;AL2TV;AKzTU;EACE,aAAA;EACA,mBAAA;EACA,SAAA;EACA,OAAA;EACA,gBAAA;AL2TZ;AKxTU;EACE,cAAA;EACA,iBAAA;AL0TZ;AKtTQ;EACE,cAAA;EACA,aAAA;EACA,sBAAA;EACA,SAAA;ALwTV;AKtTU;EACE,iBAAA;ALwTZ;AKpTQ;EACE,iDAAA;ALsTV;AKlTU;EACE,0BAAA;ALoTZ;AK9SI;EACE,WAAA;ALgTN;AK3SE;EACE,aAAA;EACA,gBAAA;EACA,kCAAA;AL6SJ;AK1SE;EACE,iBAAA;EACA,iCAAA;AL4SJ;;AKxSA;EACE,aAAA;EACA,gBAAA;EACA,kCAAA;AL2SF;;AKxSA;EACE,iBAAA;EACA,iCAAA;AL2SF;;AM1oCC;EACC,iBAAA;EACA,kBAAA;AN6oCF;AI5mCI;EEnCH;IAKE,gBAAA;IACA,iBAAA;EN8oCD;AACF;AI5mCI;EEzCH;IAUE,cAAA;IACA,eAAA;EN+oCD;AACF;AM7oCE;EACC,aAAA;EACA,6CAAA;EACA,qBAAA;EACA,iBAAA;EACA,mBAAA;EACA,iBAAA;EACA,YAAA;AN+oCH;AI7oCI;EETF;IAUE,qBAAA;ENgpCF;AACF;AIhoCI;EE3BF;IAcE,6CAAA;ENipCF;AACF;AM/oCG;EACC,kBAAA;EACA,iBAAA;ANipCJ;AM9oCG;EACC,kBAAA;EACA,YAAA;EACA,aAAA;EACA,kBAAA;EACA,oBHpBW;EGqBX,6BHpBa;EGqBb,gBAAA;EACA,eAAA;ANgpCJ;AInpCI;EELD;IAWE,YAAA;IACA,YAAA;IACA,6BAAA;ENipCH;AACF;AM7oCI;EACC,WAAA;EACA,kBAAA;EACA,MAAA;EACA,SAAA;EACA,OAAA;EACA,QAAA;EACA,YAAA;EACA,WAAA;EACA,YAAA;EACA,6DAAA;AN+oCL;AItqCI;EEaA;IAcE,WAAA;IACA,YAAA;EN+oCJ;AACF;AM5oCI;EACC,cAAA;EACA,WAAA;EACA,YAAA;EACA,iBAAA;AN8oCL;AM1oCG;EACC,kBAAA;EACA,kBAAA;AN4oCJ;AMxoCG;EACC,6CAAA;EACA,qBAAA;AN0oCJ;AI5sCI;EEgED;IAKE,uBAAA;EN2oCH;AACF;AIzrCI;EEwCD;IASE,6CAAA;EN4oCH;AACF;AM1oCI;EAZD;IAaE,4CAAA;EN6oCH;AACF;AM3oCI;EACC,kBAAA;AN6oCL;AI9tCI;EEgFA;IAIE,kBAAA;EN8oCJ;AACF;AM3oCI;EACC,kBAAA;EACA,YAAA;EACA,YAAA;EACA,iBAAA;AN6oCL;AIvtCI;EEsEA;IAOE,YAAA;IACA,YAAA;EN8oCJ;AACF;AIvtCI;EEgEA;IAYE,WAAA;EN+oCJ;AACF;AM5oCI;EACC,kBAAA;EACA,iBAAA;AN8oCL;;AO/wCE;EACE,gBAAA;EACA,aAAA;EACA,0CAAA;EACA,2BAAA;EACA,uBAAA;APkxCJ;AI9uCI;EGzCF;IAQI,gBAAA;IACA,aAAA;IACA,sBAAA;IACA,SAAA;EPmxCJ;AACF;AItvCI;EG3BA;IAEI,wBAAA;EPmxCN;AACF;AOhxCI;EACE,aAAA;EACA,sBAAA;EACA,uBAAA;APkxCN;AOhxCM;EACE,gBAAA;APkxCR;AO7wCE;EACE,aAAA;AP+wCJ;;AQ/yCC;EACC,gBAAA;EACA,uBAAA;EACA,mBAAA;EACA,aAAA;ARkzCF;AQ/yCC;EACC,aAAA;EACA,sBAAA;ARizCF;AIjxCI;EIlCH;IAKE,gBAAA;ERkzCD;AACF;AQhzCE;EACC,aAAA;EACA,8BAAA;EACA,mBAAA;ARkzCH;AQ/yCE;EACC,gBAAA;EACA,aAAA;EACA,mDAAA;EACA,SAAA;ARizCH;AIjyCI;EIpBF;IAOE,gBAAA;IACA,mDAAA;IACA,SAAA;ERkzCF;AACF;AQhzCG;EACC,kBAAA;ARkzCJ;AQhzCI;EACC,WAAA;EACA,aAAA;EACA,gBAAA;EACA,6BLnBU;EKoBV,8BLpBU;EKqBV,8DAAA;ARkzCL;AIzzCI;EICA;IAUE,aAAA;ERkzCJ;AACF;AQhzCK;EACC,cAAA;EACA,WAAA;EACA,YAAA;EACA,iBAAA;EACA,uBAAA;ARkzCN;AQ9yCI;EACC,aAAA;EACA,YAAA;EACA,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,uBAAA;EACA,kBAAA;EACA,SAAA;EACA,WAAA;EACA,gBAAA;ARgzCL;AQ9yCK;;EAEC,WAAA;ARgzCN;AQ7yCK;EACC,aAAA;EACA,gBAAA;EACA,gBAAA;EACA,eAAA;AR+yCN;AQ1yCK;EACC,6BL/DW;AH22CjB;AQ1yCK;EACC,WAAA;EACA,mBAAA;AR4yCN;AQ3yCM;EACC,cAAA;AR6yCP;;ASz4CC;EACC,kBAAA;EACA,iBAAA;EACA,oBAAA;EACA,aAAA;EACA,sBAAA;AT44CF;AIv2CI;EK1CH;IASE,kBAAA;IACA,wBAAA;ET44CD;AACF;AS14CE;EACC,mBAAA;AT44CH;AIh3CI;EK7BF;IAIE,iBAAA;ET64CF;AACF;AS14CE;EACC,YAAA;AT44CH;ASz4CE;EACC,kBAAA;EACA,MAAA;EACA,SAAA;EACA,cAAA;EACA,aAAA;EACA,mBAAA;EACA,uBAAA;EACA,WAAA;EACA,YAAA;EACA,yBNhCK;EMiCL,kBAAA;EACA,eAAA;EACA,UAAA;EACA,gCAAA;AT24CH;AI94CI;EKXF;IAiBE,aAAA;ET44CF;AACF;AS14CG;EACC,cAAA;EACA,yCAAA;AT44CJ;ASz4CG;EACC,UAAA;AT24CJ;ASv4CE;EACC,WAAA;ATy4CH;ASv4CG;EACC,wCAAA;ATy4CJ;ASr4CE;EACC,YAAA;ATu4CH;ASp4CE;EACC,cAAA;EACA,gBAAA;ATs4CH;AIj6CI;EKyBF;IAKE,0BAAA;ETu4CF;AACF;ASr4CG;EACC,gBAAA;EACA,kBAAA;ATu4CJ;ASp4CG;EACC,cAAA;EACA,YAAA;EACA,mBAAA;ATs4CJ;ASp4CI;EACC,oBAAA;EACA,4BAAA;EACA,qBAAA;EACA,aAAA;EACA,gBAAA;ATs4CL;ASl4CG;EACC,WAAA;EACA,kBAAA;EACA,SAAA;EACA,YAAA;EACA,UAAA;EACA,aAAA;EACA,yBNnGI;EMoGJ,SAAA;ATo4CJ;;AUz+CE;EACE,kBAAA;EACA,yBAAA;EAsQA,kBAAA;AVuuCJ;AU3+CI;EACE,kBAAA;EACA,cAAA;EACA,gBAAA;EACA,qBAAA;EACA,WAAA;AV6+CN;AU3+CM;EACE,cAAA;AV6+CR;AUz+CI;EACE,uBAAA;EACA,iBAAA;EACA,cAAA;AV2+CN;AI39CI;EMnBA;IAMI,uBAAA;EV4+CN;EU1+CM;IACE,YAAA;IACA,aAAA;EV4+CR;AACF;AUz+CM;EACE,aAAA;AV2+CR;AIv+CI;EMLE;IAII,cAAA;EV4+CR;AACF;AU1+CQ;EACE,eAAA;EACA,gCAAA;AV4+CV;AU1+CU;EACE,aAAA;EACA,mBAAA;EACA,8BAAA;AV4+CZ;AU1+CY;EACE,kBAAA;EACA,WAAA;EACA,YAAA;AV4+Cd;AU1+Cc;EAEE,cAAA;EACA,kBAAA;EACA,WAAA;EACA,yBPvDR;AHkiDR;AUx+Cc;EACE,QAAA;EACA,WAAA;EACA,WAAA;AV0+ChB;AUv+Cc;EACE,SAAA;EACA,UAAA;EACA,YAAA;EACA,wBAAA;EACA,0DAAA;AVy+ChB;AUp+CU;EACE,iBAAA;EACA,aAAA;EACA,sBAAA;EACA,SAAA;AVs+CZ;AUn+CU;EACE,oBAAA;AVq+CZ;AUh+CM;EACE,aAAA;EACA,gCAAA;EACA,SAAA;AVk+CR;AI1hDI;EMqDE;IAMI,aAAA;IACA,sBAAA;IACA,SAAA;EVm+CR;AACF;AUj+CQ;EACE,aAAA;EACA,mDAAA;EACA,gBAAA;EACA,aAAA;AVm+CV;AIviDI;EMgEI;IAOI,aAAA;IACA,sBAAA;EVo+CV;AACF;AUl+CU;EACE,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,QAAA;AVo+CZ;AInjDI;EMkFU;IACE,oBAAA;IACA,gCAAA;EVo+Cd;AACF;AUj+CY;EACE,oBAAA;EACA,mBAAA;EACA,kBAAA;EACA,gBAAA;EACA,iBAAA;EACA,mBAAA;EACA,yBAAA;EACA,oBP9GC;AHilDf;AInkDI;EMwFQ;IAWI,UAAA;IACA,iBAAA;IACA,mBAAA;IACA,YAAA;IACA,YAAA;EVo+Cd;AACF;AUj+CY;EACE,gBAAA;AVm+Cd;AUh+CY;EACE,mBAAA;AVk+Cd;AU59CM;EACE,oBAAA;EACA,gCAAA;AV89CR;AItlDI;EMsHE;IAKI,oBAAA;IACA,mBAAA;EV+9CR;AACF;AU59CM;EACE,iBAAA;AV89CR;AI/lDI;EMoIM;IACE,yBAAA;EV89CV;EU59CU;IACE,yBAAA;EV89CZ;EU39CU;IACE,2BAAA;IACA,oBAAA;IACA,mBAAA;EV69CZ;EU39CY;IACE,kBAAA;EV69Cd;AACF;AUv9CM;EACE,cAAA;EACA,kBAAA;EACA,gBAAA;AVy9CR;AIpnDI;EM8JE;IAEI,wBAAA;EVw9CR;AACF;AUp9CI;EACE,WAAA;AVs9CN;AUn9CI;EACE,YAAA;EACA,yBAAA;EACA,oBP1LS;EO2LT,eAAA;EACA,uBAAA;AVq9CN;AInoDI;EMyKA;IAQI,WAAA;EVs9CN;AACF;AUp9CM;EAEE,uCP5NI;EO6NJ,iBAAA;AVq9CR;AUj9CI;EACE,gBAAA;EACA,cP9NE;EO+NF,yBPhOE;EOiOF,YAAA;EACA,gBAAA;EACA,eAAA;EACA,kBAAA;EACA,iBAAA;EACA,mBAAA;EACA,eAAA;AVm9CN;AIxpDI;EM2LA;IAaI,gBAAA;EVo9CN;AACF;AUl9CI;EACE,aAAA;EACA,sBAAA;AVo9CN;AUj9CI;EACE,mBAAA;AVm9CN;AUh9CI;EACE,mBAAA;AVk9CN;AU/8CI;EACE,gBAAA;EACA,kBAAA;EACA,gBAAA;EACA,aAAA;AVi9CN;AU98CI;EACE,cAAA;EACA,kBAAA;EACA,eAAA;AVg9CN;AU58CI;EACE,aAAA;EACA,8BAAA;EACA,mBAAA;EACA,eAAA;AV88CN;AU38CI;EACE,kBAAA;EACA,gBAAA;AV68CN;AU18CI;EACE,aAAA;EACA,sBAAA;EACA,QAAA;EACA,mBAAA;AV48CN;;AWruDC;EACC,gBAAA;EACA,aAAA;EACA,sBAAA;AXwuDF;AIlsDI;EOzCH;IAME,gBAAA;EXyuDD;AACF;AWvuDE;EACC,aAAA;EACA,8BAAA;EACA,mBAAA;AXyuDH;AWtuDE;EACC,gBAAA;EACA,aAAA;EACA,mDAAA;EACA,SAAA;AXwuDH;AIltDI;EO1BF;IAOE,gBAAA;IACA,mDAAA;IACA,SAAA;EXyuDF;AACF;AWvuDG;EACC,kBAAA;EACA,gBAAA;AXyuDJ;AWvuDI;EACC,WAAA;EACA,aAAA;EACA,gBAAA;EACA,6BRdU;EQeV,8BRfU;EQgBV,8DAAA;AXyuDL;AI3uDI;EOJA;IAUE,aAAA;EXyuDJ;AACF;AWvuDK;EACC,cAAA;EACA,WAAA;EACA,YAAA;EACA,iBAAA;EACA,uBAAA;AXyuDN;AWruDI;EACC,aAAA;EACA,gBAAA;EACA,gBAAA;EACA,mBAAA;AXuuDL;AIvvDI;EOYA;IAOE,YAAA;IACA,iBAAA;EXwuDJ;AACF;AWtuDK;EACC,oBAAA;EACA,4BAAA;EACA,qBAAA;EACA,aAAA;EACA,gBAAA;AXwuDN;AIpwDI;EOuBC;IAQE,qBAAA;IACA,aAAA;EXyuDL;AACF;AW1sDK;EACC,6BRpFW;AHgyDjB;AWnrDC;EACC,kBAAA;AXqrDF;AWlrDC;EACC,eAAA;EACA,kBAAA;EACA,iBAAA;AXorDF;;AYh0DA;EACC,mBAAA;EACA,yBAAA;EACA,kBAAA;EACA,2BAAA;EACA,aAAA;EACA,gBAAA;EACA,sBAAA;AZm0DD;AIryDI;EQrCJ;IAUE,aAAA;EZo0DA;AACF;AYl0DC;EACC,aAAA;EACA,mBAAA;EACA,YAAA;EACA,oBAAA;AZo0DF;AYl0DE;EACC,iBAAA;AZo0DH;AYh0DC;EACC,kBAAA;EACA,MAAA;EACA,QAAA;EACA,aAAA;EACA,eAAA;AZk0DF;AY/zDC;EACC,gBAAA;EACA,oBAAA;EACA,wBAAA;AZi0DF;AY9zDC;EACC,iBAAA;AZg0DF;AY9zDE;EACC,0BAAA;EACA,eAAA;EACA,YAAA;EACA,iBAAA;AZg0DH","sourcesContent":[".landing {\n\t// Blocks\n\thtml,\n\tbody,\n\tp,\n\tol,\n\tul,\n\tli,\n\tdl,\n\tdt,\n\tdd,\n\tblockquote,\n\tfigure,\n\tfieldset,\n\tlegend,\n\ttextarea,\n\tpre,\n\tiframe,\n\thr,\n\th1,\n\th2,\n\th3,\n\th4,\n\th5,\n\th6 {\n\t\tmargin: 0;\n\t\tpadding: 0;\n\t}\n\n\t// Headings\n\th1,\n\th2,\n\th3,\n\th4,\n\th5,\n\th6 {\n\t\tfont-size: 100%;\n\t\tfont-weight: 300;\n\t}\n\n\t// List\n\tul {\n\t\tlist-style: none;\n\t}\n\n\t// Form\n\tbutton,\n\tinput,\n\tselect,\n\ttextarea {\n\t\tmargin: 0;\n\t\tborder: 0;\n\t\tbackground-image: none;\n\t\tbackground-color: transparent;\n\t\tbox-shadow: none;\n\n\t\t&:focus,\n\t\t&:active {\n\t\t\toutline: none;\n\t\t}\n\t}\n\n\t// Box sizing\n\thtml {\n\t\tbox-sizing: border-box;\n\t}\n\n\t* {\n\t\tbox-sizing: inherit;\n\n\t\t&,\n\t\t&::before,\n\t\t&::after {\n\t\t\tbox-sizing: inherit;\n\t\t}\n\t}\n\n\t// Media\n\timg,\n\tvideo {\n\t\theight: auto;\n\t\tmax-width: 100%;\n\t}\n\n\t// Iframe\n\tiframe {\n\t\tborder: 0;\n\t}\n\n\t// Table\n\ttable {\n\t\tborder-collapse: collapse;\n\t\tborder-spacing: 0;\n\t}\n\n\ttd,\n\tth {\n\t\tpadding: 0;\n\n\t\t&:not([align]) {\n\t\t\ttext-align: inherit;\n\t\t}\n\t}\n\n\taddress {\n\t\tfont-style: initial;\n\t}\n}\n",".landing html,\n.landing body,\n.landing p,\n.landing ol,\n.landing ul,\n.landing li,\n.landing dl,\n.landing dt,\n.landing dd,\n.landing blockquote,\n.landing figure,\n.landing fieldset,\n.landing legend,\n.landing textarea,\n.landing pre,\n.landing iframe,\n.landing hr,\n.landing h1,\n.landing h2,\n.landing h3,\n.landing h4,\n.landing h5,\n.landing h6 {\n  margin: 0;\n  padding: 0;\n}\n.landing h1,\n.landing h2,\n.landing h3,\n.landing h4,\n.landing h5,\n.landing h6 {\n  font-size: 100%;\n  font-weight: 300;\n}\n.landing ul {\n  list-style: none;\n}\n.landing button,\n.landing input,\n.landing select,\n.landing textarea {\n  margin: 0;\n  border: 0;\n  background-image: none;\n  background-color: transparent;\n  box-shadow: none;\n}\n.landing button:focus, .landing button:active,\n.landing input:focus,\n.landing input:active,\n.landing select:focus,\n.landing select:active,\n.landing textarea:focus,\n.landing textarea:active {\n  outline: none;\n}\n.landing html {\n  box-sizing: border-box;\n}\n.landing * {\n  box-sizing: inherit;\n}\n.landing *, .landing *::before, .landing *::after {\n  box-sizing: inherit;\n}\n.landing img,\n.landing video {\n  height: auto;\n  max-width: 100%;\n}\n.landing iframe {\n  border: 0;\n}\n.landing table {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n.landing td,\n.landing th {\n  padding: 0;\n}\n.landing td:not([align]),\n.landing th:not([align]) {\n  text-align: inherit;\n}\n.landing address {\n  font-style: initial;\n}\n\n@font-face {\n  font-family: \"_Apparat\";\n  src: url(\"../fonts/apparat-regular.woff2\") format(\"woff2\"), url(\"../fonts/apparat-regular.woff\") format(\"woff\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: swap;\n}\n@font-face {\n  font-family: \"_AcidGrotesk\";\n  src: url(\"../fonts/acidgrotesk-book.woff2\") format(\"woff2\"), url(\"../fonts/acidgrotesk-book.woff\") format(\"woff\");\n  font-weight: normal;\n  font-style: normal;\n  font-display: swap;\n}\n.landing {\n  position: relative;\n  height: 100%;\n  font-family: \"_AcidGrotesk\", sans-serif;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  font-weight: 400;\n  letter-spacing: 0;\n  color: #000000;\n  background-color: #ec1650;\n  overscroll-behavior: none;\n  /* For data URI method in CSS */\n  /* Media query for smaller screens */\n}\n.landing .background-container {\n  position: fixed;\n  top: 0;\n  left: 20%;\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n}\n.landing .background-container svg {\n  width: 100%;\n  height: 100%;\n}\n.landing .background-with-uri {\n  background-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 800' preserveAspectRatio='xMidYMid meet'%3E%3Cellipse cx='500' cy='400' rx='350' ry='250' fill='%23C2185B' /%3E%3Cellipse cx='500' cy='400' rx='300' ry='220' fill='%23FF7043' /%3E%3Cellipse cx='500' cy='400' rx='250' ry='190' fill='%23FF5252' /%3E%3Cellipse cx='500' cy='400' rx='200' ry='160' fill='%23FF4081' /%3E%3Cellipse cx='500' cy='400' rx='150' ry='130' fill='%23D81B60' /%3E%3C/svg%3E\");\n  background-size: cover;\n  background-position: center;\n  background-repeat: no-repeat;\n}\n@media screen and (max-width: 1439px) {\n  .landing .background-container {\n    left: 0;\n    width: 100%;\n  }\n}\n.landing.is-fixed {\n  overflow: hidden;\n}\n.landing::after {\n  display: none;\n  content: \"\";\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  background-color: #b3b3b3;\n  z-index: 9;\n}\n.landing.bg-background::after {\n  display: block;\n}\n.landing * {\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.landing a {\n  font-family: \"_AcidGrotesk\", sans-serif;\n  color: #000000;\n  text-decoration: none;\n  cursor: pointer;\n}\n.landing a:hover, .landing a:visited, .landing a:focus {\n  color: inherit; /* This will keep the color the same */\n  text-decoration: none; /* This will remove the underline */\n}\n.landing .cta-text, .landing .section__title {\n  font-size: 1.4rem;\n  line-height: 1.7rem;\n  text-transform: uppercase;\n  cursor: pointer;\n}\n@media (max-width: 767px) {\n  .landing .cta-text, .landing .section__title {\n    font-size: 1.6rem;\n    line-height: 2rem;\n  }\n}\n.landing .cta-text--underline {\n  position: relative;\n}\n.landing .cta-text--underline::after {\n  content: \"\";\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 1px;\n  background-color: #000000;\n  transform-origin: left;\n  transform: scaleX(0);\n  transition: transform 0.25s cubic-bezier(0.3, 0, 0, 1);\n}\n@media (max-width: 1170px) {\n  .landing .cta-text--underline::after {\n    transform: scaleX(1);\n  }\n}\n.landing .cta-text--underline:hover::after {\n  transform: scaleX(1);\n}\n.landing .cta-text-lower {\n  cursor: pointer;\n}\n@media (max-width: 767px) {\n  .landing .cta-text-lower {\n    font-size: 1.6rem;\n    line-height: 2rem;\n  }\n}\n.landing p {\n  font-size: 1.6rem;\n  line-height: 2rem;\n  font-family: \"_AcidGrotesk\", sans-serif;\n  font-weight: 400;\n  letter-spacing: 0;\n}\n.landing p ~ p {\n  margin-top: 25px;\n}\n.landing .h1 {\n  font-family: \"_Apparat\", sans-serif;\n  font-weight: 300;\n  font-size: 9.5rem;\n  line-height: 14.4rem;\n  text-transform: uppercase;\n  margin-top: 0;\n  margin-bottom: 0;\n}\n@media (max-width: 1439px) {\n  .landing .h1 {\n    font-size: clamp(4.4rem, 6vw, 11.8rem);\n    line-height: clamp(5.4rem, 6vw, 14.4rem);\n  }\n}\n@media (max-width: 767px) {\n  .landing .h1 {\n    font-size: 4.4rem;\n    line-height: 5.4rem;\n  }\n}\n.landing .h2 {\n  font-family: \"_AcidGrotesk\", sans-serif;\n  font-size: 4rem;\n  line-height: 5rem;\n  margin-top: 0;\n  margin-bottom: 0;\n}\n@media (max-width: 1439px) {\n  .landing .h2 {\n    font-size: clamp(2.5rem, 4vw, 4rem);\n    line-height: clamp(3.1rem, 4vw, 5rem);\n  }\n}\n@media (max-width: 767px) {\n  .landing .h2 {\n    font-size: 2.5rem;\n    line-height: 3.1rem;\n  }\n}\n.landing .h3 {\n  font-family: \"_AcidGrotesk\", sans-serif;\n  font-size: 2.6rem;\n  line-height: 3.7rem;\n  margin-top: 0;\n  margin-bottom: 0;\n}\n@media (max-width: 1439px) {\n  .landing .h3 {\n    font-size: clamp(2.2rem, 2vw, 3rem);\n    line-height: clamp(2.7rem, 2vw, 3.7rem);\n  }\n}\n@media (max-width: 767px) {\n  .landing .h3 {\n    font-size: 2.2rem;\n    line-height: 2.7rem;\n  }\n}\n.landing summary {\n  list-style-type: none !important;\n  text-align: left;\n}\n.landing summary::-webkit-details-marker {\n  display: none;\n}\n.landing dialog {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  margin: 0;\n  padding: 0;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: rgba(0, 0, 0, 0.8);\n  z-index: 999;\n}\n.landing dialog #video-modal-close-btn {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  cursor: pointer;\n  z-index: 9999;\n}\n.landing dialog #video-modal-close-btn img {\n  filter: brightness(1) invert(1);\n}\n.landing dialog video {\n  max-height: 90vh;\n  width: 90vw;\n  margin-top: 25px;\n  outline: none;\n}\n.landing dialog::backdrop {\n  background-color: rgba(0, 0, 0, 0.8);\n}\n.landing .bg-explorer {\n  background-color: #a3b0d1 !important;\n}\n.landing .bg-ecology {\n  background-color: #73ad80 !important;\n}\n.landing .bg-housing {\n  background-color: #e08565 !important;\n}\n.landing .bg-health {\n  background-color: #cd718c !important;\n}\n.landing .bg-transport {\n  background-color: #c9c3fa !important;\n}\n.landing .bg-climate {\n  background-color: #f5d574 !important;\n}\n.landing .bg-urban {\n  background-color: #adb033 !important;\n}\n.landing .bg-demographics {\n  background-color: #9e9090 !important;\n}\n.landing .bg-economy {\n  background-color: #beaf62 !important;\n}\n.landing .bg-resources {\n  background-color: #dca656 !important;\n}\n.landing .bg-land {\n  background-color: #7baaaa !important;\n}\n.landing #main-content {\n  position: relative;\n  display: grid;\n  grid-template-columns: minmax(0, 1fr) 450px;\n  align-items: flex-start;\n  justify-content: flex-end;\n  justify-items: center;\n  gap: 48px;\n  padding-left: 44px;\n  margin: 0 auto;\n}\n@media (max-width: 1170px) {\n  .landing #main-content {\n    display: block;\n    padding-left: 23px;\n    padding-right: 23px;\n  }\n}\n.landing #main-content main {\n  max-width: 990px;\n  width: 100%;\n  order: -1;\n  margin-bottom: 100px;\n}\n@media (max-width: 1170px) {\n  .landing #main-content main {\n    max-width: none;\n  }\n}\n.landing .section__title {\n  display: inline-flex;\n  align-items: center;\n  min-height: 21px;\n  padding: 0 6px;\n  margin-right: 30px;\n  background-color: #ffffff;\n  border-radius: 4px;\n  cursor: default;\n}\n\n.landing #mobile-nav {\n  display: none;\n  position: fixed;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  background-color: #e9ecef;\n  padding: 150px 23px;\n  overflow: auto;\n  z-index: 10;\n}\n@media (max-width: 767px) {\n  .landing #mobile-nav.mobile-nav--visible {\n    display: block;\n  }\n}\n.landing #mobile-nav .mobile-nav-group {\n  padding-bottom: 24px;\n  margin-bottom: 24px;\n}\n.landing #mobile-nav .mobile-nav-group ul {\n  margin-top: 20px;\n  display: flex;\n  flex-direction: column;\n  gap: 15px;\n}\n.landing #mobile-nav .mobile-nav-group:not(:last-of-type) {\n  border-bottom: 1px solid #000000;\n}\n.landing #main-header {\n  max-width: min(100vw - 88px, 1440px);\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  width: 100%;\n  margin: 0 auto;\n  padding: 12px 0;\n  z-index: 15;\n  transition: transform 0.25s cubic-bezier(0.65, 0, 0.35, 1);\n}\n@media (max-width: 1170px) {\n  .landing #main-header {\n    max-width: min(100vw - 44px, 1440px);\n  }\n}\n@media (max-width: 767px) {\n  .landing #main-header {\n    max-width: none;\n    justify-content: space-between;\n    align-items: center;\n    padding: 28px 24px;\n  }\n}\n.landing #main-header::before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 150vw;\n  height: 100%;\n  transform: translateX(-50vw);\n  background-color: #ffffff;\n  z-index: 0;\n}\n.landing #main-header .curbcut-logo {\n  display: none;\n  z-index: 1;\n}\n@media (max-width: 767px) {\n  .landing #main-header .curbcut-logo {\n    display: block;\n  }\n}\n.landing #main-header .main-nav > ul {\n  display: flex;\n  gap: 24px;\n}\n.landing #main-header .main-nav > ul li {\n  display: flex;\n  align-items: center;\n  z-index: 1;\n}\n@media (max-width: 767px) {\n  .landing #main-header .main-nav > ul li:not(.language-switcher, .menu-btn) {\n    display: none;\n  }\n}\n.landing #main-header .main-nav > ul li details {\n  position: relative;\n  display: flex;\n  flex-direction: column;\n  padding: 7px 14px;\n}\n.landing #main-header .main-nav > ul li details[open] {\n  background-color: #ffffff;\n}\n.landing #main-header .main-nav > ul li details[open] .caret {\n  transform: rotateX(180deg);\n}\n.landing #main-header .main-nav > ul li details summary {\n  display: flex;\n  gap: 8px;\n}\n.landing #main-header .main-nav > ul li details ul {\n  position: absolute;\n  top: 30px;\n  left: 0;\n  background-color: #ffffff;\n  z-index: 12;\n}\n.landing #main-header .main-nav > ul li details ul li {\n  white-space: nowrap;\n  padding: 2px 0;\n  margin: 0 8px;\n}\n.landing #main-header .main-nav > ul li details ul li:not(:last-of-type) {\n  border-bottom: 1px solid #000000;\n}\n.landing #main-header .main-nav > ul li details ul li a {\n  font-size: 1.4rem;\n  line-height: 3rem;\n}\n.landing #main-header .main-nav > ul li.language-switcher {\n  padding: 7px 14px;\n}\n@media (max-width: 767px) {\n  .landing #main-header .main-nav > ul li.language-switcher {\n    padding: 0;\n  }\n  .landing #main-header .main-nav > ul li.language-switcher .cta-text--underline::after {\n    transform: scaleX(0);\n  }\n}\n.landing #main-header .main-nav > ul li.menu-btn {\n  display: none;\n  align-items: center;\n  width: 24px;\n  height: 24px;\n  background: url(\"data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAxNyI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTAgMGgyNHYyLjQyOUgwek0wIDcuMjg2aDI0djIuNDI5SDB6TTAgMTQuNTcxaDI0VjE3SDB6Ii8+Cjwvc3ZnPg==\") no-repeat;\n  background-position: center;\n  cursor: pointer;\n}\n@media (max-width: 767px) {\n  .landing #main-header .main-nav > ul li.menu-btn {\n    display: flex;\n  }\n}\n.landing #main-header.header--opened .main-nav > ul li.menu-btn {\n  background-image: url(\"data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNCAzNCI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTI2LjMxNSA5LjM0MyA5LjM0NCAyNi4zMTRsLTEuNzE4LTEuNzE4IDE2Ljk3MS0xNi45N3oiLz4KICA8cGF0aCBmaWxsPSIjMDAwIiBkPSJtOS4zNDQgNy42MjcgMTYuOTcgMTYuOTctMS43MTcgMS43MTgtMTYuOTctMTYuOTd6Ii8+Cjwvc3ZnPg==\");\n}\n.landing #main-header.header--hidden {\n  transform: translateY(-130px);\n}\n.landing #main-header.header--background:not(.header--opened)::before {\n  opacity: 1;\n}\nbody.bg-background .landing #main-header.header--background:not(.header--opened)::before {\n  opacity: 0;\n}\n.landing #categories-menu {\n  position: sticky;\n  top: 0;\n  min-height: 100vh;\n  width: 100%;\n  max-width: 450px;\n  background-color: #e3e3e3;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-start;\n  transition: background-color 0.45s cubic-bezier(0.3, 0, 0, 1);\n  z-index: 20;\n  overflow-x: hidden; /* Hide overflow for transitions */\n  /* Main menu and submenu containers for transitions */\n  /* Position the main menu */\n  /* Position the submenu off-screen initially */\n  /* Animation states when submenu is active */\n  /* Main menu styles */\n  /* Subcategory menu styles */\n  /* Style for the \"En savoir plus\" link at the bottom */\n}\n@media (max-width: 1170px) {\n  .landing #categories-menu {\n    display: none;\n  }\n  .landing #categories-menu.is-visible {\n    min-height: auto;\n    max-width: none;\n    width: calc(100% - 46px);\n    max-height: 80vh;\n    display: flex;\n    position: fixed;\n    top: auto;\n    bottom: 14px;\n    overflow: auto;\n  }\n}\n.landing #categories-menu .curbcut-logo {\n  padding-bottom: 20px;\n  margin: 15px 25px 0;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  z-index: 2; /* Keep above the sliding menus */\n}\n@media (max-width: 1170px) {\n  .landing #categories-menu .curbcut-logo {\n    display: none;\n  }\n}\n.landing #categories-menu .close-cta {\n  display: none;\n  z-index: 2; /* Keep above the sliding menus */\n  background-color: #e3e3e3;\n}\n@media (max-width: 1170px) {\n  .landing #categories-menu .close-cta {\n    display: flex;\n    justify-content: flex-end;\n    align-items: center;\n    gap: 12px;\n    min-height: 60px;\n    height: 60px;\n    padding-right: 16px;\n    cursor: pointer;\n  }\n}\n.landing #categories-menu .categories-nav {\n  display: flex;\n  flex-direction: column;\n  margin-top: 50px;\n  flex-grow: 1;\n  position: relative; /* For positioning the sliding menus */\n  overflow-y: auto; /* Allow scrolling */\n  flex: 1; /* Take up available space */\n  display: flex;\n  flex-direction: column;\n  overflow-x: hidden;\n}\n.landing #categories-menu .main-menu-container,\n.landing #categories-menu .submenu-container {\n  width: 100%;\n  transition: transform 1s ease, opacity 0.5s ease;\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  flex-direction: column;\n  backface-visibility: hidden; /* Prevent flickering */\n}\n.landing #categories-menu .main-menu-container {\n  transform: translateX(0);\n  opacity: 1;\n}\n.landing #categories-menu .submenu-container {\n  transform: translateX(100%);\n  opacity: 0;\n}\n.landing #categories-menu.submenu-active {\n  /* Make sure the fixed header always has the grey background */\n  /* Remove the theme colors from just the title */\n  /* Remove any background color from entire menu container */\n  background-color: #e3e3e3;\n  /* Add this section to color the entire menu area except the logo */\n  /* Add theme colors to the overlay instead */\n  /* Make sure content remains visible above the colored background */\n  /* Keep these background colors only for the theme-title */\n}\n.landing #categories-menu.submenu-active .main-menu-container {\n  transform: translateX(-100%);\n  opacity: 0;\n}\n.landing #categories-menu.submenu-active .fixed-header {\n  position: sticky;\n  top: 0;\n  z-index: 3;\n  background-color: #e3e3e3 !important; /* Force grey background */\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Add border for separation */\n}\n.landing #categories-menu.submenu-active .submenu-container {\n  transform: translateX(0);\n  opacity: 1;\n}\n.landing #categories-menu.submenu-active::after {\n  content: \"\";\n  position: absolute;\n  top: 185px; /* Keep this the same as before */\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: auto;\n  min-height: calc(100% - 185px); /* Make sure it extends at least to the bottom of the container */\n  z-index: 0;\n  transition: background-color 0.45s cubic-bezier(0.3, 0, 0, 1);\n}\n.landing #categories-menu.submenu-active[data-category=climate]::after {\n  background-color: #f5d574;\n}\n.landing #categories-menu.submenu-active[data-category=demographics]::after {\n  background-color: #9e9090;\n}\n.landing #categories-menu.submenu-active[data-category=ecology]::after {\n  background-color: #73ad80;\n}\n.landing #categories-menu.submenu-active[data-category=health]::after {\n  background-color: #cd718c;\n}\n.landing #categories-menu.submenu-active[data-category=housing]::after {\n  background-color: #e08565;\n}\n.landing #categories-menu.submenu-active[data-category=transport]::after {\n  background-color: #c9c3fa;\n}\n.landing #categories-menu.submenu-active[data-category=urban]::after {\n  background-color: #adb033;\n}\n.landing #categories-menu.submenu-active[data-category=explorer]::after {\n  background-color: #a3b0d1;\n}\n.landing #categories-menu.submenu-active[data-category=economy]::after {\n  background-color: #beaf62;\n}\n.landing #categories-menu.submenu-active[data-category=resources]::after {\n  background-color: #dca656;\n}\n.landing #categories-menu.submenu-active[data-category=land]::after {\n  background-color: #7baaaa;\n}\n.landing #categories-menu.submenu-active .categories-nav,\n.landing #categories-menu.submenu-active .back-button,\n.landing #categories-menu.submenu-active .theme-title,\n.landing #categories-menu.submenu-active .subcategory-section {\n  position: relative;\n  z-index: 1;\n  background-color: transparent;\n}\n.landing #categories-menu.submenu-active .theme-title[data-category=climate] {\n  background-color: #f5d574;\n}\n.landing #categories-menu.submenu-active .theme-title[data-category=demographics] {\n  background-color: #9e9090;\n}\n.landing #categories-menu.submenu-active .theme-title[data-category=ecology] {\n  background-color: #73ad80;\n}\n.landing #categories-menu.submenu-active .theme-title[data-category=health] {\n  background-color: #cd718c;\n}\n.landing #categories-menu.submenu-active .theme-title[data-category=housing] {\n  background-color: #e08565;\n}\n.landing #categories-menu.submenu-active .theme-title[data-category=transport] {\n  background-color: #c9c3fa;\n}\n.landing #categories-menu.submenu-active .theme-title[data-category=urban] {\n  background-color: #adb033;\n}\n.landing #categories-menu.submenu-active .theme-title[data-category=explorer] {\n  background-color: #a3b0d1;\n}\n.landing #categories-menu.submenu-active .theme-title[data-category=economy] {\n  background-color: #beaf62;\n}\n.landing #categories-menu.submenu-active .theme-title[data-category=resources] {\n  background-color: #dca656;\n}\n.landing #categories-menu.submenu-active .theme-title[data-category=land] {\n  background-color: #7baaaa;\n}\n.landing #categories-menu .nav-item {\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  background-color: transparent;\n  padding: 12px 24px;\n  cursor: pointer;\n  transition: color 0.25s cubic-bezier(0.3, 0, 0, 1), background-color 0.45s cubic-bezier(0.3, 0, 0, 1);\n}\n.landing #categories-menu .nav-item:last-child {\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n}\n.landing #categories-menu .nav-item:hover, .landing #categories-menu .nav-item:focus {\n  background-color: #000000;\n}\n.landing #categories-menu .nav-item:hover[data-category=climate], .landing #categories-menu .nav-item:focus[data-category=climate] {\n  color: #f5d574;\n}\n.landing #categories-menu .nav-item:hover[data-category=climate] svg path, .landing #categories-menu .nav-item:focus[data-category=climate] svg path {\n  fill: #f5d574;\n}\n.landing #categories-menu .nav-item:hover[data-category=demographics], .landing #categories-menu .nav-item:focus[data-category=demographics] {\n  color: #9e9090;\n}\n.landing #categories-menu .nav-item:hover[data-category=demographics] svg path, .landing #categories-menu .nav-item:focus[data-category=demographics] svg path {\n  fill: #9e9090;\n}\n.landing #categories-menu .nav-item:hover[data-category=ecology], .landing #categories-menu .nav-item:focus[data-category=ecology] {\n  color: #73ad80;\n}\n.landing #categories-menu .nav-item:hover[data-category=ecology] svg path, .landing #categories-menu .nav-item:focus[data-category=ecology] svg path {\n  fill: #73ad80;\n}\n.landing #categories-menu .nav-item:hover[data-category=health], .landing #categories-menu .nav-item:focus[data-category=health] {\n  color: #cd718c;\n}\n.landing #categories-menu .nav-item:hover[data-category=health] svg path, .landing #categories-menu .nav-item:focus[data-category=health] svg path {\n  fill: #cd718c;\n}\n.landing #categories-menu .nav-item:hover[data-category=housing], .landing #categories-menu .nav-item:focus[data-category=housing] {\n  color: #e08565;\n}\n.landing #categories-menu .nav-item:hover[data-category=housing] svg path, .landing #categories-menu .nav-item:focus[data-category=housing] svg path {\n  fill: #e08565;\n}\n.landing #categories-menu .nav-item:hover[data-category=transport], .landing #categories-menu .nav-item:focus[data-category=transport] {\n  color: #c9c3fa;\n}\n.landing #categories-menu .nav-item:hover[data-category=transport] svg path, .landing #categories-menu .nav-item:focus[data-category=transport] svg path {\n  fill: #c9c3fa;\n}\n.landing #categories-menu .nav-item:hover[data-category=urban], .landing #categories-menu .nav-item:focus[data-category=urban] {\n  color: #adb033;\n}\n.landing #categories-menu .nav-item:hover[data-category=urban] svg path, .landing #categories-menu .nav-item:focus[data-category=urban] svg path {\n  fill: #adb033;\n}\n.landing #categories-menu .nav-item:hover[data-category=explorer], .landing #categories-menu .nav-item:focus[data-category=explorer] {\n  color: #a3b0d1;\n}\n.landing #categories-menu .nav-item:hover[data-category=explorer] svg path, .landing #categories-menu .nav-item:focus[data-category=explorer] svg path {\n  fill: #a3b0d1;\n}\n.landing #categories-menu .nav-item:hover[data-category=economy], .landing #categories-menu .nav-item:focus[data-category=economy] {\n  color: #beaf62;\n}\n.landing #categories-menu .nav-item:hover[data-category=economy] svg path, .landing #categories-menu .nav-item:focus[data-category=economy] svg path {\n  fill: #beaf62;\n}\n.landing #categories-menu .nav-item:hover[data-category=resources], .landing #categories-menu .nav-item:focus[data-category=resources] {\n  color: #dca656;\n}\n.landing #categories-menu .nav-item:hover[data-category=resources] svg path, .landing #categories-menu .nav-item:focus[data-category=resources] svg path {\n  fill: #dca656;\n}\n.landing #categories-menu .nav-item:hover[data-category=land], .landing #categories-menu .nav-item:focus[data-category=land] {\n  color: #7baaaa;\n}\n.landing #categories-menu .nav-item:hover[data-category=land] svg path, .landing #categories-menu .nav-item:focus[data-category=land] svg path {\n  fill: #7baaaa;\n}\n.landing #categories-menu .nav-item__category {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.landing #categories-menu .nav-item__category span {\n  display: flex;\n  flex: 1;\n  align-items: center;\n  gap: 14px;\n}\n.landing #categories-menu .nav-item__category svg {\n  flex-shrink: 0;\n  width: 24px;\n  height: 24px;\n}\n.landing #categories-menu .back-button {\n  display: flex;\n  align-items: center;\n  padding: 8px 24px;\n  cursor: pointer;\n  background-color: #e3e3e3; /* Keep original background */\n}\n.landing #categories-menu .back-button svg {\n  margin-right: 12px;\n  flex-shrink: 0;\n}\n.landing #categories-menu .back-button span {\n  font-size: 1.4rem;\n  font-weight: 500;\n}\n.landing #categories-menu .back-button:hover {\n  background-color: rgba(0, 0, 0, 0.05);\n}\n.landing #categories-menu .theme-title {\n  padding: 16px 24px;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  transition: background-color 0.45s cubic-bezier(0.3, 0, 0, 1);\n}\n.landing #categories-menu .theme-title h2 {\n  font-weight: 600;\n  margin: 0;\n}\n.landing #categories-menu .subcategory-section {\n  padding: 16px 24px;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  background-color: #e3e3e3; /* Keep original background */\n}\n.landing #categories-menu .subcategory-title {\n  font-size: 1.6rem;\n  font-weight: 600;\n  margin-bottom: 12px;\n  color: #333;\n}\n.landing #categories-menu .pages-list {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n}\n.landing #categories-menu .page-item {\n  margin: 8px 0;\n}\n.landing #categories-menu .page-link {\n  font-size: 1.6rem;\n  line-height: 2.2rem;\n  cursor: pointer;\n  display: block;\n}\n.landing #categories-menu .page-link:hover {\n  text-decoration: underline;\n}\n.landing #categories-menu .en-savoir-plus {\n  margin-top: auto;\n  padding: 24px;\n  z-index: 1;\n}\n.landing #categories-menu .en-savoir-plus a {\n  font-size: 1.6rem;\n  cursor: pointer;\n}\n.landing #categories-menu .en-savoir-plus a:hover {\n  text-decoration: underline;\n}\n.landing #choose-map-mobile-cta {\n  display: none;\n}\n@media (max-width: 1170px) {\n  .landing #choose-map-mobile-cta {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    position: sticky;\n    bottom: 0;\n    margin-bottom: 30px;\n    width: 100vw;\n    height: 50px;\n    background-color: #000000;\n    color: #ffffff;\n    transform: translateX(-23px);\n    z-index: 8;\n  }\n}\n.landing #inapp-categories-menu {\n  position: sticky;\n  top: 0;\n  min-height: 100%;\n  width: 250px;\n  max-width: 250px;\n  background-color: #e9ecef;\n  display: flex;\n  flex-direction: column;\n  transition: background-color 0.45s cubic-bezier(0.3, 0, 0, 1);\n  z-index: 20;\n  border: 1px black solid;\n  border-width: 0 1px 1px 1px;\n  scrollbar-width: thin; /* Firefox */\n  scrollbar-color: #808080 transparent; /* Firefox */\n}\n.landing #inapp-categories-menu h4, .landing #inapp-categories-menu .h4 {\n  font-size: 14px !important;\n}\n.landing #inapp-categories-menu::-webkit-scrollbar {\n  width: 6px;\n}\n.landing #inapp-categories-menu::-webkit-scrollbar-track {\n  background: transparent;\n}\n.landing #inapp-categories-menu::-webkit-scrollbar-thumb {\n  background-color: #000000;\n  border-radius: 10px;\n  border: 2px solid transparent;\n  background-clip: content-box;\n}\n.landing #inapp-categories-menu::-webkit-scrollbar-thumb:hover {\n  background-color: black;\n}\n.landing #inapp-categories-menu .categories-nav {\n  display: flex;\n  flex-direction: column;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item {\n  border-top: 1px solid #000000;\n  padding: 3px 12px;\n  background-color: transparent;\n  transition: color 0.25s cubic-bezier(0.3, 0, 0, 1), background-color 0.45s cubic-bezier(0.3, 0, 0, 1);\n}\n.landing #inapp-categories-menu .categories-nav .nav-item .theme-menu {\n  max-height: 300px;\n  overflow-y: auto;\n  padding: 5px 0;\n  margin-top: 6px;\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item .subcategory-section {\n  padding-left: 4px;\n  display: flex;\n  flex-direction: column;\n  gap: 0px;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item .subcategory-title {\n  font-size: 1.3rem;\n  font-weight: 600;\n  line-height: 1.8rem;\n  color: inherit;\n  padding-left: 2px;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item .pages-list {\n  list-style: none;\n  padding-left: 10px;\n  margin: 0;\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item .pages-list .page-item {\n  font-size: 1.2rem;\n  cursor: pointer;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item .pages-list .page-item a {\n  font-size: 1.2rem;\n  line-height: 1rem;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item .pages-list .page-item .page-link {\n  color: inherit;\n  text-decoration: none;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item .pages-list .page-item .page-link:hover {\n  text-decoration: underline;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover, .landing #inapp-categories-menu .categories-nav .nav-item:focus {\n  background-color: #000000;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=climate], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=climate] {\n  color: #f5d574;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=climate] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=climate] svg path {\n  fill: #f5d574;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=demographics], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=demographics] {\n  color: #9e9090;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=demographics] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=demographics] svg path {\n  fill: #9e9090;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=ecology], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=ecology] {\n  color: #73ad80;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=ecology] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=ecology] svg path {\n  fill: #73ad80;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=health], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=health] {\n  color: #cd718c;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=health] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=health] svg path {\n  fill: #cd718c;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=housing], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=housing] {\n  color: #e08565;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=housing] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=housing] svg path {\n  fill: #e08565;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=transport], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=transport] {\n  color: #c9c3fa;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=transport] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=transport] svg path {\n  fill: #c9c3fa;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=urban], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=urban] {\n  color: #adb033;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=urban] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=urban] svg path {\n  fill: #adb033;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=explorer], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=explorer] {\n  color: #a3b0d1;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=explorer] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=explorer] svg path {\n  fill: #a3b0d1;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=economy], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=economy] {\n  color: #beaf62;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=economy] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=economy] svg path {\n  fill: #beaf62;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=resources], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=resources] {\n  color: #dca656;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=resources] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=resources] svg path {\n  fill: #dca656;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=land], .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=land] {\n  color: #7baaaa;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item:hover[data-category=land] svg path, .landing #inapp-categories-menu .categories-nav .nav-item:focus[data-category=land] svg path {\n  fill: #7baaaa;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item__category {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  width: 100%;\n  cursor: pointer;\n  padding-right: 6px;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item__category span {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  flex: 1;\n  overflow: hidden;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item__category svg {\n  flex-shrink: 0;\n  margin-left: auto;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item ul {\n  padding: 5px 0;\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item ul li {\n  font-size: 1.2rem;\n}\n.landing #inapp-categories-menu .categories-nav .nav-item svg path {\n  transition: fill 0.25s cubic-bezier(0.3, 0, 0, 1);\n}\n.landing #inapp-categories-menu .categories-nav .nav-item[open] .caret {\n  transform: rotateX(180deg);\n}\n.landing #inapp-categories-menu .caret {\n  width: 12px;\n}\n.landing .menu-invisible {\n  max-height: 0;\n  overflow: hidden;\n  transition: max-height 3s ease-out;\n}\n.landing .menu-visible {\n  max-height: 800px;\n  transition: max-height 3s ease-in;\n}\n\n.menu-invisible {\n  max-height: 0;\n  overflow: hidden;\n  transition: max-height 3s ease-out;\n}\n\n.menu-visible {\n  max-height: 800px;\n  transition: max-height 3s ease-in;\n}\n\n.landing .hero {\n  margin-top: 116px;\n  position: relative;\n}\n@media (max-width: 1170px) {\n  .landing .hero {\n    margin-left: 15%;\n    margin-right: 15%;\n  }\n}\n@media (max-width: 767px) {\n  .landing .hero {\n    margin-left: 0;\n    margin-right: 0;\n  }\n}\n.landing .hero .main-title {\n  display: grid;\n  grid-template-columns: minmax(40%, 1fr) 320px;\n  grid-column-gap: 42px;\n  grid-row-gap: 0px;\n  align-items: center;\n  line-height: 1.05;\n  color: white;\n}\n@media (max-width: 1439px) {\n  .landing .hero .main-title {\n    align-items: flex-end;\n  }\n}\n@media (max-width: 767px) {\n  .landing .hero .main-title {\n    grid-template-columns: minmax(40%, 1fr) 128px;\n  }\n}\n.landing .hero .main-title__first-part {\n  grid-area: 1/1/2/2;\n  text-align: right;\n}\n.landing .hero .main-title__video {\n  position: relative;\n  width: 320px;\n  height: 205px;\n  grid-area: 1/2/2/3;\n  border-radius: 6.4px;\n  border-top-right-radius: 74px;\n  overflow: hidden;\n  cursor: pointer;\n}\n@media (max-width: 767px) {\n  .landing .hero .main-title__video {\n    width: 128px;\n    height: 81px;\n    border-top-right-radius: 37px;\n  }\n}\n.landing .hero .main-title__video::after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  margin: auto;\n  width: 46px;\n  height: 67px;\n  background: url(\"data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NiA2NyI+CiAgPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4zMDggNy43ODh2Mi45MDljLjM0Mi4xMTguNjYzLjMxNS45MzUuNTg5TDM0LjU2NiAzMS43MWMuOTYuOTY0Ljk2IDIuNTI2IDAgMy40OUwxNC4yNDMgNTUuNjI1Yy0uMjcyLjI3NC0uNTkzLjQ3LS45MzUuNTg4djIuOTA5Yy4zMzYuMTE4LjY1Mi4zMTMuOTIxLjU4M2w3LjE2OSA3LjIwNkw0NiA0Mi4xODQgMzkuMDUgMzUuMmEyLjQ3NiAyLjQ3NiAwIDAgMSAwLTMuNDlMNDYgMjQuNzI2IDIxLjM5NiAwbC03LjE2OCA3LjIwNmMtLjI2OS4yNy0uNTg0LjQ2NC0uOTIuNTgzWiIgZmlsbD0iI0U5RUNFRiIvPgogIDxwYXRoIGZpbGw9IiNFOUVDRUYiIGQ9Ik0wIDYuNzY3aDEzLjMwOHY1MS4zM0gweiIvPgo8L3N2Zz4=\") no-repeat;\n}\n@media (max-width: 767px) {\n  .landing .hero .main-title__video::after {\n    width: 24px;\n    height: 35px;\n  }\n}\n.landing .hero .main-title__video video {\n  display: block;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n}\n.landing .hero .main-title__second-part {\n  grid-area: 2/1/3/3;\n  text-align: center;\n}\n.landing .hero .main-title.all-langs {\n  grid-template-columns: minmax(50%, 1fr) 250px;\n  grid-column-gap: 28px;\n}\n@media (max-width: 1439px) {\n  .landing .hero .main-title.all-langs {\n    align-items: flex-start;\n  }\n}\n@media (max-width: 490px) {\n  .landing .hero .main-title.all-langs {\n    grid-template-columns: minmax(50%, 1fr) 130px;\n  }\n}\n@media (max-width: 420px) {\n  .landing .hero .main-title.all-langs {\n    grid-template-columns: minmax(50%, 1fr) 80px;\n  }\n}\n.landing .hero .main-title.all-langs .main-title__first-part {\n  grid-area: 1/1/2/3;\n}\n@media (max-width: 1439px) {\n  .landing .hero .main-title.all-langs .main-title__first-part {\n    text-align: center;\n  }\n}\n.landing .hero .main-title.all-langs .main-title__video {\n  grid-area: 2/2/3/3;\n  width: 250px;\n  height: 100%;\n  max-height: 215px;\n}\n@media (max-width: 767px) {\n  .landing .hero .main-title.all-langs .main-title__video {\n    width: 170px;\n    height: 92px;\n  }\n}\n@media (max-width: 490px) {\n  .landing .hero .main-title.all-langs .main-title__video {\n    width: 100%;\n  }\n}\n.landing .hero .main-title.all-langs .main-title__second-part {\n  grid-area: 2/1/3/2;\n  text-align: right;\n}\n\n.landing .section-about {\n  margin-top: 66px;\n  display: grid;\n  grid-template-columns: min(35%, 300px) 1fr;\n  justify-content: flex-start;\n  align-items: flex-start;\n}\n@media (max-width: 767px) {\n  .landing .section-about {\n    margin-top: 58px;\n    display: flex;\n    flex-direction: column;\n    gap: 12px;\n  }\n}\n@media (max-width: 767px) {\n  .landing .section-about #curbcut-logo {\n    display: none !important;\n  }\n}\n.landing .section-about > div:last-of-type {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n}\n.landing .section-about > div:last-of-type .cta-text {\n  margin-top: 13px;\n}\n.landing .section-about:first-of-type {\n  margin-top: 0;\n}\n\n.landing .section-block {\n  margin-top: 84px;\n  background-color: white;\n  border-radius: 24px;\n  padding: 30px;\n}\n.landing .section-discover {\n  display: flex;\n  flex-direction: column;\n}\n@media (max-width: 767px) {\n  .landing .section-discover {\n    margin-top: 78px;\n  }\n}\n.landing .section-discover > div:first-child {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.landing .section-discover__cards-wrapper {\n  margin-top: 20px;\n  display: grid;\n  grid-template-columns: repeat(4, minmax(10px, 1fr));\n  gap: 18px;\n}\n@media (max-width: 767px) {\n  .landing .section-discover__cards-wrapper {\n    margin-top: 11px;\n    grid-template-columns: repeat(2, minmax(10px, 1fr));\n    gap: 13px;\n  }\n}\n.landing .section-discover__cards-wrapper .card {\n  position: relative;\n}\n.landing .section-discover__cards-wrapper .card__img {\n  width: 100%;\n  height: 332px;\n  overflow: hidden;\n  border-top-left-radius: 6.4px;\n  border-top-right-radius: 6.4px;\n  transition: border-radius 0.25s cubic-bezier(0.65, 0, 0.35, 1);\n}\n@media (max-width: 1170px) {\n  .landing .section-discover__cards-wrapper .card__img {\n    height: 168px;\n  }\n}\n.landing .section-discover__cards-wrapper .card__img img {\n  display: block;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  object-position: center;\n}\n.landing .section-discover__cards-wrapper .card__title {\n  padding: 14px;\n  height: 67px;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: flex-start;\n  position: absolute;\n  bottom: 0;\n  width: 100%;\n  overflow: hidden;\n}\n.landing .section-discover__cards-wrapper .card__title .card__text,\n.landing .section-discover__cards-wrapper .card__title .card__preview {\n  width: 100%;\n}\n.landing .section-discover__cards-wrapper .card__title .card__preview {\n  display: none;\n  font-size: 0.7em;\n  line-height: 1.6;\n  margin-top: 5px;\n}\n.landing .section-discover__cards-wrapper .card:hover .card__img {\n  border-top-right-radius: 74px;\n}\n.landing .section-discover__cards-wrapper .card:hover .card__title {\n  bottom: 0px;\n  height: fit-content;\n}\n.landing .section-discover__cards-wrapper .card:hover .card__title .card__preview {\n  display: block;\n}\n\n.landing .section-news {\n  position: relative;\n  margin-top: 112px;\n  margin-bottom: 100px;\n  display: flex;\n  flex-direction: column;\n}\n@media (max-width: 767px) {\n  .landing .section-news {\n    margin-left: -23px;\n    width: calc(100% + 46px);\n  }\n}\n.landing .section-news > div:first-child {\n  margin-bottom: 20px;\n}\n@media (max-width: 767px) {\n  .landing .section-news > div:first-child {\n    margin-left: 23px;\n  }\n}\n.landing .section-news .swiper-is-enabled {\n  cursor: grab;\n}\n.landing .section-news .swipe-cta {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  margin: auto 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 62px;\n  height: 62px;\n  background-color: #ffffff;\n  border-radius: 50%;\n  cursor: pointer;\n  z-index: 5;\n  transition: opacity 0.25s linear;\n}\n@media (max-width: 1170px) {\n  .landing .section-news .swipe-cta {\n    display: none;\n  }\n}\n.landing .section-news .swipe-cta img {\n  display: block;\n  transform: rotate(-90deg) translateY(3px);\n}\n.landing .section-news .swipe-cta.swiper-button-disabled {\n  opacity: 0;\n}\n.landing .section-news #swipe-cta-prev {\n  left: -20px;\n}\n.landing .section-news #swipe-cta-prev img {\n  transform: rotate(90deg) translateY(3px);\n}\n.landing .section-news #swipe-cta-next {\n  right: -20px;\n}\n.landing .section-news .news {\n  display: block;\n  max-width: 253px;\n}\n@media (max-width: 767px) {\n  .landing .section-news .news {\n    max-width: max(253px, 80%);\n  }\n}\n.landing .section-news .news__title {\n  margin-top: 15px;\n  margin-bottom: 5px;\n}\n.landing .section-news .news__description {\n  color: #282828;\n  opacity: 0.5;\n  margin-bottom: 12px;\n}\n.landing .section-news .news__description span {\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: 9;\n  line-clamp: 9;\n  overflow: hidden;\n}\n.landing .section-news .news:not(:last-child)::after {\n  content: \"\";\n  position: absolute;\n  bottom: 0;\n  right: -34px;\n  width: 1px;\n  height: 253px;\n  background-color: #000000;\n  top: 40px;\n}\n\n.landing footer {\n  position: relative;\n  background-color: #ffffff;\n  /* Mobile styles */\n}\n.landing footer .footer__banner {\n  text-align: center;\n  margin: 0 auto;\n  overflow: hidden;\n  display: inline-block;\n  width: 100%;\n}\n.landing footer .footer__banner img {\n  display: block;\n}\n.landing footer .footer__content {\n  padding: 45px 51px 20px;\n  max-width: 1440px;\n  margin: 0 auto;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content {\n    padding: 43px 23px 20px;\n  }\n  .landing footer .footer__content .curbcut-logo-footer {\n    width: 141px;\n    height: 141px;\n  }\n}\n.landing footer .footer__content .footer-mobile-nav {\n  display: none;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content .footer-mobile-nav {\n    display: block;\n  }\n}\n.landing footer .footer__content .footer-mobile-nav .nav-item {\n  padding: 16px 0;\n  border-bottom: 1px solid #000000;\n}\n.landing footer .footer__content .footer-mobile-nav .nav-item__title {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.landing footer .footer__content .footer-mobile-nav .nav-item__title .plus-sign {\n  position: relative;\n  width: 14px;\n  height: 14px;\n}\n.landing footer .footer__content .footer-mobile-nav .nav-item__title .plus-sign::before, .landing footer .footer__content .footer-mobile-nav .nav-item__title .plus-sign::after {\n  display: block;\n  position: relative;\n  content: \"\";\n  background-color: #000000;\n}\n.landing footer .footer__content .footer-mobile-nav .nav-item__title .plus-sign::before {\n  top: 8px;\n  width: 100%;\n  height: 2px;\n}\n.landing footer .footer__content .footer-mobile-nav .nav-item__title .plus-sign::after {\n  left: 6px;\n  width: 2px;\n  height: 100%;\n  transform-origin: center;\n  transition: transform 0.25s cubic-bezier(0.65, 0, 0.35, 1);\n}\n.landing footer .footer__content .footer-mobile-nav .nav-item > div {\n  padding-top: 15px;\n  display: flex;\n  flex-direction: column;\n  gap: 15px;\n}\n.landing footer .footer__content .footer-mobile-nav .nav-item[open] .plus-sign::after {\n  transform: scaleY(0);\n}\n.landing footer .footer__content > div:not(.footer__content-copyright) {\n  display: grid;\n  grid-template-columns: 230px 1fr;\n  gap: 50px;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content > div:not(.footer__content-copyright) {\n    display: flex;\n    flex-direction: column;\n    gap: 44px;\n  }\n}\n.landing footer .footer__content > div:not(.footer__content-copyright) .grid {\n  display: grid;\n  grid-template-columns: repeat(4, minmax(10px, 1fr));\n  column-gap: 50px;\n  row-gap: 30px;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content > div:not(.footer__content-copyright) .grid {\n    display: flex;\n    flex-direction: column;\n  }\n}\n.landing footer .footer__content > div:not(.footer__content-copyright) .grid .column {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-start;\n  gap: 8px;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content > div:not(.footer__content-copyright) .grid .column:not(:last-of-type) {\n    padding-bottom: 50px;\n    border-bottom: 1px solid #000000;\n  }\n}\n.landing footer .footer__content > div:not(.footer__content-copyright) .grid .column__title {\n  display: inline-flex;\n  align-items: center;\n  margin-bottom: 2px;\n  padding: 2px 7px;\n  font-size: 1.4rem;\n  line-height: 1.7rem;\n  border: 1px solid #101010;\n  border-radius: 6.4px;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content > div:not(.footer__content-copyright) .grid .column__title {\n    padding: 0;\n    font-size: 2.5rem;\n    line-height: 3.1rem;\n    height: auto;\n    border: none;\n  }\n}\n.landing footer .footer__content > div:not(.footer__content-copyright) .grid .column img:first-of-type {\n  margin-top: 15px;\n}\n.landing footer .footer__content > div:not(.footer__content-copyright) .grid .column img:not(:last-child) {\n  margin-bottom: 24px;\n}\n.landing footer .footer__content-first-half {\n  padding-bottom: 60px;\n  border-bottom: 1px solid #000000;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content-first-half {\n    padding-bottom: 10px;\n    border-bottom: none;\n  }\n}\n.landing footer .footer__content-second-half {\n  padding-top: 42px;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content-second-half .grid > .column--cities {\n    display: block !important;\n  }\n  .landing footer .footer__content-second-half .grid > .column--cities .column__title {\n    display: block !important;\n  }\n  .landing footer .footer__content-second-half .grid > .column--cities img {\n    margin-bottom: 0 !important;\n    display: inline-flex;\n    align-items: center;\n  }\n  .landing footer .footer__content-second-half .grid > .column--cities img:not(:last-child) {\n    margin-right: 40px;\n  }\n}\n.landing footer .footer__content-copyright {\n  display: block;\n  text-align: center;\n  margin-top: 42px;\n}\n@media (max-width: 1170px) {\n  .landing footer .footer__content .hidden-mobile {\n    display: none !important;\n  }\n}\n.landing footer form {\n  width: 100%;\n}\n.landing footer input {\n  height: 46px;\n  border: 1px solid #000000;\n  border-radius: 6.4px;\n  padding: 0 16px;\n  width: min(208px, 100%);\n}\n@media (max-width: 1170px) {\n  .landing footer input {\n    width: 100%;\n  }\n}\n.landing footer input, .landing footer input::placeholder {\n  font-family: \"_AcidGrotesk\", sans-serif;\n  font-size: 1.4rem;\n}\n.landing footer .submit-btn {\n  margin-top: 11px;\n  color: #ffffff;\n  background-color: #000000;\n  height: 46px;\n  min-width: 124px;\n  padding: 0 16px;\n  border-radius: 8px;\n  font-size: 1.6rem;\n  line-height: 2.2rem;\n  cursor: pointer;\n}\n@media (max-width: 1170px) {\n  .landing footer .submit-btn {\n    min-width: 188px;\n  }\n}\n.landing footer .column {\n  display: flex;\n  flex-direction: column;\n}\n.landing footer .column__title {\n  margin-bottom: 16px;\n}\n.landing footer .subcategory-group {\n  margin-bottom: 16px;\n}\n.landing footer .subcategory-title {\n  font-weight: 500;\n  margin-bottom: 8px;\n  font-size: 0.9em;\n  opacity: 0.45;\n}\n.landing footer .cta-text-lower {\n  display: block;\n  margin-bottom: 8px;\n  cursor: pointer;\n}\n.landing footer .nav-item__title {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  cursor: pointer;\n}\n.landing footer .subcategories-container {\n  padding-left: 16px;\n  margin-top: 12px;\n}\n.landing footer .pages-container {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  margin-bottom: 16px;\n}\n\n.landing .section-team {\n  margin-top: 84px;\n  display: flex;\n  flex-direction: column;\n}\n@media (max-width: 767px) {\n  .landing .section-team {\n    margin-top: 78px;\n  }\n}\n.landing .section-team > div:first-child {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.landing .section-team__cards-wrapper {\n  margin-top: 20px;\n  display: grid;\n  grid-template-columns: repeat(4, minmax(10px, 1fr));\n  gap: 18px;\n}\n@media (max-width: 767px) {\n  .landing .section-team__cards-wrapper {\n    margin-top: 11px;\n    grid-template-columns: repeat(2, minmax(10px, 1fr));\n    gap: 13px;\n  }\n}\n.landing .section-team__cards-wrapper .card {\n  position: relative;\n  overflow: hidden;\n}\n.landing .section-team__cards-wrapper .card__img {\n  width: 100%;\n  height: 265px;\n  overflow: hidden;\n  border-top-left-radius: 6.4px;\n  border-top-right-radius: 6.4px;\n  transition: border-radius 0.25s cubic-bezier(0.65, 0, 0.35, 1);\n}\n@media (max-width: 1170px) {\n  .landing .section-team__cards-wrapper .card__img {\n    height: 168px;\n  }\n}\n.landing .section-team__cards-wrapper .card__img img {\n  display: block;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  object-position: center;\n}\n.landing .section-team__cards-wrapper .card__title {\n  padding: 14px;\n  min-height: 67px;\n  max-height: auto;\n  align-items: center;\n}\n@media (max-width: 767px) {\n  .landing .section-team__cards-wrapper .card__title {\n    height: 78px;\n    padding: 9px 11px;\n  }\n}\n.landing .section-team__cards-wrapper .card__title span {\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: 2;\n  line-clamp: 2;\n  overflow: hidden;\n}\n@media (max-width: 767px) {\n  .landing .section-team__cards-wrapper .card__title span {\n    -webkit-line-clamp: 3;\n    line-clamp: 3;\n  }\n}\n.landing .section-team__cards-wrapper .card:hover .card__img {\n  border-top-right-radius: 74px;\n}\n.landing .contributors-container {\n  text-align: center;\n}\n.landing .contributor-style {\n  display: inline;\n  margin-right: 10px;\n  margin-left: 10px;\n}\n\n.title-text-box {\n  border-radius: 15px;\n  border: 1px solid #000000;\n  position: relative;\n  transition: width 0.3s ease;\n  padding: 15px;\n  max-height: 100%;\n  box-sizing: border-box;\n}\n@media (max-width: 1170px) {\n  .title-text-box {\n    display: none;\n  }\n}\n.title-text-box__top {\n  display: flex;\n  align-items: center;\n  color: white;\n  padding-bottom: 10px;\n}\n.title-text-box__top h3 {\n  margin-left: 10px;\n}\n.title-text-box__close {\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding: 10px;\n  cursor: pointer;\n}\n.title-text-box .content {\n  overflow-y: auto;\n  overflow-x: \"hidden\";\n  padding: 1px 0px 1px 0px;\n}\n.title-text-box .button-container {\n  text-align: right;\n}\n.title-text-box .button-container button {\n  text-decoration: underline;\n  cursor: pointer;\n  color: white;\n  padding-top: 10px;\n}","@font-face {\n    font-family: '_Apparat';\n    src: url('../fonts/apparat-regular.woff2') format('woff2'),\n        url('../fonts/apparat-regular.woff') format('woff');\n    font-weight: normal;\n    font-style: normal;\n    font-display: swap;\n}\n\n@font-face {\n    font-family: '_AcidGrotesk';\n    src: url('../fonts/acidgrotesk-book.woff2') format('woff2'),\n        url('../fonts/acidgrotesk-book.woff') format('woff');\n    font-weight: normal;\n    font-style: normal;\n    font-display: swap;\n}\n","@use \"variables\";\n@use \"mixins\";\n\n.landing {\n  position: relative;\n  height: 100%;\n  font-family: variables.$font-main;\n  font-size: 1.6rem;\n  line-height: 2rem;\n  font-weight: 400;\n  letter-spacing: 0;\n  color: variables.$black;\n  background-color: #ec1650;\n  overscroll-behavior: none;\n\n  .background-container {\n    position: fixed;\n    top: 0;\n    left: 20%;\n    width: 100%;\n    height: 100%;\n    overflow: hidden;\n  }\n\n  .background-container svg {\n    width: 100%;\n    height: 100%;\n  }\n\n  /* For data URI method in CSS */\n  .background-with-uri {\n    background-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 800' preserveAspectRatio='xMidYMid meet'%3E%3Cellipse cx='500' cy='400' rx='350' ry='250' fill='%23C2185B' /%3E%3Cellipse cx='500' cy='400' rx='300' ry='220' fill='%23FF7043' /%3E%3Cellipse cx='500' cy='400' rx='250' ry='190' fill='%23FF5252' /%3E%3Cellipse cx='500' cy='400' rx='200' ry='160' fill='%23FF4081' /%3E%3Cellipse cx='500' cy='400' rx='150' ry='130' fill='%23D81B60' /%3E%3C/svg%3E\");\n    background-size: cover;\n    background-position: center;\n    background-repeat: no-repeat;\n  }\n\n  /* Media query for smaller screens */\n  @media screen and (max-width: mixins.$laptop) {\n    .background-container {\n      left: 0;\n      width: 100%;\n    }\n  }\n\n  &.is-fixed {\n    overflow: hidden;\n  }\n\n  &::after {\n    display: none;\n    content: \"\";\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: #b3b3b3;\n    z-index: 9;\n  }\n\n  &.bg-background::after {\n    display: block;\n  }\n\n  * {\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n  }\n\n  // html {\n  // \tfont-size: 10px;\n  // \toverscroll-behavior: none;\n  // }\n\n  // // Lenis\n  // html.lenis {\n  // \theight: auto;\n  // }\n\n  // .lenis.lenis-smooth {\n  // \tscroll-behavior: auto;\n  // }\n\n  // .lenis.lenis-smooth [data-lenis-prevent] {\n  // \toverscroll-behavior: contain;\n  // }\n\n  // .lenis.lenis-stopped {\n  // \toverflow: hidden;\n  // }\n\n  // .lenis.lenis-scrolling iframe {\n  // \tpointer-events: none;\n  // }\n\n  a {\n    font-family: variables.$font-main;\n    color: variables.$black;\n    text-decoration: none;\n    cursor: pointer;\n\n    &:hover,\n    &:visited,\n    &:focus {\n      color: inherit; /* This will keep the color the same */\n      text-decoration: none; /* This will remove the underline */\n    }\n  }\n\n  .cta-text {\n    font-size: 1.4rem;\n    line-height: 1.7rem;\n    text-transform: uppercase;\n    cursor: pointer;\n\n    @include mixins.mobile {\n      font-size: 1.6rem;\n      line-height: 2rem;\n    }\n\n    &--underline {\n      position: relative;\n\n      &::after {\n        content: \"\";\n        position: absolute;\n        bottom: 0;\n        left: 0;\n        width: 100%;\n        height: 1px;\n        background-color: variables.$black;\n        transform-origin: left;\n        transform: scaleX(0);\n        transition: transform variables.$t1 variables.$ease-in-out-airbag;\n\n        @include mixins.tablet {\n          transform: scaleX(1);\n        }\n      }\n\n      &:hover::after {\n        transform: scaleX(1);\n      }\n    }\n  }\n\n  .cta-text-lower {\n    cursor: pointer;\n\n    @include mixins.mobile {\n      font-size: 1.6rem;\n      line-height: 2rem;\n    }\n  }\n\n  p {\n    font-size: 1.6rem;\n    line-height: 2rem;\n    font-family: variables.$font-main;\n    font-weight: 400;\n    letter-spacing: 0;\n\n    & ~ p {\n      margin-top: 25px;\n    }\n  }\n\n  .h1 {\n    font-family: variables.$font-title;\n    font-weight: 300;\n    font-size: 9.5rem;\n    line-height: 14.4rem;\n    text-transform: uppercase;\n    margin-top: 0;\n    margin-bottom: 0;\n\n    @include mixins.laptop {\n      font-size: clamp(4.4rem, 6vw, 11.8rem);\n      line-height: clamp(5.4rem, 6vw, 14.4rem);\n    }\n\n    @include mixins.mobile {\n      font-size: 4.4rem;\n      line-height: 5.4rem;\n    }\n  }\n\n  .h2 {\n    font-family: variables.$font-main;\n    font-size: 4rem;\n    line-height: 5rem;\n    margin-top: 0;\n    margin-bottom: 0;\n\n    @include mixins.laptop {\n      font-size: clamp(2.5rem, 4vw, 4rem);\n      line-height: clamp(3.1rem, 4vw, 5rem);\n    }\n\n    @include mixins.mobile {\n      font-size: 2.5rem;\n      line-height: 3.1rem;\n    }\n  }\n\n  .h3 {\n    font-family: variables.$font-main;\n    font-size: 2.6rem;\n    line-height: 3.7rem;\n    margin-top: 0;\n    margin-bottom: 0;\n\n    @include mixins.laptop {\n      font-size: clamp(2.2rem, 2vw, 3rem);\n      line-height: clamp(2.7rem, 2vw, 3.7rem);\n    }\n\n    @include mixins.mobile {\n      font-size: 2.2rem;\n      line-height: 2.7rem;\n    }\n  }\n\n  summary {\n    list-style-type: none !important;\n    text-align: left;\n\n    &::-webkit-details-marker {\n      display: none;\n    }\n  }\n\n  dialog {\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100vw;\n    height: 100vh;\n    margin: 0;\n    padding: 0;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    background-color: rgba(0, 0, 0, 0.8);\n    z-index: 999;\n\n    #video-modal-close-btn {\n      position: absolute;\n      top: 10px;\n      right: 10px;\n      cursor: pointer;\n      z-index: 9999;\n\n      img {\n        filter: brightness(1) invert(1);\n      }\n    }\n\n    video {\n      max-height: 90vh;\n      width: 90vw;\n      margin-top: 25px;\n      outline: none;\n    }\n\n    &::backdrop {\n      background-color: rgba(0, 0, 0, 0.8);\n    }\n  }\n\n  // Categories colors\n  .bg-explorer {\n    background-color: variables.$color-explorer !important;\n  }\n  .bg-ecology {\n    background-color: variables.$color-ecology !important;\n  }\n  .bg-housing {\n    background-color: variables.$color-housing !important;\n  }\n  .bg-health {\n    background-color: variables.$color-health !important;\n  }\n  .bg-transport {\n    background-color: variables.$color-transport !important;\n  }\n  .bg-climate {\n    background-color: variables.$color-climate !important;\n  }\n  .bg-urban {\n    background-color: variables.$color-urban !important;\n  }\n  .bg-demographics {\n    background-color: variables.$color-demographics !important;\n  }\n  .bg-economy {\n    background-color: variables.$color-economy !important;\n  }\n  .bg-resources {\n    background-color: variables.$color-resources !important;\n  }\n  .bg-land {\n    background-color: variables.$color-land !important;\n  }\n\n  #main-content {\n    position: relative;\n    display: grid;\n    grid-template-columns: minmax(0, 1fr) 450px;\n    align-items: flex-start;\n    justify-content: flex-end;\n    justify-items: center;\n    gap: 48px;\n    padding-left: 44px;\n    margin: 0 auto;\n\n    @include mixins.tablet {\n      display: block;\n      padding-left: 23px;\n      padding-right: 23px;\n    }\n\n    main {\n      max-width: calc(1440px - 450px);\n      width: 100%;\n      order: -1;\n      margin-bottom: 100px;\n\n      @include mixins.tablet {\n        max-width: none;\n      }\n    }\n  }\n\n  .section__title {\n    @extend .cta-text;\n    display: inline-flex;\n    align-items: center;\n    min-height: 21px;\n    padding: 0 6px;\n    margin-right: 30px;\n    background-color: variables.$white;\n    border-radius: variables.$b-radius;\n    cursor: default;\n  }\n}\n","// Fonts\n$font-main: '_AcidGrotesk', sans-serif;\n$font-title: '_Apparat', sans-serif;\n\n// Colors\n$black: #000000;\n$white: #ffffff;\n$grey: #e9ecef;\n\n$color-explorer: #a3b0d1;\n$color-ecology: #73ad80;\n$color-housing: #e08565;\n$color-health: #cd718c;\n$color-transport: #c9c3fa;\n$color-climate: #f5d574;\n$color-urban: #adb033;\n$color-demographics: #9e9090;\n$color-economy: #beaf62;\n$color-resources: #dca656;\n$color-land: #7baaaa;\n\n$t1: 0.25s;\n$t2: 0.45s;\n\n$b-radius: 4px;\n$b-radius-mid: 6.4px;\n$b-radius-large: 74px;\n\n// Easings\n$ease-in-out-cubic: cubic-bezier(\n\t0.65,\n\t0,\n\t0.35,\n\t1\n); // https://cubic-bezier.com/#.65,0,.35,1\n$ease-in-out-airbag: cubic-bezier(\n\t0.3,\n\t0,\n\t0,\n\t1\n); // https://cubic-bezier.com/#.3,0,0,1\n","$small: 490px;\n$mobile: 767px;\n$tablet: 1170px;\n$laptop: 1439px;\n$hd: 1920px;\n$two-k: 2200px;\n$four-k: 3400px;\n\n@mixin four-k {\n    @media (max-width: $four-k) {\n        @content;\n    }\n}\n\n@mixin two-k {\n    @media (max-width: $two-k) {\n        @content;\n    }\n}\n\n@mixin hd {\n    @media (max-width: $hd) {\n        @content;\n    }\n}\n\n@mixin laptop {\n    @media (max-width: $laptop) {\n        @content;\n    }\n}\n\n@mixin desktop-screen {\n    @media (min-width: calc($tablet + 1)) {\n        @content;\n    }\n}\n\n@mixin tablet {\n    @media (max-width: $tablet) {\n        @content;\n    }\n}\n\n@mixin mobile {\n    @media (max-width: $mobile) {\n        @content;\n    }\n}\n\n@mixin small {\n    @media (max-width: $small) {\n        @content;\n    }\n}\n","@use \"../variables\";\n@use \"../mixins\";\n\n.landing {\n  #mobile-nav {\n    display: none;\n    position: fixed;\n    top: 0;\n    left: 0;\n    height: 100%;\n    width: 100%;\n    background-color: variables.$grey;\n    padding: 150px 23px;\n    overflow: auto;\n    z-index: 10;\n\n    @include mixins.mobile {\n      &.mobile-nav--visible {\n        display: block;\n      }\n    }\n\n    .mobile-nav-group {\n      padding-bottom: 24px;\n      margin-bottom: 24px;\n\n      ul {\n        margin-top: 20px;\n        display: flex;\n        flex-direction: column;\n        gap: 15px;\n      }\n\n      &:not(:last-of-type) {\n        border-bottom: 1px solid variables.$black;\n      }\n    }\n  }\n\n  #main-header {\n    max-width: min(calc(100vw - 44px * 2), 1440px);\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    display: flex;\n    width: 100%;\n    margin: 0 auto;\n    padding: 12px 0;\n    z-index: 15;\n    transition: transform variables.$t1 variables.$ease-in-out-cubic;\n\n    @include mixins.tablet {\n      max-width: min(calc(100vw - 44px), 1440px);\n    }\n\n    @include mixins.mobile {\n      max-width: none;\n      justify-content: space-between;\n      align-items: center;\n      padding: 28px 24px;\n    }\n\n    &::before {\n      content: \"\";\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 150vw;\n      height: 100%;\n      transform: translateX(-50vw);\n      background-color: variables.$white;\n      z-index: 0;\n    }\n\n    .curbcut-logo {\n      display: none;\n      z-index: 1;\n\n      @include mixins.mobile {\n        display: block;\n      }\n    }\n\n    .main-nav > ul {\n      display: flex;\n      gap: 24px;\n\n      li {\n        display: flex;\n        align-items: center;\n        z-index: 1;\n\n        @include mixins.mobile {\n          &:not(.language-switcher, .menu-btn) {\n            display: none;\n          }\n        }\n\n        details {\n          position: relative;\n          display: flex;\n          flex-direction: column;\n          padding: 7px 14px;\n\n          &[open] {\n            background-color: variables.$white;\n\n            .caret {\n              transform: rotateX(180deg);\n            }\n          }\n\n          summary {\n            display: flex;\n            gap: 8px;\n          }\n\n          ul {\n            position: absolute;\n            top: 30px;\n            left: 0;\n            background-color: variables.$white;\n            z-index: 12;\n\n            li {\n              white-space: nowrap;\n              padding: 2px 0;\n              margin: 0 8px;\n\n              &:not(:last-of-type) {\n                border-bottom: 1px solid variables.$black;\n              }\n\n              a {\n                font-size: 1.4rem;\n                line-height: 3rem;\n              }\n            }\n          }\n        }\n\n        &.language-switcher {\n          padding: 7px 14px;\n\n          @include mixins.mobile {\n            padding: 0;\n\n            .cta-text--underline::after {\n              transform: scaleX(0);\n            }\n          }\n        }\n\n        &.menu-btn {\n          display: none;\n          align-items: center;\n          width: 24px;\n          height: 24px;\n          background: url(\"data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAxNyI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTAgMGgyNHYyLjQyOUgwek0wIDcuMjg2aDI0djIuNDI5SDB6TTAgMTQuNTcxaDI0VjE3SDB6Ii8+Cjwvc3ZnPg==\")\n            no-repeat;\n          background-position: center;\n          cursor: pointer;\n\n          @include mixins.mobile {\n            display: flex;\n          }\n        }\n      }\n    }\n\n    &.header--opened {\n      .main-nav > ul li.menu-btn {\n        background-image: url(\"data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNCAzNCI+CiAgPHBhdGggZmlsbD0iIzAwMCIgZD0iTTI2LjMxNSA5LjM0MyA5LjM0NCAyNi4zMTRsLTEuNzE4LTEuNzE4IDE2Ljk3MS0xNi45N3oiLz4KICA8cGF0aCBmaWxsPSIjMDAwIiBkPSJtOS4zNDQgNy42MjcgMTYuOTcgMTYuOTctMS43MTcgMS43MTgtMTYuOTctMTYuOTd6Ii8+Cjwvc3ZnPg==\");\n      }\n    }\n\n    &.header--hidden {\n      transform: translateY(-130px);\n    }\n\n    &.header--background:not(.header--opened)::before {\n      opacity: 1;\n    }\n\n    body.bg-background &.header--background:not(.header--opened)::before {\n      opacity: 0;\n    }\n  }\n\n  #categories-menu {\n    position: sticky;\n    top: 0;\n    min-height: 100vh;\n    width: 100%;\n    max-width: 450px;\n    background-color: #e3e3e3;\n    display: flex;\n    flex-direction: column;\n    justify-content: flex-start;\n    transition: background-color variables.$t2 variables.$ease-in-out-airbag;\n    z-index: 20;\n    overflow-x: hidden; /* Hide overflow for transitions */\n\n    @include mixins.tablet {\n      display: none;\n\n      &.is-visible {\n        min-height: auto;\n        max-width: none;\n        width: calc(100% - 23px * 2);\n        max-height: 80vh;\n        display: flex;\n        position: fixed;\n        top: auto;\n        bottom: 14px;\n        overflow: auto;\n      }\n    }\n\n    .curbcut-logo {\n      padding-bottom: 20px;\n      margin: 15px 25px 0;\n      display: flex;\n      flex-direction: column;\n      gap: 8px;\n      z-index: 2; /* Keep above the sliding menus */\n      @include mixins.tablet {\n        display: none;\n      }\n    }\n\n    .close-cta {\n      display: none;\n      z-index: 2; /* Keep above the sliding menus */\n      background-color: #e3e3e3;\n\n      @include mixins.tablet {\n        display: flex;\n        justify-content: flex-end;\n        align-items: center;\n        gap: 12px;\n        min-height: 60px;\n        height: 60px;\n        padding-right: 16px;\n        cursor: pointer;\n      }\n    }\n\n    .categories-nav {\n      display: flex;\n      flex-direction: column;\n      margin-top: 50px;\n      flex-grow: 1;\n      position: relative; /* For positioning the sliding menus */\n      overflow-y: auto; /* Allow scrolling */\n      flex: 1; /* Take up available space */\n      display: flex;\n      flex-direction: column;\n      overflow-x: hidden;\n    }\n\n    /* Main menu and submenu containers for transitions */\n    .main-menu-container,\n    .submenu-container {\n      width: 100%;\n      transition: transform 1s ease, opacity 0.5s ease;\n      position: absolute;\n      top: 0;\n      left: 0;\n      right: 0;\n      display: flex;\n      flex-direction: column;\n      backface-visibility: hidden; /* Prevent flickering */\n    }\n\n    /* Position the main menu */\n    .main-menu-container {\n      transform: translateX(0);\n      opacity: 1;\n    }\n\n    /* Position the submenu off-screen initially */\n    .submenu-container {\n      transform: translateX(100%);\n      opacity: 0;\n    }\n\n    /* Animation states when submenu is active */\n    &.submenu-active {\n      .main-menu-container {\n        transform: translateX(-100%);\n        opacity: 0;\n      }\n      /* Make sure the fixed header always has the grey background */\n      .fixed-header {\n        position: sticky;\n        top: 0;\n        z-index: 3;\n        background-color: #e3e3e3 !important; /* Force grey background */\n        border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Add border for separation */\n      }\n\n      .submenu-container {\n        transform: translateX(0);\n        opacity: 1;\n      }\n\n      /* Remove the theme colors from just the title */\n      /* Remove any background color from entire menu container */\n      background-color: #e3e3e3;\n\n      /* Add this section to color the entire menu area except the logo */\n      &::after {\n        content: \"\";\n        position: absolute;\n        top: 185px; /* Keep this the same as before */\n        left: 0;\n        right: 0;\n        bottom: 0;\n        height: auto;\n        min-height: calc(\n          100% - 185px\n        ); /* Make sure it extends at least to the bottom of the container */\n        z-index: 0;\n        transition: background-color variables.$t2 variables.$ease-in-out-airbag;\n      }\n\n      /* Add theme colors to the overlay instead */\n      &[data-category=\"climate\"]::after {\n        background-color: variables.$color-climate;\n      }\n      &[data-category=\"demographics\"]::after {\n        background-color: variables.$color-demographics;\n      }\n      &[data-category=\"ecology\"]::after {\n        background-color: variables.$color-ecology;\n      }\n      &[data-category=\"health\"]::after {\n        background-color: variables.$color-health;\n      }\n      &[data-category=\"housing\"]::after {\n        background-color: variables.$color-housing;\n      }\n      &[data-category=\"transport\"]::after {\n        background-color: variables.$color-transport;\n      }\n      &[data-category=\"urban\"]::after {\n        background-color: variables.$color-urban;\n      }\n      &[data-category=\"explorer\"]::after {\n        background-color: variables.$color-explorer;\n      }\n      &[data-category=\"economy\"]::after {\n        background-color: variables.$color-economy;\n      }\n      &[data-category=\"resources\"]::after {\n        background-color: variables.$color-resources;\n      }\n      &[data-category=\"land\"]::after {\n        background-color: variables.$color-land;\n      }\n\n      /* Make sure content remains visible above the colored background */\n      .categories-nav,\n      .back-button,\n      .theme-title,\n      .subcategory-section {\n        position: relative;\n        z-index: 1;\n        background-color: transparent;\n      }\n\n      /* Keep these background colors only for the theme-title */\n      .theme-title {\n        &[data-category=\"climate\"] {\n          background-color: variables.$color-climate;\n        }\n        &[data-category=\"demographics\"] {\n          background-color: variables.$color-demographics;\n        }\n        &[data-category=\"ecology\"] {\n          background-color: variables.$color-ecology;\n        }\n        &[data-category=\"health\"] {\n          background-color: variables.$color-health;\n        }\n        &[data-category=\"housing\"] {\n          background-color: variables.$color-housing;\n        }\n        &[data-category=\"transport\"] {\n          background-color: variables.$color-transport;\n        }\n        &[data-category=\"urban\"] {\n          background-color: variables.$color-urban;\n        }\n        &[data-category=\"explorer\"] {\n          background-color: variables.$color-explorer;\n        }\n        &[data-category=\"economy\"] {\n          background-color: variables.$color-economy;\n        }\n        &[data-category=\"resources\"] {\n          background-color: variables.$color-resources;\n        }\n        &[data-category=\"land\"] {\n          background-color: variables.$color-land;\n        }\n      }\n    }\n\n    /* Main menu styles */\n    .nav-item {\n      border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n      background-color: transparent;\n      padding: 12px 24px;\n      cursor: pointer;\n      transition: color variables.$t1 variables.$ease-in-out-airbag,\n        background-color variables.$t2 variables.$ease-in-out-airbag;\n      &:last-child {\n        border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n      }\n\n      &:hover,\n      &:focus {\n        background-color: variables.$black;\n\n        &[data-category=\"climate\"] {\n          color: variables.$color-climate;\n          svg path {\n            fill: variables.$color-climate;\n          }\n        }\n        &[data-category=\"demographics\"] {\n          color: variables.$color-demographics;\n          svg path {\n            fill: variables.$color-demographics;\n          }\n        }\n        &[data-category=\"ecology\"] {\n          color: variables.$color-ecology;\n          svg path {\n            fill: variables.$color-ecology;\n          }\n        }\n        &[data-category=\"health\"] {\n          color: variables.$color-health;\n          svg path {\n            fill: variables.$color-health;\n          }\n        }\n        &[data-category=\"housing\"] {\n          color: variables.$color-housing;\n          svg path {\n            fill: variables.$color-housing;\n          }\n        }\n        &[data-category=\"transport\"] {\n          color: variables.$color-transport;\n          svg path {\n            fill: variables.$color-transport;\n          }\n        }\n        &[data-category=\"urban\"] {\n          color: variables.$color-urban;\n          svg path {\n            fill: variables.$color-urban;\n          }\n        }\n        &[data-category=\"explorer\"] {\n          color: variables.$color-explorer;\n          svg path {\n            fill: variables.$color-explorer;\n          }\n        }\n        &[data-category=\"economy\"] {\n          color: variables.$color-economy;\n          svg path {\n            fill: variables.$color-economy;\n          }\n        }\n        &[data-category=\"resources\"] {\n          color: variables.$color-resources;\n          svg path {\n            fill: variables.$color-resources;\n          }\n        }\n        &[data-category=\"land\"] {\n          color: variables.$color-land;\n          svg path {\n            fill: variables.$color-land;\n          }\n        }\n      }\n\n      &__category {\n        display: flex;\n        align-items: center;\n        justify-content: space-between;\n\n        span {\n          display: flex;\n          flex: 1;\n          align-items: center;\n          gap: 14px;\n        }\n\n        svg {\n          flex-shrink: 0;\n          width: 24px;\n          height: 24px;\n        }\n      }\n    }\n\n    /* Subcategory menu styles */\n    .back-button {\n      display: flex;\n      align-items: center;\n      padding: 8px 24px;\n      cursor: pointer;\n      background-color: #e3e3e3; /* Keep original background */\n\n      svg {\n        margin-right: 12px;\n        flex-shrink: 0;\n      }\n\n      span {\n        font-size: 1.4rem;\n        font-weight: 500;\n      }\n\n      &:hover {\n        background-color: rgba(0, 0, 0, 0.05);\n      }\n    }\n\n    .theme-title {\n      padding: 16px 24px;\n      border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n      transition: background-color variables.$t2 variables.$ease-in-out-airbag;\n\n      h2 {\n        font-weight: 600;\n        margin: 0;\n      }\n    }\n\n    .subcategory-section {\n      padding: 16px 24px;\n      border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n      background-color: #e3e3e3; /* Keep original background */\n    }\n\n    .subcategory-title {\n      font-size: 1.6rem;\n      font-weight: 600;\n      margin-bottom: 12px;\n      color: #333;\n    }\n\n    .pages-list {\n      padding: 0;\n      margin: 0;\n      list-style: none;\n    }\n\n    .page-item {\n      margin: 8px 0;\n    }\n\n    .page-link {\n      font-size: 1.6rem;\n      line-height: 2.2rem;\n      cursor: pointer;\n      display: block;\n\n      &:hover {\n        text-decoration: underline;\n      }\n    }\n\n    /* Style for the \"En savoir plus\" link at the bottom */\n    .en-savoir-plus {\n      margin-top: auto;\n      padding: 24px;\n      z-index: 1;\n\n      a {\n        font-size: 1.6rem;\n        cursor: pointer;\n\n        &:hover {\n          text-decoration: underline;\n        }\n      }\n    }\n  }\n\n  #choose-map-mobile-cta {\n    display: none;\n\n    @include mixins.tablet {\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      position: sticky;\n      bottom: 0;\n      margin-bottom: 30px;\n      width: 100vw;\n      height: 50px;\n      background-color: variables.$black;\n      color: variables.$white;\n      transform: translateX(-23px);\n      z-index: 8;\n    }\n  }\n\n  #inapp-categories-menu {\n    position: sticky;\n    top: 0;\n    min-height: 100%;\n    width: 250px;\n    max-width: 250px;\n    background-color: variables.$grey;\n    display: flex;\n    flex-direction: column;\n    transition: background-color variables.$t2 variables.$ease-in-out-airbag;\n    z-index: 20;\n    border: 1px black solid;\n    border-width: 0 1px 1px 1px;\n  \n    scrollbar-width: thin; /* Firefox */\n    scrollbar-color: #808080 transparent; /* Firefox */\n\n    h4, .h4 {\n      font-size: 14px !important;\n    }\n  \n    &::-webkit-scrollbar {\n      width: 6px;\n    }\n  \n    &::-webkit-scrollbar-track {\n      background: transparent;\n    }\n  \n    &::-webkit-scrollbar-thumb {\n      background-color: variables.$black;\n      border-radius: 10px;\n      border: 2px solid transparent;\n      background-clip: content-box;\n    }\n  \n    &::-webkit-scrollbar-thumb:hover {\n      background-color: darken(variables.$black, 10%);\n    }\n  \n    .categories-nav {\n      display: flex;\n      flex-direction: column;\n  \n      .nav-item {\n        border-top: 1px solid variables.$black;\n        padding: 3px 12px;\n        background-color: transparent;\n        transition: color variables.$t1 variables.$ease-in-out-airbag,\n          background-color variables.$t2 variables.$ease-in-out-airbag;\n  \n        // Dans .nav-item\n        .theme-menu {\n          max-height: 300px; // limite la hauteur du menu ouvert\n          overflow-y: auto;\n          padding: 5px 0;\n          margin-top: 6px;\n          display: flex;\n          flex-direction: column;\n          gap: 10px; // espace entre sous-catégories\n        }\n  \n        .subcategory-section {\n          padding-left: 4px;\n          display: flex;\n          flex-direction: column;\n          gap: 0px;\n        }\n  \n        .subcategory-title {\n          font-size: 1.3rem;\n          font-weight: 600;\n          line-height: 1.8rem;\n          color: inherit;\n          padding-left: 2px;\n        }\n  \n        .pages-list {\n          list-style: none;\n          padding-left: 10px;\n          margin: 0;\n          display: flex;\n          flex-direction: column;\n          gap: 4px;\n  \n          .page-item {\n            font-size: 1.2rem;\n            cursor: pointer;\n  \n            a {\n              font-size: 1.2rem;\n              line-height: 1rem;\n            }\n  \n            .page-link {\n              color: inherit;\n              text-decoration: none;\n  \n              &:hover {\n                text-decoration: underline;\n              }\n            }\n          }\n        }\n  \n        &:hover,\n        &:focus {\n          background-color: variables.$black;\n  \n          &[data-category=\"climate\"] {\n            color: variables.$color-climate;\n            svg path {\n              fill: variables.$color-climate;\n            }\n          }\n          &[data-category=\"demographics\"] {\n            color: variables.$color-demographics;\n            svg path {\n              fill: variables.$color-demographics;\n            }\n          }\n          &[data-category=\"ecology\"] {\n            color: variables.$color-ecology;\n            svg path {\n              fill: variables.$color-ecology;\n            }\n          }\n          &[data-category=\"health\"] {\n            color: variables.$color-health;\n            svg path {\n              fill: variables.$color-health;\n            }\n          }\n          &[data-category=\"housing\"] {\n            color: variables.$color-housing;\n            svg path {\n              fill: variables.$color-housing;\n            }\n          }\n          &[data-category=\"transport\"] {\n            color: variables.$color-transport;\n            svg path {\n              fill: variables.$color-transport;\n            }\n          }\n          &[data-category=\"urban\"] {\n            color: variables.$color-urban;\n            svg path {\n              fill: variables.$color-urban;\n            }\n          }\n          &[data-category=\"explorer\"] {\n            color: variables.$color-explorer;\n            svg path {\n              fill: variables.$color-explorer;\n            }\n          }\n          &[data-category=\"economy\"] {\n            color: variables.$color-economy;\n            svg path {\n              fill: variables.$color-economy;\n            }\n          }\n          &[data-category=\"resources\"] {\n            color: variables.$color-resources;\n            svg path {\n              fill: variables.$color-resources;\n            }\n          }\n          &[data-category=\"land\"] {\n            color: variables.$color-land;\n            svg path {\n              fill: variables.$color-land;\n            }\n          }\n        }\n  \n        &__category {\n          display: flex;\n          align-items: center;\n          justify-content: space-between;\n          width: 100%; // ensure full width\n          cursor: pointer;\n          padding-right: 6px; // optional, gives spacing from right edge\n  \n          span {\n            display: flex;\n            align-items: center;\n            gap: 14px;\n            flex: 1; // ensures the span takes remaining space, pushing caret right\n            overflow: hidden; // optional, avoids content overflow\n          }\n  \n          svg {\n            flex-shrink: 0; // prevent the caret from shrinking\n            margin-left: auto; // ensure it stays aligned to the right\n          }\n        }\n  \n        ul {\n          padding: 5px 0;\n          display: flex;\n          flex-direction: column;\n          gap: 10px;\n  \n          li {\n            font-size: 1.2rem;\n          }\n        }\n  \n        svg path {\n          transition: fill variables.$t1 variables.$ease-in-out-airbag;\n        }\n  \n        &[open] {\n          .caret {\n            transform: rotateX(180deg);\n          }\n        }\n      }\n    }\n  \n    .caret {\n      width: 12px;\n    }\n  }\n  \n\n  .menu-invisible {\n    max-height: 0;\n    overflow: hidden;\n    transition: max-height 3s ease-out;\n  }\n\n  .menu-visible {\n    max-height: 800px;\n    transition: max-height 3s ease-in;\n  }\n}\n\n.menu-invisible {\n  max-height: 0;\n  overflow: hidden;\n  transition: max-height 3s ease-out;\n}\n\n.menu-visible {\n  max-height: 800px;\n  transition: max-height 3s ease-in;\n}\n","@use '../variables';\n@use '../mixins';\n\n.landing {\n\t.hero {\n\t\tmargin-top: 116px;\n\t\tposition: relative;\n\n\t\t@include mixins.tablet {\n\t\t\tmargin-left: 15%;\n\t\t\tmargin-right: 15%;\n\t\t}\n\n\t\t@include mixins.mobile {\n\t\t\tmargin-left: 0;\n\t\t\tmargin-right: 0;\n\t\t}\n\n\t\t.main-title {\n\t\t\tdisplay: grid;\n\t\t\tgrid-template-columns: minmax(40%, 1fr) 320px;\n\t\t\tgrid-column-gap: 42px;\n\t\t\tgrid-row-gap: 0px;\n\t\t\talign-items: center;\n\t\t\tline-height: 1.05;\n\t\t\tcolor: white;\n\n\t\t\t@include mixins.laptop {\n\t\t\t\talign-items: flex-end;\n\t\t\t}\n\n\t\t\t@include mixins.mobile {\n\t\t\t\tgrid-template-columns: minmax(40%, 1fr) 128px;\n\t\t\t}\n\n\t\t\t&__first-part {\n\t\t\t\tgrid-area: 1 / 1 / 2 / 2;\n\t\t\t\ttext-align: right;\n\t\t\t}\n\n\t\t\t&__video {\n\t\t\t\tposition: relative;\n\t\t\t\twidth: 320px;\n\t\t\t\theight: 205px;\n\t\t\t\tgrid-area: 1 / 2 / 2 / 3;\n\t\t\t\tborder-radius: variables.$b-radius-mid;\n\t\t\t\tborder-top-right-radius: variables.$b-radius-large;\n\t\t\t\toverflow: hidden;\n\t\t\t\tcursor: pointer;\n\n\t\t\t\t@include mixins.mobile {\n\t\t\t\t\twidth: 128px;\n\t\t\t\t\theight: 81px;\n\t\t\t\t\tborder-top-right-radius: calc(\n\t\t\t\t\t\tvariables.$b-radius-large / 2\n\t\t\t\t\t);\n\t\t\t\t}\n\n\t\t\t\t&::after {\n\t\t\t\t\tcontent: '';\n\t\t\t\t\tposition: absolute;\n\t\t\t\t\ttop: 0;\n\t\t\t\t\tbottom: 0;\n\t\t\t\t\tleft: 0;\n\t\t\t\t\tright: 0;\n\t\t\t\t\tmargin: auto;\n\t\t\t\t\twidth: 46px;\n\t\t\t\t\theight: 67px;\n\t\t\t\t\tbackground: url('data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NiA2NyI+CiAgPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4zMDggNy43ODh2Mi45MDljLjM0Mi4xMTguNjYzLjMxNS45MzUuNTg5TDM0LjU2NiAzMS43MWMuOTYuOTY0Ljk2IDIuNTI2IDAgMy40OUwxNC4yNDMgNTUuNjI1Yy0uMjcyLjI3NC0uNTkzLjQ3LS45MzUuNTg4djIuOTA5Yy4zMzYuMTE4LjY1Mi4zMTMuOTIxLjU4M2w3LjE2OSA3LjIwNkw0NiA0Mi4xODQgMzkuMDUgMzUuMmEyLjQ3NiAyLjQ3NiAwIDAgMSAwLTMuNDlMNDYgMjQuNzI2IDIxLjM5NiAwbC03LjE2OCA3LjIwNmMtLjI2OS4yNy0uNTg0LjQ2NC0uOTIuNTgzWiIgZmlsbD0iI0U5RUNFRiIvPgogIDxwYXRoIGZpbGw9IiNFOUVDRUYiIGQ9Ik0wIDYuNzY3aDEzLjMwOHY1MS4zM0gweiIvPgo8L3N2Zz4=')\n\t\t\t\t\t\tno-repeat;\n\n\t\t\t\t\t@include mixins.mobile {\n\t\t\t\t\t\twidth: 24px;\n\t\t\t\t\t\theight: 35px;\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\tvideo {\n\t\t\t\t\tdisplay: block;\n\t\t\t\t\twidth: 100%;\n\t\t\t\t\theight: 100%;\n\t\t\t\t\tobject-fit: cover;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t&__second-part {\n\t\t\t\tgrid-area: 2 / 1 / 3 / 3;\n\t\t\t\ttext-align: center;\n\t\t\t}\n\n\t\t\t// This was previously lang-fr, but now added to ALL situations\n\t\t\t&.all-langs {\n\t\t\t\tgrid-template-columns: minmax(50%, 1fr) 250px;\n\t\t\t\tgrid-column-gap: 28px;\n\n\t\t\t\t@include mixins.laptop {\n\t\t\t\t\talign-items: flex-start;\n\t\t\t\t}\n\n\t\t\t\t@include mixins.small {\n\t\t\t\t\tgrid-template-columns: minmax(50%, 1fr) 130px;\n\t\t\t\t}\n\n\t\t\t\t@media (max-width: 420px) {\n\t\t\t\t\tgrid-template-columns: minmax(50%, 1fr) 80px;\n\t\t\t\t}\n\n\t\t\t\t.main-title__first-part {\n\t\t\t\t\tgrid-area: 1 / 1 / 2 / 3;\n\n\t\t\t\t\t@include mixins.laptop {\n\t\t\t\t\t\ttext-align: center;\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\t.main-title__video {\n\t\t\t\t\tgrid-area: 2 / 2 / 3 / 3;\n\t\t\t\t\twidth: 250px;\n\t\t\t\t\theight: 100%;\n\t\t\t\t\tmax-height: 215px;\n\n\t\t\t\t\t@include mixins.mobile {\n\t\t\t\t\t\twidth: 170px;\n\t\t\t\t\t\theight: 92px;\n\t\t\t\t\t}\n\n\t\t\t\t\t@include mixins.small {\n\t\t\t\t\t\twidth: 100%;\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\t.main-title__second-part {\n\t\t\t\t\tgrid-area: 2 / 1 / 3 / 2;\n\t\t\t\t\ttext-align: right;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n","@use \"../variables\";\n@use \"../mixins\";\n\n.landing {\n  .section-about {\n    margin-top: 66px;\n    display: grid;\n    grid-template-columns: min(35%, 300px) 1fr;\n    justify-content: flex-start;\n    align-items: flex-start;\n  \n    @include mixins.mobile {\n      margin-top: 58px;\n      display: flex;\n      flex-direction: column;\n      gap: 12px;\n    }\n  \n    #curbcut-logo {\n      @include mixins.mobile {\n        display: none !important;\n      }\n    }\n  \n    & > div:last-of-type {\n      display: flex;\n      flex-direction: column;\n      align-items: flex-start;\n  \n      .cta-text {\n        margin-top: 13px;\n      }\n    }\n  }\n  \n  .section-about:first-of-type {\n    margin-top: 0;\n  }\n  \n}\n","@use '../variables';\n@use '../mixins';\n\n.landing {\n\t.section-block {\n\t\tmargin-top: 84px;\n\t\tbackground-color: white;\n\t\tborder-radius: 24px;\n\t\tpadding: 30px;\n\t}\n\t\n\t.section-discover {\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\t\n\t\t@include mixins.mobile {\n\t\t\tmargin-top: 78px;\n\t\t}\n\t\n\t\t& > div:first-child {\n\t\t\tdisplay: flex;\n\t\t\tjustify-content: space-between;\n\t\t\talign-items: center;\n\t\t}\n\t\n\t\t&__cards-wrapper {\n\t\t\tmargin-top: 20px;\n\t\t\tdisplay: grid;\n\t\t\tgrid-template-columns: repeat(4, minmax(10px, 1fr));\n\t\t\tgap: 18px;\n\t\n\t\t\t@include mixins.mobile {\n\t\t\t\tmargin-top: 11px;\n\t\t\t\tgrid-template-columns: repeat(2, minmax(10px, 1fr));\n\t\t\t\tgap: 13px;\n\t\t\t}\n\t\n\t\t\t.card {\n\t\t\t\tposition: relative; // Added this to keep everything in one block\n\t\n\t\t\t\t&__img {\n\t\t\t\t\twidth: 100%;\n\t\t\t\t\theight: 332px;\n\t\t\t\t\toverflow: hidden;\n\t\t\t\t\tborder-top-left-radius: variables.$b-radius-mid;\n\t\t\t\t\tborder-top-right-radius: variables.$b-radius-mid;\n\t\t\t\t\ttransition: border-radius variables.$t1\n\t\t\t\t\t\tvariables.$ease-in-out-cubic;\n\t\n\t\t\t\t\t@include mixins.tablet {\n\t\t\t\t\t\theight: 168px;\n\t\t\t\t\t}\n\t\n\t\t\t\t\timg {\n\t\t\t\t\t\tdisplay: block;\n\t\t\t\t\t\twidth: 100%;\n\t\t\t\t\t\theight: 100%;\n\t\t\t\t\t\tobject-fit: cover;\n\t\t\t\t\t\tobject-position: center;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\n\t\t\t\t&__title {\n\t\t\t\t\tpadding: 14px;\n\t\t\t\t\theight: 67px;\n\t\t\t\t\tdisplay: flex;\n\t\t\t\t\tflex-direction: column; // Changed to column to align text in rows\n\t\t\t\t\tjustify-content: center; // Added to vertically center text\n\t\t\t\t\talign-items: flex-start; // Text aligns to the left\n\t\t\t\t\tposition: absolute;\n\t\t\t\t\tbottom: 0;\n\t\t\t\t\twidth: 100%;\n\t\t\t\t\toverflow: hidden;\n\t\n\t\t\t\t\t.card__text,\n\t\t\t\t\t.card__preview {\n\t\t\t\t\t\twidth: 100%; // Ensures text containers take up full width\n\t\t\t\t\t}\n\t\n\t\t\t\t\t.card__preview {\n\t\t\t\t\t\tdisplay: none;\n\t\t\t\t\t\tfont-size: 0.7em;\n\t\t\t\t\t\tline-height: 1.6;\n\t\t\t\t\t\tmargin-top: 5px;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\n\t\t\t\t&:hover {\n\t\t\t\t\t.card__img {\n\t\t\t\t\t\tborder-top-right-radius: variables.$b-radius-large;\n\t\t\t\t\t}\n\t\t\t\t\t.card__title {\n\t\t\t\t\t\tbottom: 0px;\n\t\t\t\t\t\theight: fit-content;\n\t\t\t\t\t\t.card__preview {\n\t\t\t\t\t\t\tdisplay: block;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n\t\n}","@use '../variables';\n@use '../mixins';\n.landing {\n\t.section-news {\n\t\tposition: relative;\n\t\tmargin-top: 112px;\n\t\tmargin-bottom: 100px;\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\t\n\t\t@include mixins.mobile {\n\t\t\t// Remove padding for slider\n\t\t\tmargin-left: -23px;\n\t\t\twidth: calc(100% + 23px * 2);\n\t\t}\n\t\n\t\t& > div:first-child {\n\t\t\tmargin-bottom: 20px;\n\t\n\t\t\t@include mixins.mobile {\n\t\t\t\tmargin-left: 23px;\n\t\t\t}\n\t\t}\n\t\n\t\t.swiper-is-enabled {\n\t\t\tcursor: grab;\n\t\t}\n\t\n\t\t.swipe-cta {\n\t\t\tposition: absolute;\n\t\t\ttop: 0;\n\t\t\tbottom: 0;\n\t\t\tmargin: auto 0;\n\t\t\tdisplay: flex;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n\t\t\twidth: 62px;\n\t\t\theight: 62px;\n\t\t\tbackground-color: variables.$white;\n\t\t\tborder-radius: 50%;\n\t\t\tcursor: pointer;\n\t\t\tz-index: 5;\n\t\t\ttransition: opacity variables.$t1 linear;\n\t\n\t\t\t@include mixins.tablet {\n\t\t\t\tdisplay: none;\n\t\t\t}\n\t\n\t\t\timg {\n\t\t\t\tdisplay: block;\n\t\t\t\ttransform: rotate(-90deg) translateY(3px);\n\t\t\t}\n\t\n\t\t\t&.swiper-button-disabled {\n\t\t\t\topacity: 0;\n\t\t\t}\n\t\t}\n\t\n\t\t#swipe-cta-prev {\n\t\t\tleft: -20px;\n\t\n\t\t\timg {\n\t\t\t\ttransform: rotate(90deg) translateY(3px);\n\t\t\t}\n\t\t}\n\t\n\t\t#swipe-cta-next {\n\t\t\tright: -20px;\n\t\t}\n\t\n\t\t.news {\n\t\t\tdisplay: block;\n\t\t\tmax-width: 253px;\n\t\n\t\t\t@include mixins.mobile {\n\t\t\t\tmax-width: max(253px, 80%);\n\t\t\t}\n\t\n\t\t\t&__title {\n\t\t\t\tmargin-top: 15px;\n\t\t\t\tmargin-bottom: 5px;\n\t\t\t}\n\t\n\t\t\t&__description {\n\t\t\t\tcolor: #282828;\n\t\t\t\topacity: 0.5;\n\t\t\t\tmargin-bottom: 12px;\n\t\n\t\t\t\tspan {\n\t\t\t\t\tdisplay: -webkit-box;\n\t\t\t\t\t-webkit-box-orient: vertical;\n\t\t\t\t\t-webkit-line-clamp: 9;\n\t\t\t\t\tline-clamp: 9;\n\t\t\t\t\toverflow: hidden;\n\t\t\t\t}\n\t\t\t}\n\t\n\t\t\t&:not(:last-child)::after {\n\t\t\t\tcontent: '';\n\t\t\t\tposition: absolute;\n\t\t\t\tbottom: 0;\n\t\t\t\tright: -34px;\n\t\t\t\twidth: 1px;\n\t\t\t\theight: 253px;\n\t\t\t\tbackground-color: variables.$black;\n\t\t\t\ttop: 40px;\n\t\t\t}\n\t\t}\n\t}\n\t}\n","@use \"../variables\";\n@use \"../mixins\";\n\n.landing {\n  footer {\n    position: relative;\n    background-color: variables.$white;\n  \n    .footer__banner {\n      text-align: center;\n      margin: 0 auto;\n      overflow: hidden;\n      display: inline-block;\n      width: 100%;\n  \n      img {\n        display: block;\n      }\n    }\n  \n    .footer__content {\n      padding: 45px 51px 20px;\n      max-width: 1440px;\n      margin: 0 auto;\n  \n      @include mixins.tablet {\n        padding: 43px 23px 20px;\n  \n        .curbcut-logo-footer {\n          width: 141px;\n          height: 141px;\n        }\n      }\n  \n      .footer-mobile-nav {\n        display: none;\n  \n        @include mixins.tablet {\n          display: block;\n        }\n  \n        .nav-item {\n          padding: 16px 0;\n          border-bottom: 1px solid variables.$black;\n  \n          &__title {\n            display: flex;\n            align-items: center;\n            justify-content: space-between;\n  \n            .plus-sign {\n              position: relative;\n              width: 14px;\n              height: 14px;\n  \n              &::before,\n              &::after {\n                display: block;\n                position: relative;\n                content: \"\";\n                background-color: variables.$black;\n              }\n  \n              &::before {\n                top: 8px;\n                width: 100%;\n                height: 2px;\n              }\n  \n              &::after {\n                left: 6px;\n                width: 2px;\n                height: 100%;\n                transform-origin: center;\n                transition: transform variables.$t1 variables.$ease-in-out-cubic;\n              }\n            }\n          }\n  \n          & > div {\n            padding-top: 15px;\n            display: flex;\n            flex-direction: column;\n            gap: 15px;\n          }\n  \n          &[open] .plus-sign::after {\n            transform: scaleY(0);\n          }\n        }\n      }\n  \n      & > div:not(.footer__content-copyright) {\n        display: grid;\n        grid-template-columns: 230px 1fr;\n        gap: 50px;\n  \n        @include mixins.tablet {\n          display: flex;\n          flex-direction: column;\n          gap: 44px;\n        }\n  \n        .grid {\n          display: grid;\n          grid-template-columns: repeat(4, minmax(10px, 1fr));\n          column-gap: 50px;\n          row-gap: 30px;\n  \n          @include mixins.tablet {\n            display: flex;\n            flex-direction: column;\n          }\n  \n          .column {\n            display: flex;\n            flex-direction: column;\n            align-items: flex-start;\n            gap: 8px;\n  \n            @include mixins.tablet {\n              &:not(:last-of-type) {\n                padding-bottom: 50px;\n                border-bottom: 1px solid variables.$black;\n              }\n            }\n  \n            &__title {\n              display: inline-flex;\n              align-items: center;\n              margin-bottom: 2px;\n              padding: 2px 7px;\n              font-size: 1.4rem;\n              line-height: 1.7rem;\n              border: 1px solid #101010;\n              border-radius: variables.$b-radius-mid;\n  \n              @include mixins.tablet {\n                padding: 0;\n                font-size: 2.5rem;\n                line-height: 3.1rem;\n                height: auto;\n                border: none;\n              }\n            }\n  \n            img:first-of-type {\n              margin-top: 15px;\n            }\n  \n            img:not(:last-child) {\n              margin-bottom: 24px;\n            }\n          }\n        }\n      }\n  \n      &-first-half {\n        padding-bottom: 60px;\n        border-bottom: 1px solid variables.$black;\n  \n        @include mixins.tablet {\n          padding-bottom: 10px;\n          border-bottom: none;\n        }\n      }\n  \n      &-second-half {\n        padding-top: 42px;\n  \n        @include mixins.tablet {\n          .grid > .column--cities {\n            display: block !important;\n  \n            .column__title {\n              display: block !important;\n            }\n  \n            img {\n              margin-bottom: 0 !important;\n              display: inline-flex;\n              align-items: center;\n  \n              &:not(:last-child) {\n                margin-right: 40px;\n              }\n            }\n          }\n        }\n      }\n  \n      &-copyright {\n        display: block;\n        text-align: center;\n        margin-top: 42px;\n      }\n  \n      .hidden-mobile {\n        @include mixins.tablet {\n          display: none !important;\n        }\n      }\n    }\n  \n    form {\n      width: 100%;\n    }\n  \n    input {\n      height: 46px;\n      border: 1px solid variables.$black;\n      border-radius: variables.$b-radius-mid;\n      padding: 0 16px;\n      width: min(208px, 100%);\n  \n      @include mixins.tablet {\n        width: 100%;\n      }\n  \n      &,\n      &::placeholder {\n        font-family: variables.$font-main;\n        font-size: 1.4rem;\n      }\n    }\n  \n    .submit-btn {\n      margin-top: 11px;\n      color: variables.$white;\n      background-color: variables.$black;\n      height: 46px;\n      min-width: 124px;\n      padding: 0 16px;\n      border-radius: 8px;\n      font-size: 1.6rem;\n      line-height: 2.2rem;\n      cursor: pointer;\n  \n      @include mixins.tablet {\n        min-width: 188px;\n      }\n    }\n    .column {\n      display: flex;\n      flex-direction: column;\n    }\n  \n    .column__title {\n      margin-bottom: 16px;\n    }\n  \n    .subcategory-group {\n      margin-bottom: 16px;\n    }\n  \n    .subcategory-title {\n      font-weight: 500;\n      margin-bottom: 8px;\n      font-size: 0.9em;\n      opacity: 0.45;\n    }\n  \n    .cta-text-lower {\n      display: block;\n      margin-bottom: 8px;\n      cursor: pointer;\n    }\n  \n    /* Mobile styles */\n    .nav-item__title {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      cursor: pointer;\n    }\n  \n    .subcategories-container {\n      padding-left: 16px;\n      margin-top: 12px;\n    }\n  \n    .pages-container {\n      display: flex;\n      flex-direction: column;\n      gap: 8px;\n      margin-bottom: 16px;\n    }\n  }\n  }\n","@use '../variables';\r\n@use '../mixins';\r\n\r\n.landing {\r\n\t.section-team {\r\n\t\tmargin-top: 84px;\r\n\t\tdisplay: flex;\r\n\t\tflex-direction: column;\r\n\r\n\t\t@include mixins.mobile {\r\n\t\t\tmargin-top: 78px;\r\n\t\t}\r\n\r\n\t\t& > div:first-child {\r\n\t\t\tdisplay: flex;\r\n\t\t\tjustify-content: space-between;\r\n\t\t\talign-items: center;\r\n\t\t}\r\n\r\n\t\t&__cards-wrapper {\r\n\t\t\tmargin-top: 20px;\r\n\t\t\tdisplay: grid;\r\n\t\t\tgrid-template-columns: repeat(4, minmax(10px, 1fr));\r\n\t\t\tgap: 18px;\r\n\r\n\t\t\t@include mixins.mobile {\r\n\t\t\t\tmargin-top: 11px;\r\n\t\t\t\tgrid-template-columns: repeat(2, minmax(10px, 1fr));\r\n\t\t\t\tgap: 13px;\r\n\t\t\t}\r\n\r\n\t\t\t.card {\r\n\t\t\t\tposition: relative;\r\n\t\t\t\toverflow: hidden;\r\n\r\n\t\t\t\t&__img {\r\n\t\t\t\t\twidth: 100%;\r\n\t\t\t\t\theight: 265px;\r\n\t\t\t\t\toverflow: hidden;\r\n\t\t\t\t\tborder-top-left-radius: variables.$b-radius-mid;\r\n\t\t\t\t\tborder-top-right-radius: variables.$b-radius-mid;\r\n\t\t\t\t\ttransition: border-radius variables.$t1\r\n\t\t\t\t\t\tvariables.$ease-in-out-cubic;\r\n\r\n\t\t\t\t\t@include mixins.tablet {\r\n\t\t\t\t\t\theight: 168px;\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t\timg {\r\n\t\t\t\t\t\tdisplay: block;\r\n\t\t\t\t\t\twidth: 100%;\r\n\t\t\t\t\t\theight: 100%;\r\n\t\t\t\t\t\tobject-fit: cover;\r\n\t\t\t\t\t\tobject-position: center;\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\r\n\t\t\t\t&__title {\r\n\t\t\t\t\tpadding: 14px;\r\n\t\t\t\t\tmin-height: 67px;\r\n\t\t\t\t\tmax-height: auto;\r\n\t\t\t\t\talign-items: center;\r\n\r\n\t\t\t\t\t@include mixins.mobile {\r\n\t\t\t\t\t\theight: 78px;\r\n\t\t\t\t\t\tpadding: 9px 11px;\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t\tspan {\r\n\t\t\t\t\t\tdisplay: -webkit-box;\r\n\t\t\t\t\t\t-webkit-box-orient: vertical;\r\n\t\t\t\t\t\t-webkit-line-clamp: 2;\r\n\t\t\t\t\t\tline-clamp: 2;\r\n\t\t\t\t\t\toverflow: hidden;\r\n\r\n\t\t\t\t\t\t@include mixins.mobile {\r\n\t\t\t\t\t\t\t-webkit-line-clamp: 3;\r\n\t\t\t\t\t\t\tline-clamp: 3;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\r\n\t\t\t\t// &__hover {\r\n\t\t\t\t// \tposition: absolute;\r\n\t\t\t\t// \tborder-top-right-radius: variables.$b-radius-large - 10;\r\n\t\t\t\t// \ttop: 0;\r\n\t\t\t\t// \tdisplay: flex;\r\n\t\t\t\t// \talign-items: center;\r\n\t\t\t\t// \tjustify-content: center;\r\n\t\t\t\t// \topacity: 0;\r\n\t\t\t\t// \ttransition: opacity 0.3s ease;\r\n\t\t\t\t// \tz-index: 2;\r\n\t\t\t\t// \tpadding: 14px;\r\n\t\t\t\t// \tmin-height: 100%;\r\n\r\n\t\t\t\t// \tspan {\r\n\t\t\t\t// \t\tpadding: 10px;\r\n\t\t\t\t// \t\tcolor: --black;\r\n\t\t\t\t// \t\tfont-size: 13px;\r\n\t\t\t\t// \t}\r\n\r\n\t\t\t\t// \t@include mixins.mobile {\r\n\t\t\t\t// \t\tpadding: 9px 11px;\r\n\t\t\t\t// \t\tpointer-events: none;\r\n\t\t\t\t// \t\topacity: 0 !important;\r\n\t\t\t\t// \t}\r\n\t\t\t\t// }\r\n\r\n\t\t\t\t&:hover {\r\n\t\t\t\t\t.card__img {\r\n\t\t\t\t\t\tborder-top-right-radius: variables.$b-radius-large;\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t\t// .card__hover {\r\n\t\t\t\t\t// \topacity: 1; /* show on hover */\r\n\r\n\t\t\t\t\t// \tspan {\r\n\t\t\t\t\t// \t\twhite-space: normal; /* Reset the white-space to normal */\r\n\t\t\t\t\t// \t\toverflow: visible; /* Display overflowed text */\r\n\t\t\t\t\t// \t}\r\n\r\n\t\t\t\t\t// \t@include mixins.mobile {\r\n\t\t\t\t\t// \t\topacity: 0 !important; // prevent hover effect\r\n\t\t\t\t\t// \t\tmax-height: auto; // reset to original height\r\n\t\t\t\t\t// \t\tspan {\r\n\t\t\t\t\t// \t\t\twhite-space: nowrap; // reset to original white-space\r\n\t\t\t\t\t// \t\t\toverflow: hidden; // reset to original overflow\r\n\t\t\t\t\t// \t\t}\r\n\t\t\t\t\t// \t}\r\n\t\t\t\t\t// }\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n\r\n\t.contributors-container {\r\n\t\ttext-align: center;\r\n\t}\r\n\r\n\t.contributor-style {\r\n\t\tdisplay: inline;\r\n\t\tmargin-right: 10px;\r\n\t\tmargin-left: 10px;\r\n\t}\r\n}\r\n","@use '../mixins';\r\n\r\n.title-text-box {\r\n\tborder-radius: 15px;\r\n\tborder: 1px solid #000000;\r\n\tposition: relative;\r\n\ttransition: width 0.3s ease;\r\n\tpadding: 15px;\r\n\tmax-height: 100%;\r\n\tbox-sizing: border-box;\r\n\r\n\t@include mixins.tablet {\r\n\t\tdisplay: none;\r\n\t}\r\n\r\n\t&__top {\r\n\t\tdisplay: flex;\r\n\t\talign-items: center;\r\n\t\tcolor: white;\r\n\t\tpadding-bottom: 10px;\r\n\r\n\t\th3 {\r\n\t\t\tmargin-left: 10px;\r\n\t\t}\r\n\t}\r\n\r\n\t&__close {\r\n\t\tposition: absolute;\r\n\t\ttop: 0;\r\n\t\tright: 0;\r\n\t\tpadding: 10px;\r\n\t\tcursor: pointer;\r\n\t}\r\n\r\n\t.content {\r\n\t\toverflow-y: auto;\r\n\t\toverflow-x: 'hidden';\r\n\t\tpadding: 1px 0px 1px 0px;\r\n\t}\r\n\r\n\t.button-container {\r\n\t\ttext-align: right;\r\n\r\n\t\tbutton {\r\n\t\t\ttext-decoration: underline;\r\n\t\t\tcursor: pointer;\r\n\t\t\tcolor: white;\r\n\t\t\tpadding-top: 10px;\r\n\t\t}\r\n\t}\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -16497,6 +16714,17 @@ module.exports = "data:application/font-woff;charset=utf-8;base64, d09GRgABAAAAA
 
 /***/ }),
 
+/***/ "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 1000 800%27 preserveAspectRatio=%27xMidYMid meet%27%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27350%27 ry=%27250%27 fill=%27%23C2185B%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27300%27 ry=%27220%27 fill=%27%23FF7043%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27250%27 ry=%27190%27 fill=%27%23FF5252%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27200%27 ry=%27160%27 fill=%27%23FF4081%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27150%27 ry=%27130%27 fill=%27%23D81B60%27 /%3E%3C/svg%3E":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 1000 800%27 preserveAspectRatio=%27xMidYMid meet%27%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27350%27 ry=%27250%27 fill=%27%23C2185B%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27300%27 ry=%27220%27 fill=%27%23FF7043%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27250%27 ry=%27190%27 fill=%27%23FF5252%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27200%27 ry=%27160%27 fill=%27%23FF4081%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27150%27 ry=%27130%27 fill=%27%23D81B60%27 /%3E%3C/svg%3E ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 1000 800%27 preserveAspectRatio=%27xMidYMid meet%27%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27350%27 ry=%27250%27 fill=%27%23C2185B%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27300%27 ry=%27220%27 fill=%27%23FF7043%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27250%27 ry=%27190%27 fill=%27%23FF5252%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27200%27 ry=%27160%27 fill=%27%23FF4081%27 /%3E%3Cellipse cx=%27500%27 cy=%27400%27 rx=%27150%27 ry=%27130%27 fill=%27%23D81B60%27 /%3E%3C/svg%3E";
+
+/***/ }),
+
 /***/ "data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NiA2NyI+CiAgPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4zMDggNy43ODh2Mi45MDljLjM0Mi4xMTguNjYzLjMxNS45MzUuNTg5TDM0LjU2NiAzMS43MWMuOTYuOTY0Ljk2IDIuNTI2IDAgMy40OUwxNC4yNDMgNTUuNjI1Yy0uMjcyLjI3NC0uNTkzLjQ3LS45MzUuNTg4djIuOTA5Yy4zMzYuMTE4LjY1Mi4zMTMuOTIxLjU4M2w3LjE2OSA3LjIwNkw0NiA0Mi4xODQgMzkuMDUgMzUuMmEyLjQ3NiAyLjQ3NiAwIDAgMSAwLTMuNDlMNDYgMjQuNzI2IDIxLjM5NiAwbC03LjE2OCA3LjIwNmMtLjI2OS4yNy0uNTg0LjQ2NC0uOTIuNTgzWiIgZmlsbD0iI0U5RUNFRiIvPgogIDxwYXRoIGZpbGw9IiNFOUVDRUYiIGQ9Ik0wIDYuNzY3aDEzLjMwOHY1MS4zM0gweiIvPgo8L3N2Zz4=":
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NiA2NyI+CiAgPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMy4zMDggNy43ODh2Mi45MDljLjM0Mi4xMTguNjYzLjMxNS45MzUuNTg5TDM0LjU2NiAzMS43MWMuOTYuOTY0Ljk2IDIuNTI2IDAgMy40OUwxNC4yNDMgNTUuNjI1Yy0uMjcyLjI3NC0uNTkzLjQ3LS45MzUuNTg4djIuOTA5Yy4zMzYuMTE4LjY1Mi4zMTMuOTIxLjU4M2w3LjE2OSA3LjIwNkw0NiA0Mi4xODQgMzkuMDUgMzUuMmEyLjQ3NiAyLjQ3NiAwIDAgMSAwLTMuNDlMNDYgMjQuNzI2IDIxLjM5NiAwbC03LjE2OCA3LjIwNmMtLjI2OS4yNy0uNTg0LjQ2NC0uOTIuNTgzWiIgZmlsbD0iI0U5RUNFRiIvPgogIDxwYXRoIGZpbGw9IiNFOUVDRUYiIGQ9Ik0wIDYuNzY3aDEzLjMwOHY1MS4zM0gweiIvPgo8L3N2Zz4= ***!
@@ -16537,7 +16765,7 @@ module.exports = "data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
-module.exports = __webpack_require__.p + "892a30d53572eb7707b9.woff";
+module.exports = __webpack_require__.p + "fonts/acidgrotesk-book.woff";
 
 /***/ }),
 
@@ -16548,7 +16776,7 @@ module.exports = __webpack_require__.p + "892a30d53572eb7707b9.woff";
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
-module.exports = __webpack_require__.p + "5c4d95027769b8ba2e5b.woff2";
+module.exports = __webpack_require__.p + "fonts/acidgrotesk-book.woff2";
 
 /***/ }),
 
@@ -16559,7 +16787,7 @@ module.exports = __webpack_require__.p + "5c4d95027769b8ba2e5b.woff2";
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
-module.exports = __webpack_require__.p + "42e82dce7a4ffe296133.woff";
+module.exports = __webpack_require__.p + "fonts/apparat-regular.woff";
 
 /***/ }),
 
@@ -16570,7 +16798,51 @@ module.exports = __webpack_require__.p + "42e82dce7a4ffe296133.woff";
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
-module.exports = __webpack_require__.p + "6d38a22ce2392c280b0b.woff2";
+module.exports = __webpack_require__.p + "fonts/apparat-regular.woff2";
+
+/***/ }),
+
+/***/ "./srcjs/assets/cisss.jpg":
+/*!********************************!*\
+  !*** ./srcjs/assets/cisss.jpg ***!
+  \********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "images/cisss.jpg";
+
+/***/ }),
+
+/***/ "./srcjs/assets/laval.png":
+/*!********************************!*\
+  !*** ./srcjs/assets/laval.png ***!
+  \********************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "data:image/png;base64,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";
+
+/***/ }),
+
+/***/ "./srcjs/assets/mssi.png":
+/*!*******************************!*\
+  !*** ./srcjs/assets/mssi.png ***!
+  \*******************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "images/mssi.png";
+
+/***/ }),
+
+/***/ "./srcjs/assets/prds.png":
+/*!*******************************!*\
+  !*** ./srcjs/assets/prds.png ***!
+  \*******************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "images/prds.png";
 
 /***/ }),
 

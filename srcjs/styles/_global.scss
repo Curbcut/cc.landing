@@ -10,7 +10,7 @@
   font-weight: 400;
   letter-spacing: 0;
   color: variables.$black;
-  background-color: variables.$grey;
+  background-color: #ec1650;
   overscroll-behavior: none;
 
   .background-container {
@@ -19,7 +19,6 @@
     left: 20%;
     width: 100%;
     height: 100%;
-    z-index: -1;
     overflow: hidden;
   }
 

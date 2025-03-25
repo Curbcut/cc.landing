@@ -168,6 +168,7 @@ function ThemesMenu({ lenis, themes, pages, setValue }) {
         <p>
           <Translate str="POWERED BY" />
         </p>
+        <a href='https://curbcut.ca'>
         <img
           onClick={() => navigate("/")}
           style={{ cursor: "pointer" }}
@@ -176,6 +177,7 @@ function ThemesMenu({ lenis, themes, pages, setValue }) {
           width="150"
           height="83"
         />
+        </a>
       </div>
       <div className="close-cta">
         <Translate str="CLOSE" />
