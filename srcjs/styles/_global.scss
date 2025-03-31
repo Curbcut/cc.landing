@@ -176,12 +176,12 @@
     margin-bottom: 0;
 
     @include mixins.laptop {
-      font-size: clamp(4.4rem, 6vw, 11.8rem);
-      line-height: clamp(5.4rem, 6vw, 14.4rem);
+      font-size: clamp(4.1rem, 6vw, 11.8rem);
+      line-height: clamp(5.4rem, 6vw, 14.1rem);
     }
 
     @include mixins.mobile {
-      font-size: 4.4rem;
+      font-size: 4.1rem;
       line-height: 5.4rem;
     }
   }

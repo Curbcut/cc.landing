@@ -75,6 +75,10 @@
 					.card__text,
 					.card__preview {
 						width: 100%; // Ensures text containers take up full width
+
+						@include mixins.tablet {
+							font-size: 1.25rem;
+						}
 					}
 	
 					.card__preview {

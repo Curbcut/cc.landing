@@ -143,4 +143,8 @@ export const translation_df = [
 		en: 'POWERED BY',
 		fr: 'PROPULSÉ PAR',
 	},
+	{
+		en: 'GO BACK',
+		fr: 'RETOUR',
+	},
 ]
