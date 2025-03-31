@@ -131,7 +131,9 @@ function ThemesMenu({ lenis, themes, pages, setValue }) {
 
           {themeData.subcategories.map((subcategory, subIndex) => (
             <div key={subIndex} className="subcategory-section">
-              <h3 className="subcategory-title">{subcategory.title}</h3>
+    {subcategory.title !== "Explorateur de lieux" && (
+      <h3 className="subcategory-title">{subcategory.title}</h3>
+    )}
               <ul className="pages-list">
                 {subcategory.pages.map((page, pageIndex) => (
                   <li key={pageIndex} className="page-item">

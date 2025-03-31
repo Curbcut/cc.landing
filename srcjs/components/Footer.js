@@ -252,7 +252,7 @@ function Footer({ themes, pages, setValue }) {
         </div>
 
         <div className="footer__content-copyright">
-          © 2023 Curbcut -
+          © 2025 Curbcut -
           <Translate str="by Curbcut. All rights reserved." />
         </div>
       </div>

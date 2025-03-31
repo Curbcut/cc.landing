@@ -12459,7 +12459,7 @@ function ThemesMenu(_ref) {
       return /*#__PURE__*/React.createElement("div", {
         key: subIndex,
         className: "subcategory-section"
-      }, /*#__PURE__*/React.createElement("h3", {
+      }, subcategory.title !== "Explorateur de lieux" && /*#__PURE__*/React.createElement("h3", {
         className: "subcategory-title"
       }, subcategory.title), /*#__PURE__*/React.createElement("ul", {
         className: "pages-list"
@@ -13411,6 +13411,9 @@ var translation_df = [{
 }, {
   en: 'POWERED BY',
   fr: 'PROPULSÉ PAR'
+}, {
+  en: 'GO BACK',
+  fr: 'RETOUR'
 }];
 
 /***/ }),
